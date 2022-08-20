@@ -1,6 +1,6 @@
 import {
   Button,
-  Checkbox,
+  Checkbox, Divider,
   FormControl, FormControlLabel,
   TextField,
 } from "@mui/material";
@@ -11,6 +11,7 @@ import { useState } from "react";
 import { FlexBox, Layout, ProgressBar } from "../src/components/atoms";
 import styles from "../styles/signup.module.scss";
 import { PasswordMeter } from "password-meter";
+import { GoogleIcon } from "../src/components/icons"
 
 const Signup = ({}) => {
   const [errorDetails, setErrorDetails] = useState({})
@@ -152,6 +153,21 @@ const Signup = ({}) => {
           <Typography variant="h5" variantMapping={'h2'} className={styles.signupSubtitle}>
             Create, share, and collaborate on your to-do lists
           </Typography>
+          
+          <FlexBox fullWidth column align>
+            <Button variant="contained" color="primary" className={'button-primary-bg-white'} style={{width: "88%"}}>
+              <FlexBox fullWidth align justifyBetween className={styles.externalSignup}>
+                <FlexBox align><GoogleIcon /></FlexBox>
+                <span>Sign up with Google</span>
+                <span>&nbsp;</span>
+              </FlexBox>
+            </Button>
+          </FlexBox>
+  
+          <div style={{width: '90%'}}>
+            <Divider variant={'fullWidth'} textAlign="center" style={{margin: '8px 3px'}}>or</Divider>
+          </div>
+  
   
           <FormControl>
             <FlexBox fullWidth justifyBetween className={styles.inputRow}>
@@ -246,13 +262,17 @@ const Signup = ({}) => {
               fullWidth
               variant="contained"
               color="primary"
-              className={[styles.submit, "button-main"]}
+              className={[styles.submit, "button-primary-bg-black"]}
               onClick={onSubmit}
             >
               Sign in
             </Button>
             <Typography variant="subtitle2" sx={{marginTop: '8px', textAlign: 'center', opacity: '.8'}}>
               By signing up, you agree to our <Link href={'/terms#tos'} noLinkStyle>Terms of Service</Link> and <Link href={'/terms#privacy'}>Privacy Policy</Link>
+            </Typography>
+  
+            <Typography variant="subtitle2" sx={{marginTop: '16px', textAlign: 'center', opacity: '.8'}}>
+              Have an account? <Link href={'/terms#tos'} noLinkStyle>Go to login</Link>
             </Typography>
 
           </FormControl>

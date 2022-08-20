@@ -4,7 +4,7 @@ a {
   color: inherit;
 }
 
-.button-main {
+.button-primary-bg-black {
   background-color: $black;
   color: $white;
   font-weight: $fontWeight-bold;
@@ -14,5 +14,16 @@ a {
   &:hover {
     background-color: $primary-color;
     color: $white;
+  }
+}
+
+.button-primary-bg-white {
+  background-color: $white;
+  color: $black;
+  font-weight: $fontWeight-medium;
+  font-size: 1.25rem;
+
+  &:hover {
+    background-color: $gray-1;
   }
 }
