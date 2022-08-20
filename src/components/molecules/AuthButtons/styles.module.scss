@@ -1,0 +1,25 @@
+@import "src/variables.module";
+
+.buttonLogin {
+  font-weight: $fontWeight-bold;
+  letter-spacing: 1px;
+  color: $gray-8;
+  margin-right: $spacing-1;
+
+  &:hover {
+    color: $black;
+    background-color: transparent;
+  }
+}
+
+.buttonSignup {
+  background-color: $black;
+  color: $white;
+  font-weight: $fontWeight-bold;
+  letter-spacing: 1px;
+
+  &:hover {
+    background-color: $primary-color;
+    color: $white;
+  }
+}

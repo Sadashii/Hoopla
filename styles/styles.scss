@@ -1,0 +1,18 @@
+@import "src/variables.module";
+
+a {
+  color: inherit;
+}
+
+.button-main {
+  background-color: $black;
+  color: $white;
+  font-weight: $fontWeight-bold;
+  letter-spacing: 1px;
+  font-size: 1.25rem;
+
+  &:hover {
+    background-color: $primary-color;
+    color: $white;
+  }
+}

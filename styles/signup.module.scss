@@ -1,0 +1,33 @@
+@import "src/variables.module";
+
+.signupContainer {
+  height: calc(100vh - #{$header_height} * 2);
+  padding: $header_layout_gap / 2;
+
+
+  .signupTitle {
+    font-weight: $fontWeight-bold;
+    margin-bottom: $spacing-1;
+  }
+  .signupSubtitle {
+    margin-bottom: $spacing-3;
+  }
+
+  .inputRow {
+    margin-bottom: $spacing-1-5;
+
+    .inputField{
+      margin-right: $spacing-1-5;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .submit {
+    margin-top: $spacing-1-5;
+
+
+  }
+}

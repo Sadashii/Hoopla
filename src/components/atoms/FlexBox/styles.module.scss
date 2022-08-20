@@ -1,0 +1,27 @@
+.flexbox {
+  display: flex;
+  &.column {
+    flex-direction: column;
+  }
+  &.justifyCenter {
+    justify-content: center;
+  }
+  &.justifyEnd {
+    justify-content: flex-end;
+  }
+  &.alignEnd {
+    align-items: flex-end;
+  }
+  &.alignCenter {
+    align-items: center;
+  }
+  &.justifyBetween {
+    justify-content: space-between;
+  }
+  &.fullWidth {
+    width: 100%;
+  }
+  &.no-shrink {
+    flex-shrink: 0;
+  }
+}

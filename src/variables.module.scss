@@ -1,0 +1,153 @@
+/* variables.module.scss */
+$primary-color: #04a3cb;
+$secondary-color: #d60a54;
+$header_height: 60px;
+$header_layout_gap: $header_height;
+
+// Colors
+$white: #ffffff;
+$black: #000000;
+$gray-1: #f6f8f9;
+$gray-1a: #f4f6f6;
+$gray-2: #edf1f2;
+$gray-3: #e0e6e8;
+$gray-4: #d5dce0;
+$gray-5: #b7bfc6;
+$gray-6: #9ca6af;
+$gray-7: #848f99;
+$gray-8: #646f79;
+$gray-9: #222b37;
+$gray-10: #151b26;
+$green-1: #e2fffa;
+$green-2: #b0fff1;
+$green-3: #58f5d9;
+$green-4: #25e8c8;
+$green-5: #00bf9c;
+$teal-1: #edf8ff;
+$teal-2: #95e0ff;
+$teal-3: #32c1ff;
+$teal-4: #14aaf5;
+$teal-5: #008ce3;
+$purple-1: #f0f0ff;
+$purple-2: #aba3ff;
+$purple-3: #9287ff;
+$purple-4: #796eff;
+$purple-5: #635ac7;
+$gold-1: #fffede;
+$gold-2: #fff78f;
+$gold-3: #ffe01b;
+$gold-4: #fcbd01;
+$gold-5: #f2a100;
+$orange-1: #f9dc00;
+$orange-2: #ffba00;
+$orange-3: #ff7f00;
+$coral-1: #ffedef;
+$coral-2: #ff9ca5;
+$coral-3: #ff7381;
+$coral-4: #ff5263;
+$coral-5: #ed4758;
+
+$shadow-color: rgb(36, 50, 66);
+$shadow-10: 0 3px 5px 0 rgba(36, 50, 66, 0.2);
+$shadow-20: 0 11px 12px 0 rgba(36, 50, 66, 0.12);
+$shadow-30: 0 20px 30px 0 rgba(36, 50, 66, 0.14);
+$shadow-40: 0 50px 60px 0 rgba(36, 50, 66, 0.15);
+
+$transition-duration-short: 75ms;
+$transition-duration: 150ms;
+$transition-duration-med: 225ms;
+$transition-duration-long: 300ms;
+$transition-duration-xlong: 450ms;
+
+$fontWeight-thin: 300;
+$fontWeight-light: 300;
+$fontWeight-normal: normal;
+$fontWeight-medium: 400;
+$fontWeight-semibold: 500;
+$fontWeight-bold: 600;
+
+$spacing-0: 0;
+$spacing-0-5: 8px;
+$spacing-1: 16px;
+$spacing-1-5: 24px;
+$spacing-2: 32px;
+$spacing-3: 48px;
+$spacing-4: 64px;
+$spacing-5: 80px;
+$spacing-6: 96px;
+$spacing-7: 112px;
+$spacing-8: 128px;
+$spacing-9: 144px;
+$spacing-10: 160px;
+
+$border-radius: 4px; // default for mui
+
+$fontFamily-base: "'Open Sans', sans-serif";
+$fontFamily-title: "'Raleway', sans-serif";
+
+
+:export { // These can be used inside js files
+  primaryColor: $primary-color;
+  secondaryColor: $secondary-color;
+
+
+}
+
+
+//    --zIndex-1: 100;
+//    --zIndex-2: 200;
+//    --zIndex-3: 300;
+//    --zIndex-4: 400;
+//    --zIndex-5: 500;
+//    --zIndex-6: 600;
+//    --zIndex-7: 700;
+//    --zIndex-8: 800;
+//    --zIndex-9: 900;
+//    --zIndex-10: 1000;
+//    --fontFamily-base: "gordita","Helvetica Neue","Helvetica",sans-serif;
+//    --fontFamily-print: "Georgia","Times New Roman","Times",serif;
+//    --fontFamily-mono: "Consolas",monospace;
+//    --fontSize-base: 16px;
+//    --fontSize-larger: 3.2rem;
+//    --fontSize-large: 2.2rem;
+//    --fontSize-medium: 2rem;
+//    --fontSize-regular: 1.6rem;
+//    --fontSize-small: 1.4rem;
+//    --fontSize-smaller: 1.2rem;
+//    --fontSize-xl: 82;
+//    --fontSize-h1: 56;
+//    --fontSize-h2: 56;
+//    --fontSize-h3: 45;
+//    --fontSize-h4: 31;
+//    --fontSize-h5: 22;
+//    --fontSize-h6: 16;
+
+//    --media-xsmall: 480;
+//    --media-small: 768;
+//    --media-medium: 960;
+//    --media-large: 1120;
+//    --media-xlarge: 1280;
+//    --media-xxlarge: 1440;
+//    --media-xxxlarge: 1920;
+//    --media-xsmall-min: cacl(
+//            var(--media-xsmall) / var(--fontSize-base)
+//          );
+//    --media-small-min: cacl(var(--media-small) / var(--fontSize-base));
+//    --media-medium-min: cacl(
+//            var(--media-medium) / var(--fontSize-base)
+//          );
+//    --media-large-min: cacl(
+//            var(--media-large) / var(--fontSize-base)
+//          );
+//    --media-xlarge-min: cacl(var(--media-xlarge) / var(--fontSize-base));
+//    --media-xxlarge-min: cacl(var(--media-xxlarge) / var(--fontSize-base));
+//    --media-xxxlarge-min: cacl(
+//            var(--media-xxxlarge) / var(--fontSize-base)
+//          );
+//    --media-xsmall-max: cacl((var(--media-small) - 1) / var(--fontSize-base));
+//    --media-small-max: cacl((var(--media-medium) - 1) / var(--fontSize-base));
+//    --media-medium-max: cacl((var(--media-large) - 1) / var(--fontSize-base));
+//    --media-large-max: cacl((var(--media-xlarge) - 1) / var(--fontSize-base));
+//    --media-xlarge-max: cacl(
+//            (var(--media-xxlarge) - 1) / var(--fontSize-base)
+//          );

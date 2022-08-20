@@ -1,0 +1,40 @@
+@import "src/variables.module";
+
+.welcomeContainer {
+  background-color: $gray-1;
+
+  .welcome {
+    padding: 7rem 0;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $gray-9;
+
+    .welcomeTitle {
+      color: $black;
+      font-weight: $fontWeight-bold;
+      margin-bottom: $spacing-2;
+    }
+
+    .welcomeSubtitle {
+      color: $gray-8;
+      font-weight: $fontWeight-light;
+      margin-bottom: $spacing-2;
+    }
+
+    .welcomeButton {
+      background-color: $black;
+      color: $white;
+      font-weight: $fontWeight-bold;
+      font-size: 1rem;
+      padding: .75rem 1.5rem;
+      letter-spacing: 1px;
+      transition: all $transition-duration;
+
+      &:hover {
+        background-color: $primary-color;
+        color: $white;
+      }
+    }
+  }
+}
