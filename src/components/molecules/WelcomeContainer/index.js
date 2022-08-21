@@ -32,7 +32,7 @@ WelcomeContainer.defaultProps = {
   title: "A better online to-do app for all of your needs",
   subtitle: "Create, share, and collaborate on your to-do lists",
   cta: "Get Started",
-  ctaHref: "/signup/"
+  ctaHref: "/auth/signup/"
 }
 
 export default WelcomeContainer;

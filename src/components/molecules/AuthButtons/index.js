@@ -6,14 +6,14 @@ const AuthButtons = ({login = true, signup = true}) => {
   return (
     <>
       {login && (
-        <Link href={'/login/'} noLinkStyle>
+        <Link href={'/auth/login/'} noLinkStyle>
           <Button variant="text" color="primary" className={styles.buttonLogin}>
             Log In
           </Button>
         </Link>
       )}
       {signup && (
-        <Link href={'/signup/'} noLinkStyle>
+        <Link href={'/auth/signup/'} noLinkStyle>
           <Button variant="contained" color="primary" className={styles.buttonSignup}>
             Get Started
           </Button>

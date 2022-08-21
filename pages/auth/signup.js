@@ -1,27 +1,31 @@
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Button,
-  Checkbox, Divider,
-  FormControl, FormControlLabel,
+  Checkbox, CircularProgress, Divider,
+  FormControl, FormControlLabel, IconButton, InputAdornment,
   TextField,
 } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
-import { FlexBox, Layout, ProgressBar } from "../src/components/atoms";
-import styles from "../styles/signup.module.scss";
+import { useAlert, types } from "react-alert";
+import { FlexBox, Layout, ProgressBar } from "../../src/components/atoms";
+import styles from "../../styles/signup.module.scss";
 import { PasswordMeter } from "password-meter";
-import { GoogleIcon } from "../src/components/icons"
+import { GoogleIcon } from "../../src/components/icons"
 
 const Signup = ({}) => {
+  const [signupLoading, setSignupLoading] = useState(false)
   const [errorDetails, setErrorDetails] = useState({})
   const [details, setDetails] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    confirmPassword: "",
-    showPassword: false,
+    showPassword: true,
+    marketingConsent: true,
   })
   const [passwordStrength, setPasswordStrength] = useState({})
   const strengthColors = {
@@ -32,15 +36,17 @@ const Signup = ({}) => {
     "veryStrong": "#69d300",
     "perfect": "#00ff00",
   }
+  const alert = useAlert()
   
   const verifyFields = (field = null, value = null) => {
-    const error = {}
+    const error = {...errorDetails}
     
     const verifyFirstName = (value) => {
       if (value.length === 0) {
         error.firstName = "First name is required"
         return false
       }
+      delete error.firstName
       return true
     }
 
@@ -49,6 +55,7 @@ const Signup = ({}) => {
         error.lastName = "Last name is required"
         return false
       }
+      delete error.lastName
       return true
     }
     const verifyEmail = (value) => {
@@ -60,6 +67,7 @@ const Signup = ({}) => {
         error.email = "Email is invalid"
         return false
       }
+      delete error.email
       return true
     }
     const verifyPassword = (value) => {
@@ -79,21 +87,9 @@ const Signup = ({}) => {
         error.password = "Password must contain at least one lowercase letter, one uppercase letter, and one number"
         return false
       }
+      delete error.password
       return true
     }
-    const verifyConfirmPassword = (value) => {
-      if (value.length === 0) {
-        error.confirmPassword = "Confirm password is required"
-        return false
-      }
-      if (value !== details.password) {
-        error.confirmPassword = "Passwords do not match"
-        return false
-      }
-      return true
-    }
-
-
 
     if (field) {
       switch (field) {
@@ -109,24 +105,32 @@ const Signup = ({}) => {
         case "password":
           verifyPassword(value)
           break;
-        case "confirmPassword":
-          verifyConfirmPassword(value)
-          break;
       }
     } else {
       verifyFirstName(details.firstName)
       verifyLastName(details.lastName)
       verifyEmail(details.email)
       verifyPassword(details.password)
-      verifyConfirmPassword(details.confirmPassword)
     }
     
     setErrorDetails(error)
     return Object.keys(error).length === 0
   }
 
-  const onSubmit = () => {
-    console.log(verifyFields());
+  const onSubmit = async () => {
+    if (verifyFields()) {
+      setSignupLoading(true)
+      await axios
+        .post(`/api/auth/signup`, details)
+        .then((res) => {
+          alert.show(res.data, {type: types.SUCCESS})
+          setSignupLoading(false)
+        })
+        .catch((err) => {
+          alert.show(err.response.data.error, {type: types.ERROR})
+          setSignupLoading(false)
+        })
+    }
   }
   
   const setField = (field, e) => {
@@ -134,7 +138,6 @@ const Signup = ({}) => {
       let strength = new PasswordMeter().getResult(e.target.value)
       setPasswordStrength(strength)
     }
-    
     
     verifyFields(field, e.target.value)
     setDetails({
@@ -155,7 +158,7 @@ const Signup = ({}) => {
           </Typography>
           
           <FlexBox fullWidth column align>
-            <Button variant="contained" color="primary" className={'button-primary-bg-white'} style={{width: "88%"}}>
+            <Button variant="contained" color="primary" className={'button-primary-bg-white'} style={{width: "100%"}}>
               <FlexBox fullWidth align justifyBetween className={styles.externalSignup}>
                 <FlexBox align><GoogleIcon /></FlexBox>
                 <span>Sign up with Google</span>
@@ -164,7 +167,7 @@ const Signup = ({}) => {
             </Button>
           </FlexBox>
   
-          <div style={{width: '90%'}}>
+          <div style={{width: '100%'}}>
             <Divider variant={'fullWidth'} textAlign="center" style={{margin: '8px 3px'}}>or</Divider>
           </div>
   
@@ -186,6 +189,7 @@ const Signup = ({}) => {
                 fullWidth
                 label="Last name"
                 variant="outlined"
+                required
                 value={details.lastName}
                 error={errorDetails.lastName !== undefined}
                 helperText={errorDetails.lastName}
@@ -211,7 +215,6 @@ const Signup = ({}) => {
               <TextField
                 label="Password"
                 variant="outlined"
-                className={styles.inputField}
                 fullWidth
                 required
                 type={details.showPassword ? 'text' : 'password'}
@@ -219,17 +222,19 @@ const Signup = ({}) => {
                 error={errorDetails.password !== undefined}
                 helperText={errorDetails.password}
                 onChange={(e) => setField("password", e)}
-              />
-              <TextField
-                label="Confirm Password"
-                variant={'outlined'}
-                fullWidth
-                required
-                type={details.showPassword ? 'text' : 'password'}
-                value={details.confirmPassword}
-                error={errorDetails.confirmPassword !== undefined}
-                helperText={errorDetails.confirmPassword}
-                onChange={(e) => setField("confirmPassword", e)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setDetails({...details, showPassword: !details.showPassword})}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
+                        {details.showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </FlexBox>
             {details.password.length > 0 && passwordStrength.percent !== undefined && (
@@ -246,15 +251,16 @@ const Signup = ({}) => {
                 </Typography>
               </div>
             )}
-  
+            
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={details.showPassword}
-                  onClick={() => setDetails({ ...details, showPassword: !details.showPassword })}
+                  checked={details.marketingConsent}
+                  onClick={() => setDetails({ ...details, marketingConsent: !details.marketingConsent })}
                 />
               }
-              label="Show password"
+              label="I agree to receive cool marketing emails and occasional updates, we promise to not spam you :)"
+              sx={{marginTop: "1.5rem"}}
             />
   
             <Button
@@ -262,11 +268,14 @@ const Signup = ({}) => {
               fullWidth
               variant="contained"
               color="primary"
-              className={[styles.submit, "button-primary-bg-black"]}
+              className={[styles.submit, signupLoading ? "button-primary-bg-black" : "button-primary-bg-black-hover"]}
               onClick={onSubmit}
             >
-              Sign in
+              {signupLoading ? (
+                <CircularProgress size={35} />
+              ) : "Sign up"}
             </Button>
+            
             <Typography variant="subtitle2" sx={{marginTop: '8px', textAlign: 'center', opacity: '.8'}}>
               By signing up, you agree to our <Link href={'/terms#tos'} noLinkStyle>Terms of Service</Link> and <Link href={'/terms#privacy'}>Privacy Policy</Link>
             </Typography>
