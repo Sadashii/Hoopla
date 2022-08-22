@@ -1,18 +1,18 @@
 /**
- * @param {import('next').NextApiRequest} req
- * @param {import('next').NextApiResponse} res
+ * @param {import("next").NextApiRequest} req
+ * @param {import("next").NextApiResponse} res
  */
+import jwt from "jsonwebtoken";
 import DB from "../../../middleware/database";
 import Utils from "../../../middleware/utils";
 import User from "../../../models/user";
-import jwt from "jsonwebtoken";
 
-export default async function login(req, res) {
+export default async function login (req, res) {
   await DB();
   
   if (req.method === "POST") {
     // Check if user exists
-    let user = await User.findOne({ "email.address": req.body.email });
+    let user = await User.findOne({"email.address": req.body.email});
     if (!user) {
       return res.status(400).json({
         error: "NO_ACCOUNT",
@@ -32,16 +32,16 @@ export default async function login(req, res) {
         error: "NOT_VERIFIED",
       });
     }
-  
+    
     // Login user
     const body = {
       _id: user._id,
       email: user.email.address,
-    }
-    const token = jwt.sign({user: body}, process.env.JWT_SECRET)
+    };
+    const token = jwt.sign({user: body}, process.env.JWT_SECRET);
     
-    res.status(200).json({ token });
+    res.status(200).json({token});
   }
   
-  res.status(405).send()
+  res.status(405).send();
 }

@@ -18,8 +18,8 @@ const NavbarItems = [
     icon: Commute,
   },
   {
-    title: 'About Us',
-    to: '',
+    title: "About Us",
+    to: "",
     icon: InfoOutlined,
     children: [
       {
@@ -41,12 +41,12 @@ const NavbarItems = [
     ],
   },
   {
-    title: 'Support us',
-    to: '',
+    title: "Support us",
+    to: "",
     icon: InfoOutlined,
     children: [
       {
-        title: 'Become a Contributor',
+        title: "Become a Contributor",
         to: "https://znotesteam.notion.site/Contributors-Board-95575c32448e422ea0136963af967cf2",
         external: true,
       },

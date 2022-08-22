@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { model, models, Schema } from "mongoose";
 
 const user = new Schema({
   _id: {
@@ -22,9 +22,9 @@ const user = new Schema({
   },
   meta: {
     marketing: Boolean,
-  }
+  },
 });
 
-const User = models.User || model('User', user);
+const User = models.User || model("User", user);
 
 export default User;

@@ -1,24 +1,24 @@
+import { CacheProvider } from "@emotion/react";
+import "@fontsource/raleway";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Head from 'next/head';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { CacheProvider } from '@emotion/react';
+import Head from "next/head";
+import PropTypes from "prop-types";
+import * as React from "react";
+import { useEffect } from "react";
+import { positions, Provider as AlertProvider, transitions } from "react-alert";
 import { AlertTemplate } from "../src/components/atoms";
 import UserHelper from "../src/helper/UserHelper";
-import theme from '../src/theme';
-import createEmotionCache from '../src/utils/createEmotionCache';
-import "@fontsource/raleway";
+import theme from "../src/theme";
+import createEmotionCache from "../src/utils/createEmotionCache";
 import "../styles/styles.scss";
-import { positions, Provider as AlertProvider, transitions } from "react-alert";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-export default function MyApp(props) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+export default function MyApp (props) {
+  const {Component, emotionCache = clientSideEmotionCache, pageProps} = props;
   
   axios.defaults.baseURL = process.env.API_URL;
   
@@ -42,12 +42,12 @@ export default function MyApp(props) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="viewport" content="initial-scale=1, width=device-width"/>
       </Head>
       <ThemeProvider theme={theme}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
+          <CssBaseline/>
           <Component {...pageProps} />
         </AlertProvider>
       </ThemeProvider>

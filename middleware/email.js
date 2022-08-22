@@ -11,7 +11,9 @@ let transport = nodemailer.createTransport({
 });
 
 transport.verify(function (err) {
-  if (err) throw new Error("Invalid email configuration!");
+  if (err) {
+    throw new Error("Invalid email configuration!");
+  }
 });
 
 const sendEmail = async (template, vars, mailOptions) => {
@@ -19,21 +21,23 @@ const sendEmail = async (template, vars, mailOptions) => {
     `${process.cwd()}/middleware/emails/${template}.ejs`,
     vars,
     async function (err, data) {
-      if (err) throw new Error(err);
+      if (err) {
+        throw new Error(err);
+      }
       
       mailOptions = {
         from: `"Hoopla" <no-reply@${process.env.WEBSITE_DOMAIN}>`,
         html: data,
         ...mailOptions,
-      }
+      };
       await transport.sendMail(mailOptions, function (err, info) {
         if (err) {
-          return [false, err]
+          return [false, err];
         }
-        return [true, info]
+        return [true, info];
       });
-    }
-  )
-}
+    },
+  );
+};
 
 export default sendEmail;

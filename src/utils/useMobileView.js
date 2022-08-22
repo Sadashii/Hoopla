@@ -16,5 +16,5 @@ export const useMobileView = (size = 768) => {
     }
   }, [dimens]);
   
-  return isMobileView
-}
+  return isMobileView;
+};

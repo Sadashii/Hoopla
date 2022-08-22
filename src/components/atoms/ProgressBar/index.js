@@ -4,19 +4,19 @@ import PropTypes from "prop-types";
 import React from "react";
 
 const ProgressBar = ({
-    height = 10,
-    className,
-    primaryColor,
-    secondaryColor,
-    backgroundColor,
-    ...props
- }) => {
+                       height = 10,
+                       className,
+                       primaryColor,
+                       secondaryColor,
+                       backgroundColor,
+                       ...props
+                     }) => {
   return (
     <LinearProgress
       sx={{
         height,
         borderRadius: 20,
-        backgroundColor: backgroundColor || 'primary',
+        backgroundColor: backgroundColor || "primary",
         "span": {
           background: `linear-gradient(90deg, ${secondaryColor} 0%, ${primaryColor} 100%) !important`,
         },

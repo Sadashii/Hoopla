@@ -1,25 +1,25 @@
 /**
- * @param {import('next').NextApiRequest} req
- * @param {import('next').NextApiResponse} res
+ * @param {import("next").NextApiRequest} req
+ * @param {import("next").NextApiResponse} res
  */
+import randomstring from "randomstring";
 import DB from "../../../middleware/database";
 import sendEmail from "../../../middleware/email";
 import User from "../../../models/user";
-import randomstring from "randomstring"
 
-export default async function resendVerify(req, res) {
+export default async function resendVerify (req, res) {
   await DB();
   
   if (req.method === "POST") {
     // Check if user exists
-    let user = await User.findOne({ "email.address": req.body.email });
+    let user = await User.findOne({"email.address": req.body.email});
     if (!user) {
       return res.status(400).json({
         error: "NO_ACCOUNT",
       });
     }
     
-    const verificationToken = randomstring.generate(44)
+    const verificationToken = randomstring.generate(44);
     user.email.verificationCode = verificationToken;
     await user.save();
     
@@ -32,12 +32,12 @@ export default async function resendVerify(req, res) {
       },
       {
         to: req.body.email,
-        subject: "Hoopla - verify your email"
-      }
-    )
+        subject: "Hoopla - verify your email",
+      },
+    );
     
     res.status(200).send();
   }
   
-  res.status(405).send()
+  res.status(405).send();
 }

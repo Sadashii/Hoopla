@@ -1,9 +1,9 @@
-import { createTheme } from '@mui/material/styles';
-import themeColours from './variables.module.scss';
+import { createTheme } from "@mui/material/styles";
+import themeColours from "./variables.module.scss";
 
 const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
       main: themeColours.primaryColor,
     },
@@ -33,8 +33,8 @@ const theme = createTheme({
     button: {
       textTransform: "none",
       textDecoration: "none",
-    }
-  }
+    },
+  },
 });
 
 export default theme;

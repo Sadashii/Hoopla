@@ -9,9 +9,9 @@ import { AuthButtons } from "../../molecules";
 import styles from "./styles.module.scss";
 
 
-const Navbar = ({ logoOnly }) => {
+const Navbar = ({logoOnly}) => {
   const [logoSize, setLogoSize] = useState(50);
-  const isMobile = useMobileView(600)
+  const isMobile = useMobileView(600);
   const user = UserHelper.getUser();
   
   return (
@@ -30,18 +30,18 @@ const Navbar = ({ logoOnly }) => {
               )}
             </FlexBox>
           </Link>
-  
+          
           {!logoOnly && (
             <div>
               {!user && (
-                <AuthButtons login={!isMobile} />
+                <AuthButtons login={!isMobile}/>
               )}
             </div>
           )}
         </FlexBox>
       </Toolbar>
     </AppBar>
-  )
-}
+  );
+};
 
 export default Navbar;

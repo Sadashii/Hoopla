@@ -5,7 +5,9 @@
   height: $header_height;
   box-shadow: none;
 
-  * {transition: all $transition-duration-med ease-in-out;}
+  * {
+    transition: all $transition-duration-med ease-in-out;
+  }
 
   .navbarInner {
     height: $header_height !important;
