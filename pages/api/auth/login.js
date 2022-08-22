@@ -5,6 +5,7 @@
 import DB from "../../../middleware/database";
 import Utils from "../../../middleware/utils";
 import User from "../../../models/user";
+import jwt from "jsonwebtoken";
 
 export default async function login(req, res) {
   await DB();
@@ -31,9 +32,15 @@ export default async function login(req, res) {
         error: "NOT_VERIFIED",
       });
     }
+  
+    // Login user
+    const body = {
+      _id: user._id,
+      email: user.email.address,
+    }
+    const token = jwt.sign({user: body}, process.env.JWT_SECRET)
     
-    
-    res.status(200).json(user.toJSON());
+    res.status(200).json({ token });
   }
   
   res.status(405).send()

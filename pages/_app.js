@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
@@ -6,6 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import { AlertTemplate } from "../src/components/atoms";
+import UserHelper from "../src/helper/UserHelper";
 import theme from '../src/theme';
 import createEmotionCache from '../src/utils/createEmotionCache';
 import "@fontsource/raleway";
@@ -19,6 +21,13 @@ export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   
   axios.defaults.baseURL = process.env.API_URL;
+  
+  useEffect(() => {
+    const token = UserHelper.getUserToken();
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+  }, [UserHelper.getUserToken()]);
   
   const alertOptions = {
     position: positions.TOP_RIGHT,

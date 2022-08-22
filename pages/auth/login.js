@@ -9,8 +9,10 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { FlexBox, Layout } from "../../src/components/atoms";
+import UserHelper from "../../src/helper/UserHelper";
 import styles from "../../styles/signup.module.scss";
 import { GoogleIcon } from "../../src/components/icons"
 
@@ -22,6 +24,7 @@ const Login = ({}) => {
     password: "",
     showPassword: false,
   })
+  const router = useRouter()
   
   const verifyFields = (field = null, value = null) => {
     const error = {...errorDetails}
@@ -77,7 +80,8 @@ const Login = ({}) => {
     if (verifyFields()) {
       await axios.post("/api/auth/login", details)
         .then(res => {
-          // login workflow
+          UserHelper.postLogin(res.data.token)
+          router.push("/")
         })
         .catch((err) => {
           switch (err.response.data.error) {
