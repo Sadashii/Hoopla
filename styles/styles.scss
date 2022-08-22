@@ -34,3 +34,22 @@ a {
     background-color: $gray-1;
   }
 }
+
+.alert-container-error {
+  color: $coral-5;
+  background-color: $coral-1;
+  border: 1px solid $coral-3;
+  padding: $spacing-0-5;
+  border-radius: $border-radius;
+
+  margin-bottom: -$spacing-0-5;
+}
+.alert-container-success {
+  color: $teal-5;
+  background-color: $teal-1;
+  border: 1px solid $teal-3;
+  padding: $spacing-0-5;
+  border-radius: $border-radius;
+
+  margin-bottom: -$spacing-0-5;
+}

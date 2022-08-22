@@ -14,8 +14,8 @@ export default async function signup(req, res) {
   if (req.method === "POST") {
     // add 1000ms delay to allow user to think that we're doing something serious
     await new Promise(resolve => setTimeout(resolve, 1000))
-    
     // Check if user already exists
+    
     let user = await User.findOne({ "email.address": req.body.email });
     if (user) {
       return res.status(400).json({
@@ -50,7 +50,7 @@ export default async function signup(req, res) {
       "verify",
       {
         name: `${req.body.firstName} ${req.body.lastName}`,
-        token: verificationToken,
+        url: `${process.env.WEBSITE_URL}/auth/verify?code=${verificationToken}`,
         domain: process.env.WEBSITE_DOMAIN,
       },
       {

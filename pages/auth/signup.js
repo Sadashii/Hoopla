@@ -17,6 +17,8 @@ import { PasswordMeter } from "password-meter";
 import { GoogleIcon } from "../../src/components/icons"
 
 const Signup = ({}) => {
+  const [response, setResponse] = useState(null)
+  const [isResponseSuccess, setIsResponseSuccess] = useState(false)
   const [signupLoading, setSignupLoading] = useState(false)
   const [errorDetails, setErrorDetails] = useState({})
   const [details, setDetails] = useState({
@@ -24,7 +26,7 @@ const Signup = ({}) => {
     lastName: "",
     email: "",
     password: "",
-    showPassword: true,
+    showPassword: false,
     marketingConsent: true,
   })
   const [passwordStrength, setPasswordStrength] = useState({})
@@ -36,7 +38,6 @@ const Signup = ({}) => {
     "veryStrong": "#69d300",
     "perfect": "#00ff00",
   }
-  const alert = useAlert()
   
   const verifyFields = (field = null, value = null) => {
     const error = {...errorDetails}
@@ -123,11 +124,13 @@ const Signup = ({}) => {
       await axios
         .post(`/api/auth/signup`, details)
         .then((res) => {
-          alert.show(res.data, {type: types.SUCCESS})
+          setResponse(<>We have sent you an email with the verification link.</>)
+          setIsResponseSuccess(true)
           setSignupLoading(false)
         })
         .catch((err) => {
-          alert.show(err.response.data.error, {type: types.ERROR})
+          setResponse(<>{err.response.data.error}</>)
+          setIsResponseSuccess(false)
           setSignupLoading(false)
         })
     }
@@ -245,6 +248,7 @@ const Signup = ({}) => {
                   primaryColor={strengthColors[passwordStrength.status]}
                   secondaryColor={strengthColors[passwordStrength.status]}
                   backgroundColor={"transparent"}
+                  variant={'determinate'}
                 />
                 <Typography variant="body2" sx={{textAlign: 'right', textTransform: "capitalize"}}>
                   {passwordStrength.status}
@@ -262,6 +266,12 @@ const Signup = ({}) => {
               label="I agree to receive cool marketing emails and occasional updates, we promise to not spam you :)"
               sx={{marginTop: "1.5rem"}}
             />
+  
+            {response && (
+              <div className={isResponseSuccess ? "alert-container-success" : "alert-container-error"} style={{marginTop: '1rem'}}>
+                {response}
+              </div>
+            )}
   
             <Button
               type="submit"
@@ -281,7 +291,7 @@ const Signup = ({}) => {
             </Typography>
   
             <Typography variant="subtitle2" sx={{marginTop: '16px', textAlign: 'center', opacity: '.8'}}>
-              Have an account? <Link href={'/terms#tos'} noLinkStyle>Go to login</Link>
+              Have an account? <Link href={'/auth/login/'} noLinkStyle>Go to login</Link>
             </Typography>
 
           </FormControl>
