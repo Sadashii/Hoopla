@@ -174,7 +174,7 @@ const Login = ({}) => {
                 }}
               />
               <div style={{width: '100%', textAlign: "right", fontSize: '.8rem', marginTop: '.25rem'}}>
-                <Link href={"/auth/forgot-password"}>Forgot password?</Link>
+                <Link href={"/auth/reset-password"}>Forgot password?</Link>
               </div>
             </FlexBox>
   
