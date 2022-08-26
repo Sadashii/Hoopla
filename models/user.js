@@ -22,6 +22,7 @@ const user = new Schema({
   },
   meta: {
     marketing: Boolean,
+    firstLogin: Date,
   },
 });
 

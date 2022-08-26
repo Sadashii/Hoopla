@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import jwt from "jsonwebtoken";
 
 class Utils {
   hashPasswordPrivate (password) {
@@ -12,6 +13,20 @@ class Utils {
   
   comparePassword (password, hash) {
     return bcrypt.compare(this.hashPasswordPrivate(password), hash);
+  }
+  
+  isUserLoggedIn (req, res) {
+    let token = req.headers.authorization
+    if (!token) {
+      res.status(403).send()
+      return false
+    }
+    token = token.split("Bearer ")[1]
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+  
+    req.user = decoded.user
+    
+    return true
   }
 }
 

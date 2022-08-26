@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import DB from "../../../middleware/database";
 import Utils from "../../../middleware/utils";
 import User from "../../../models/user";
+import Workspace from "../../../models/workspace";
 
 export default async function login (req, res) {
   await DB();
@@ -39,6 +40,23 @@ export default async function login (req, res) {
       email: user.email.address,
     };
     const token = jwt.sign({user: body}, process.env.JWT_SECRET);
+    
+    if (!user.meta.firstLogin) {
+      user.meta.firstLogin = new Date()
+      const default_workspace = new Workspace({
+        _id: user._id,
+        name: `My Hoopla`,
+        icon: `${process.env.WEBSITE_URL}/logo.png`,
+        members: [
+          {
+            role: "OWNER",
+            addedAt: new Date(),
+            user: user._id
+          }
+        ]
+      })
+      await default_workspace.save()
+    }
     
     res.status(200).json({token});
   }

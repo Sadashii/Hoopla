@@ -1,7 +1,7 @@
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, Button, Toolbar } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserHelper from "../../../helper/UserHelper";
 import { useMobileView } from "../../../utils/useMobileView";
 import { FlexBox } from "../../atoms";
@@ -12,7 +12,18 @@ import styles from "./styles.module.scss";
 const Navbar = ({logoOnly}) => {
   const [logoSize, setLogoSize] = useState(50);
   const isMobile = useMobileView(600);
-  const user = UserHelper.getUser();
+  const [user, setUser] = useState(null)
+  
+  useEffect(() => {
+    if (UserHelper.getUserToken()) {
+      setUser(UserHelper.getUser())
+      UserHelper
+        .getLatestUser()
+        .then(user => {
+          setUser(user)
+        })
+    }
+  }, [])
   
   return (
     <AppBar
@@ -33,9 +44,13 @@ const Navbar = ({logoOnly}) => {
           
           {!logoOnly && (
             <div>
-              {!user && (
+              {!user ? (
                 <AuthButtons login={!isMobile}/>
-              )}
+              ) : (
+                <Button className={"button-primary-bg-black-hover"} href={"/app/"} style={{maxHeight: '40px'}}>
+                  Go to app
+                </Button>
+                )}
             </div>
           )}
         </FlexBox>

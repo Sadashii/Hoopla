@@ -1,3 +1,5 @@
+import axios from "axios";
+
 class UserHelper {
   postLogin = (token) => {
     if (typeof window !== "undefined") {
@@ -17,6 +19,12 @@ class UserHelper {
     return null;
   };
   
+  saveUser = (user) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user_data", JSON.stringify(user));
+    }
+  };
+  
   getUser = () => {
     if (typeof window !== "undefined") {
       const user = localStorage.getItem("user_data");
@@ -28,6 +36,15 @@ class UserHelper {
     }
     return null;
   };
+  getLatestUser = async () => {
+    const user = await axios.get("/api/account/", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+      },
+    });
+    await this.saveUser(user.data);
+    return user.data;
+  }
 }
 
 export default new UserHelper();

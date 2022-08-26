@@ -1,0 +1,44 @@
+@import "src/variables.module";
+
+.mainContainer {
+  * {
+    margin: 0;
+    transition: all ease-in $transition-duration;
+  }
+  height: 100vh;
+
+  .leftNavbar {
+    background-color: $gray-3;
+    width: 16rem;
+    max-width: 100vw;
+    overflow-x: hidden;
+
+    .navOption {
+      &:hover {
+        background-color: $gray-4;
+      }
+    }
+
+    .logo {
+      padding: $spacing-1-5  $spacing-0-5;
+      width: 100%;
+      height: 2rem;
+      position: relative;
+
+      .toggleNavbarIcon {
+        opacity: 0;
+      }
+
+      &:hover {
+        .toggleNavbarIcon {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  .leftNavbarClose {
+    width: 0;
+  }
+
+
+}
