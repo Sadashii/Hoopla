@@ -3,16 +3,16 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
 class Utils {
-  hashPasswordPrivate (password) {
+  createShaHash (password) {
     return crypto.createHash("sha256").update(password).digest("hex");
   }
   
-  hashPassword (password) {
-    return bcrypt.hash(this.hashPasswordPrivate(password), 10);
+  createHash (password) {
+    return bcrypt.hash(this.createShaHash(password), 10);
   }
   
-  comparePassword (password, hash) {
-    return bcrypt.compare(this.hashPasswordPrivate(password), hash);
+  compareHash (password, hash) {
+    return bcrypt.compare(this.createShaHash(password), hash);
   }
   
   isUserLoggedIn (req, res) {

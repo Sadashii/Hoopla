@@ -36,7 +36,7 @@ export default async function signup (req, res) {
       },
       services: {
         password: {
-          bcrypt: await Utils.hashPassword(req.body.password),
+          bcrypt: await Utils.createHash(req.body.password),
           lastChanged: new Date(),
         },
       },

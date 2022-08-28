@@ -1,0 +1,27 @@
+@import "src/variables.module";
+
+.pageNavItem {
+  .pageExpandIcon {
+    transition: all linear $transition-duration;
+  }
+
+  .pageExpandedIcon {
+    transform: rotateZ(90deg);
+  }
+
+  .pageAddIcon {
+    opacity: 0;
+  }
+  .pageName {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:hover {
+    .pageAddIcon {
+      opacity: .7;
+    }
+  }
+}

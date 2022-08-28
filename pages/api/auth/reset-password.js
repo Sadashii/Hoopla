@@ -21,7 +21,7 @@ export default async function resendVerify (req, res) {
     }
     
     const newPassword = randomstring.generate(8);
-    user.services.password.bcrypt = await Utils.hashPassword(newPassword);
+    user.services.password.bcrypt = await Utils.createHash(newPassword);
     await user.save();
     
     await sendEmail(

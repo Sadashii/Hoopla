@@ -3,6 +3,7 @@
  * @param {import("next").NextApiResponse} res
  */
 import jwt from "jsonwebtoken";
+import slugify from "slugify";
 import DB from "../../../middleware/database";
 import Utils from "../../../middleware/utils";
 import User from "../../../models/user";
@@ -21,7 +22,7 @@ export default async function login (req, res) {
     }
     
     // Check if password is correct
-    if (!await Utils.comparePassword(req.body.password, user.services.password.bcrypt)) {
+    if (!await Utils.compareHash(req.body.password, user.services.password.bcrypt)) {
       return res.status(400).json({
         error: "INVALID_PASSWORD",
       });
@@ -47,6 +48,7 @@ export default async function login (req, res) {
         _id: user._id,
         name: `My Hoopla`,
         icon: `${process.env.WEBSITE_URL}/logo.png`,
+        slug: slugify("My Hoopla"),
         members: [
           {
             role: "OWNER",

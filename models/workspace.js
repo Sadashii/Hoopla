@@ -6,17 +6,18 @@ const workspace = new Schema({
     auto: true,
   },
   name: Schema.Types.String,
+  slug: Schema.Types.String,
   icon: Schema.Types.String,
   members: [
-      {
-        role: Schema.Types.String,
-        addedAt: Schema.Types.Date,
-        user: {
-          type: Schema.Types.ObjectId,
-          ref: "user"
-        }
+    {
+      role: Schema.Types.String,
+      addedAt: Schema.Types.Date,
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "user"
       }
-    ],
+    }
+  ],
 }, {
   timestamps: true
 });

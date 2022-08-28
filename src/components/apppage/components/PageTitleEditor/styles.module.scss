@@ -1,0 +1,45 @@
+@import "src/variables.module";
+
+.pageTitleEditor {
+  $titleSize: 2.5em;
+
+
+  .pageDisplayOptions {
+    margin-top: $spacing-5;
+    opacity: 0;
+  }
+  .pageDisplayOption {
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .pageIcon {
+    width: $titleSize * 1.5;
+    height: $titleSize * 1.5;
+    position: relative;
+    cursor: pointer;
+
+    .pageIconEmoji {
+      font-size: $titleSize;
+    }
+  }
+
+  .pageTitle {
+    font-size: $titleSize;
+    font-weight: bold;
+    cursor: text;
+    width: 100%;
+
+    &:empty:after {
+      content: "Untitled";
+      opacity: .4;
+    }
+  }
+
+  &:hover {
+    .pageDisplayOptions {
+      opacity: 1;
+    }
+  }
+}
