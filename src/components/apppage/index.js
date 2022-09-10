@@ -1,7 +1,6 @@
-import { Divider, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import axios from "axios";
 import clsx from "clsx";
-import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -9,7 +8,8 @@ import UserHelper from "../../helper/UserHelper";
 import { useStickyState } from "../../utils/useStickyState";
 import { FlexBox, Tooltip } from "../atoms";
 import PageContentEditor from "./components/PageContentEditor";
-import PageNav from "./components/PageNav";
+import PageNav from "./components/LeftNavPages";
+import PageOptions from "./components/PageOptions";
 import PageTitleEditor from "./components/PageTitleEditor";
 import { findPageInPages } from "./recursion";
 import styles from "./styles.module.scss"
@@ -20,11 +20,14 @@ const AppPage = () => {
   const user = UserHelper.getUser()
   const router = useRouter()
   
-  const [navbarOpen, setNavbarOpen] = useState(true)
+  const [navbarOpen, setNavbarOpen] = useStickyState(true, 'user_show_sidebar')
+  
   const [workspaceID, setWorkspaceID, fetchedWorkspaceID] = useStickyState(null, "user_current_workspace")
   const [workspaceData, setWorkspaceData, fetchedWorkspaceData] = useStickyState(null, "user_current_workspace_data")
-  const [pageID, setPageID, fetchedPageID] = useStickyState(null, "user_current_page")
-  const [workspacePagesData, setWorkspacePagesData, fetchedWorkspacePages] = useStickyState(null, "user_current_page_data")
+  
+  const [workspacePagesData, setWorkspacePagesData, fetchedWorkspacePages] = useStickyState(null, "user_current_workspace_pages_data")
+  
+  const [currentPageID, setCurrentPageID, fetchedPageID] = useStickyState(null, "user_current_page")
   const [currentPage, setCurrentPage] = useState(null)
   
   useEffect(() => {
@@ -44,10 +47,10 @@ const AppPage = () => {
   }, [fetchedWorkspaceID, workspaceID, fetchedWorkspaceData])
   
   useEffect(() => {
-    if (fetchedPageID && pageID !== null) {
-      setCurrentPage(findPageInPages(pageID, workspacePagesData))
+    if (workspacePagesData && fetchedPageID && currentPageID !== null) {
+      setCurrentPage(findPageInPages(currentPageID, workspacePagesData))
     }
-  }, [fetchedPageID, pageID])
+  }, [fetchedPageID, currentPageID])
   
   const fetchWorkspace = (wid, __v) => {
     axios
@@ -83,29 +86,12 @@ const AppPage = () => {
         }
         throw new Error(err)
       })
-  
   }
-  
-  
+
   return (
     <>
-      <FlexBox className={styles.mainContainer}>
-        <FlexBox column className={clsx(styles.leftNavbar, navbarOpen === false && styles.leftNavbarClose)}>
-          {/* <FlexBox align justifyBetween style={{cursor: "pointer"}} className={clsx(styles.navOption, styles.logo)}> */}
-          {/*   <FlexBox align> */}
-          {/*     <Image src="/logo.png" height={35} width={35} alt={"Brand Logo"}/> */}
-          {/*     <h2>Hoopla</h2> */}
-          {/*   </FlexBox> */}
-          {/*   <Tooltip title={"Close sidebar"} shortcut={"Ctrl + /"}> */}
-          {/*     <IconButton> */}
-          {/*       <KeyboardDoubleArrowLeftIcon */}
-          {/*         className={styles.toggleNavbarIcon} */}
-          {/*         onClick={() => setNavbarOpen(!navbarOpen)} */}
-          {/*       /> */}
-          {/*     </IconButton> */}
-          {/*   </Tooltip> */}
-          {/* </FlexBox> */}
-          {/* <Divider /> */}
+      <FlexBox className={clsx(styles.mainContainer)}>
+        <FlexBox column className={clsx(styles.leftNavbar, navbarOpen && styles.leftNavbarOpen)}>
           {workspaceData && (
             <FlexBox justifyBetween style={{cursor: "pointer"}} className={clsx(styles.navOption, styles.logo)}>
               <FlexBox align>
@@ -124,12 +110,12 @@ const AppPage = () => {
           )}
           {fetchedWorkspacePages && (
             <>
-            <PageNav workspacePagesData={workspacePagesData} setWorkspacePagesData={setWorkspacePagesData} workspaceData={workspaceData} pageID={pageID} setPageID={setPageID} />
+              <PageNav workspacePagesData={workspacePagesData} setWorkspacePagesData={setWorkspacePagesData} workspaceData={workspaceData} pageID={currentPageID} setPageID={setCurrentPageID} />
             </>
           )}
         </FlexBox>
-        <FlexBox fullWidth column>
-          <FlexBox align justifyBetween fullWidth>
+        <FlexBox fullWidth column className={clsx(styles.page, navbarOpen && styles.leftNavbarOpenPage)}>
+          <FlexBox align justifyBetween fullWidth className={styles.pageOptions}>
             <div>
               {navbarOpen === false && (
                 <Tooltip title={"Open sidebar"} shortcut={"Ctrl + /"}>
@@ -141,20 +127,29 @@ const AppPage = () => {
                 </Tooltip>
               )}
             </div>
-          {/*   top right utils */}
+            <PageOptions
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          
+            
           </FlexBox>
           {/* main render */}
-          {currentPage && (
-            <FlexBox fullWidth column className={clsx(styles.pageContainer)} style={{fontSize: '16px'}}>
-              <PageTitleEditor
-                pageData={currentPage}
-                setPageData={setCurrentPage}
-                setWorkspacePagesData={setWorkspacePagesData}
-              />
-              {/* <PageContentEditor */}
-              {/* /> */}
-            </FlexBox>
-          )}
+          <FlexBox fullWidth className={styles.pageContainerContainer}>
+            {currentPage && (
+              <FlexBox fullWidth column className={clsx(styles.pageContainer)} style={{fontSize: currentPage.properties.smallText ? '14px' : '16px', maxWidth: currentPage.properties.fullWidth ? '100%' : '900px'}}>
+                <PageTitleEditor
+                  pageData={currentPage}
+                  setPageData={setCurrentPage}
+                  setWorkspacePagesData={setWorkspacePagesData}
+                />
+                <PageContentEditor
+                  user={user}
+                  pageData={currentPage}
+                />
+              </FlexBox>
+            )}
+          </FlexBox>
         </FlexBox>
       </FlexBox>
     </>

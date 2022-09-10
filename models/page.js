@@ -8,13 +8,14 @@ const page = new Schema({
   name: Schema.Types.String,
   slug: Schema.Types.String,
   icon: Schema.Types.String,
-  children: [{type: Schema.Types.ObjectId, ref: "Page"}],
-  content: [{type: Schema.Types.ObjectId, ref: "Block"}],
   topmost: Schema.Types.Boolean,
   parent: {type: Schema.Types.ObjectId, ref: "Page"},
-  workspace: {type: Schema.Types.ObjectId, ref: 'Workspace'}
+  workspace: {type: Schema.Types.ObjectId, ref: 'Workspace'},
+  properties: {
+    type: Schema.Types.Mixed,
+  },
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
 const Page = models.Page || model("Page", page);

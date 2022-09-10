@@ -62,10 +62,10 @@ const PageTitleEditor = ({
   }
   
   const onIconChange = (emojiName) => {
+    setShowIconSelector(false);
     updatePageValue(pageData._id, {
       icon: emojiName
     })
-    setShowIconSelector(false);
   }
   
   const addIcon = () => {
@@ -92,16 +92,15 @@ const PageTitleEditor = ({
                     {emojis[pageData.icon]}
                   </p>
                 )}
+                {showIconSelector && (
+                  <IconSelector onClick={onIconChange} onCancel={() => setShowIconSelector(false)} />
+                )}
               </div>
             </Tooltip>
-            {showIconSelector && (
-              <IconSelector onClick={onIconChange} element={iconDivRef} onCancel={() => setShowIconSelector(false)} />
-            )}
           </>
         )}
-          <div contentEditable={true} className={styles.pageTitle} onInput={onTitleChange} ref={titleDivRef} />
+        <div contentEditable={true} className={styles.pageTitle} onInput={onTitleChange} ref={titleDivRef} />
       </FlexBox>
-      
     </FlexBox>
   )
 }

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { FlexBox, Layout } from "../../src/components/atoms";
 import { GoogleIcon } from "../../src/components/icons";
+import { RedirectToAppIfLoggedIn } from "../../src/components/molecules";
 import UserHelper from "../../src/helper/UserHelper";
 import styles from "../../styles/signup.module.scss";
 
@@ -108,6 +109,7 @@ const Login = ({}) => {
   
   return (
     <Layout logoOnly={true}>
+      <RedirectToAppIfLoggedIn />
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>
           <Typography variant="h3" variantMapping={"h1"} className={styles.signupTitle}>

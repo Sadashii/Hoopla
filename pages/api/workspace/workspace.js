@@ -4,6 +4,7 @@
  */
 import DB from "../../../middleware/database";
 import Utils from "../../../middleware/utils";
+import User from "../../../models/user";
 import Workspace from "../../../models/workspace";
 
 export default async function workspace (req, res) {
@@ -16,7 +17,6 @@ export default async function workspace (req, res) {
         if (!workspace) {
           return res.status(404).send()
         }
-  
   
         if (!workspace.members.find(member => member.user.toString() === req.user._id)) {
           return res.status(403).send()

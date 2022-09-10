@@ -44,7 +44,10 @@ export default async function pages (req, res) {
           icon: null,
           topmost: !Boolean(req.body.parent),
           parent: req.body.parent,
-          workspace: req.body.workspace
+          workspace: req.body.workspace,
+          properties: {
+            fullWidth: false
+          }
         })
         
         await page.save()

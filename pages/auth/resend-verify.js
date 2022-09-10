@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useState } from "react";
 import { FlexBox, Layout } from "../../src/components/atoms";
+import { RedirectToAppIfLoggedIn } from "../../src/components/molecules";
 import styles from "../../styles/signup.module.scss";
 
 const ResendVerify = ({}) => {
@@ -75,6 +76,7 @@ const ResendVerify = ({}) => {
   
   return (
     <Layout logoOnly={true}>
+      <RedirectToAppIfLoggedIn />
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>
           <Typography variant="h3" variantMapping={"h1"} className={styles.signupTitle}>

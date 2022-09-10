@@ -1,10 +1,18 @@
-import { Tooltip as MUITooltip } from "@mui/material"
+import { IconButton, Tooltip as MUITooltip } from "@mui/material";
 
-const Tooltip = ({ title, shortcut, children}) => {
+const Tooltip = ({ title, shortcut, children, icon=false}) => {
   
   return (
     <MUITooltip title={title}>
-      {children}
+      {icon ? (
+        <IconButton>
+          {children}
+        </IconButton>
+      ) : (
+        <>
+          {children}
+        </>
+      )}
     </MUITooltip>
   )
 }

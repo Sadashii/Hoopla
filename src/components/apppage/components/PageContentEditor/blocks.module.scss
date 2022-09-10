@@ -1,0 +1,157 @@
+@import "src/variables.module";
+
+.blockWrapper {
+  transform: translateX(-18px);
+  .blockOptions {
+    opacity: 0;
+    cursor: pointer;
+  }
+  .blockOptionsHoverOn {
+    opacity: 1;
+  }
+  &:hover {
+    .blockOptions {
+      opacity: 1;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    .editorContainer {
+      border-radius: 4px;
+      background-color: $teal-2 !important;
+    }
+  }
+  * {
+    transition: all $transition-duration;
+  }
+}
+
+.formatColorTextColor {
+  font-weight: bold;
+  padding: 0 5px;
+
+}
+.formatColorBackgroundColor {
+  font-weight: bold;
+  padding: 0 5px;
+  border-radius: $border-radius;
+}
+
+// Block Styles
+.baseBlock {
+  cursor: text;
+  width: 100%;
+
+  .editor {
+    width: 100%;
+  }
+}
+
+.blockText {
+  @extend .baseBlock;
+
+  .editor {
+    &:focus {
+      &:empty:after {
+        content: "Type '/' for commands";
+        opacity: .5;
+      }
+    }
+  }
+}
+.blockH1 {
+  @extend .baseBlock;
+  $size: 2.25em;
+  margin-top: $size / 2 !important;
+
+  .editor {
+    font-size: $size;
+
+    &:empty:after {
+      content: "Heading 1";
+      opacity: .5;
+    }
+  }
+}
+.blockH2 {
+  @extend .baseBlock;
+  $size: 1.75em;
+  margin-top: $size / 2 !important;
+
+  .editor {
+    font-size: $size;
+
+    &:empty:after {
+      content: "Heading 2";
+      opacity: .5;
+    }
+  }
+}
+.blockH3 {
+  @extend .baseBlock;
+  $size: 1.25em;
+  margin-top: $size / 2 !important;
+
+  .editor {
+    font-size: $size;
+
+    &:empty:after {
+      content: "Heading 3";
+      opacity: .5;
+    }
+  }
+}
+.todo {
+  @extend .baseBlock;
+
+  .checkBoxContainer {
+    margin-right: 4px;
+    cursor: pointer;
+  }
+  .editor {
+    &:empty:after {
+      content: "To-do";
+      opacity: .5;
+    }
+  }
+}
+.bulletedList {
+  @extend .baseBlock;
+
+  .bulletedList_marker {
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 2rem;
+  }
+
+  .editor {
+    &:empty:after {
+      content: "List";
+      opacity: .5;
+    }
+  }
+}
+.blockQuote {
+  @extend .baseBlock;
+  margin-top: .5em !important;
+
+  .editor {
+    padding-left: .75em;
+    border-left: 4px solid black;
+
+    &:empty:after {
+      content: "Quote something awesome";
+      opacity: .5;
+    }
+  }
+}
+
+
+// Text Styles
+.strikethrough {
+  text-decoration: line-through;
+}

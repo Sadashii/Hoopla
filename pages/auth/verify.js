@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FlexBox, Layout, ProgressBar } from "../../src/components/atoms";
+import { RedirectToAppIfLoggedIn } from "../../src/components/molecules";
 import styles from "../../styles/signup.module.scss";
 
 const Verify = ({}) => {
@@ -50,6 +51,7 @@ const Verify = ({}) => {
   
   return (
     <Layout logoOnly={true}>
+      <RedirectToAppIfLoggedIn/>
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>
           <Typography variant="h3" variantMapping={"h1"} className={styles.signupTitle}>

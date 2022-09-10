@@ -52,9 +52,10 @@ const PageNav = ({
   
   const renderPage = (page, level=0) => {
     return (
-      <>
+      <div key={page._id}>
         <FlexBox
           justifyBetween
+          fullWidth
           className={clsx(pageID === page._id ? stylesP.navOptionBold : stylesP.navOptionLightBold, styles.pageNavItem)}
           style={{paddingLeft: `${12 * level + 8}px`}}
         >
@@ -64,7 +65,7 @@ const PageNav = ({
               axios
                 .post(`/api/workspace/pages`, {
                   page: page._id,
-                  current_version: page.children.__v || null,
+                  current_version: page.children?.__v || null,
                 })
                 .then(res => {
                   // Recursion function which I don't understand ever since I wrote it
@@ -139,7 +140,7 @@ const PageNav = ({
             )}
           </>
         )}
-      </>
+      </div>
     )
   }
   

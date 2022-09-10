@@ -18,6 +18,7 @@ import { PasswordMeter } from "password-meter";
 import { useState } from "react";
 import { FlexBox, Layout, ProgressBar } from "../../src/components/atoms";
 import { GoogleIcon } from "../../src/components/icons";
+import { RedirectToAppIfLoggedIn } from "../../src/components/molecules";
 import styles from "../../styles/signup.module.scss";
 
 const Signup = ({}) => {
@@ -155,6 +156,7 @@ const Signup = ({}) => {
   
   return (
     <Layout logoOnly={true}>
+      <RedirectToAppIfLoggedIn />
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>
           <Typography variant="h3" variantMapping={"h1"} className={styles.signupTitle}>
