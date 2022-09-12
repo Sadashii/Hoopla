@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useStickyState } from "../../../../utils/useStickyState";
 import Block from "./Block";
 
 const PageContentEditor = ({
@@ -14,8 +15,8 @@ const PageContentEditor = ({
     if (pageData?._id) {
       axios
         .post(`/api/workspace/blocks`, {
-          operation: "FIND",
-          page: pageData._id
+          operation: "GET",
+          page: pageData._id,
         })
         .then(res => {
           setPageContent(res.data.blocks)

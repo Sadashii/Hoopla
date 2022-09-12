@@ -16,6 +16,29 @@ const findPageInPages = (id, pages) => {
   }
 }
 
+const findPageParent = (id, pages) => {
+  for (const page of pages.pages || pages.children.pages || []) {
+    if (page._id === id) {
+      return pages
+    }
+  }
+  
+  for (const page of pages.pages || pages.children.pages) {
+    let pagetoreturn = findPageParent(id, page)
+    if (pagetoreturn) {
+      return pagetoreturn
+    }
+  }
+}
+
 module.exports = {
   findPageInPages,
+  findPageParent,
 }
+
+
+
+
+
+
+

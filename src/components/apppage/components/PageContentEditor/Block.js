@@ -329,7 +329,8 @@ const Block = ({
           color: block.properties.textColor || 'black',
           backgroundColor: block.properties.backgroundColor || 'transparent',
           width: '100%',
-          alignItems: "flex-start"
+          alignItems: "flex-start",
+          height: 'fit-content'
         }} className={styles.editorContainer}>
           {renderBlockContent()}
         </FlexBox>

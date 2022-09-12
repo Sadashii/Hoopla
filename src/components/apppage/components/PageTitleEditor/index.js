@@ -1,7 +1,8 @@
 import axios from "axios";
 import clsx from "clsx";
 import emojis from "node-emoji/lib/emoji.json"
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import ContentEditable from "react-contenteditable";
 import slugify from "slugify";
 import { FlexBox, Tooltip } from "../../../atoms";
 import { findPageInPages } from "../../recursion";
@@ -16,17 +17,7 @@ const PageTitleEditor = ({
   setWorkspacePagesData
 }) => {
   const iconDivRef = useRef(null)
-  const titleDivRef = useRef(null)
   const [showIconSelector, setShowIconSelector] = useState(false)
-  const [pageNameID, setPageNameID] = useState("")
-  
-  useEffect(() => {
-    if (pageNameID !== pageData._id) {
-      titleDivRef.current.innerText = pageData.name
-      setPageNameID(pageData._id)
-    }
-  }, [pageData])
-  
   
   const updatePageValue = (id, values) => {
     setPageData(pageData => {
@@ -37,6 +28,7 @@ const PageTitleEditor = ({
   
       return clone
     })
+    
     setWorkspacePagesData(workspacePagesData => {
       let clone = {...workspacePagesData}
       let pageInClone = findPageInPages(id, clone)
@@ -45,7 +37,8 @@ const PageTitleEditor = ({
       }
 
       axios
-        .patch(`/api/workspace/pages`, {
+        .post(`/api/workspace/pages`, {
+          operation: "UPDATE",
           _id: id,
           ...values
         })
@@ -56,8 +49,8 @@ const PageTitleEditor = ({
   
   const onTitleChange = (e) => {
     updatePageValue(pageData._id, {
-      name: e.target.innerText,
-      slug: slugify(e.target.innerText)
+      name: e.target.value,
+      slug: slugify(e.target.value)
     })
   }
   
@@ -99,7 +92,11 @@ const PageTitleEditor = ({
             </Tooltip>
           </>
         )}
-        <div contentEditable={true} className={styles.pageTitle} onInput={onTitleChange} ref={titleDivRef} />
+        <ContentEditable
+          html={pageData.name}
+          onChange={onTitleChange}
+          className={styles.pageTitle}
+        />
       </FlexBox>
     </FlexBox>
   )

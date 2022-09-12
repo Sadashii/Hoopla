@@ -23,7 +23,8 @@ const PageNav = ({
   }
   const addPage = (wid) => {
     axios
-      .put(`/api/workspace/pages`, {
+      .post(`/api/workspace/pages`, {
+        operation: "CREATE",
         workspace: wid,
       })
       .then(res => {
@@ -39,7 +40,8 @@ const PageNav = ({
   }
   const addPageToPage = (pid) => {
     axios
-      .put(`/api/workspace/pages`, {
+      .post(`/api/workspace/pages`, {
+        operation: "CREATE",
         parent: pid,
       })
       .then(res => {
@@ -52,18 +54,19 @@ const PageNav = ({
   
   const renderPage = (page, level=0) => {
     return (
-      <div key={page._id}>
+      <>
         <FlexBox
           justifyBetween
           fullWidth
           className={clsx(pageID === page._id ? stylesP.navOptionBold : stylesP.navOptionLightBold, styles.pageNavItem)}
-          style={{paddingLeft: `${12 * level + 8}px`}}
+          style={{paddingLeft: `${12 * level + 6}px`}}
         >
           <ArrowRightIcon
             className={clsx(styles.pageExpandIcon, expandedPages.includes(page._id) && styles.pageExpandedIcon)}
             onClick={() => {
               axios
                 .post(`/api/workspace/pages`, {
+                  operation: "GET",
                   page: page._id,
                   current_version: page.children?.__v || null,
                 })
@@ -140,23 +143,16 @@ const PageNav = ({
             )}
           </>
         )}
-      </div>
+      </>
     )
   }
   
-  const addPageButton = () => {
-    
-    return (
-      <FlexBox onClick={() => addPage(workspaceData._id)} className={clsx(stylesP.navOptionLightBold)}>
-        <AddIcon style={{marginRight: '4px'}} /> Add a page
-      </FlexBox>
-    )
-  }
-
   return (
     <>
       {workspacePagesData?.pages.map(page => renderPage(page))}
-      {addPageButton()}
+      <FlexBox onClick={() => addPage(workspaceData._id)} className={clsx(stylesP.navOptionLightBold, styles.pageNavItem)}>
+        <AddIcon style={{marginRight: '4px'}} /> Add a page
+      </FlexBox>
     </>
   )
 }

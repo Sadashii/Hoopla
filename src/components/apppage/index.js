@@ -55,6 +55,7 @@ const AppPage = () => {
   const fetchWorkspace = (wid, __v) => {
     axios
       .post(`/api/workspace/workspace`, {
+        operation: "GET_WORKSPACE",
         workspace: wid,
         current_version: __v,
       })
@@ -74,6 +75,7 @@ const AppPage = () => {
   const fetchPages = (wid, __v) => {
     axios
       .post(`/api/workspace/pages`, {
+        operation: "GET",
         workspace: wid,
         current_version: __v,
       })
@@ -128,10 +130,11 @@ const AppPage = () => {
               )}
             </div>
             <PageOptions
+              workspacePages={workspacePagesData}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
+              openPage={setCurrentPageID}
             />
-          
             
           </FlexBox>
           {/* main render */}

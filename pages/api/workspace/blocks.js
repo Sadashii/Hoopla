@@ -6,19 +6,17 @@ import DB from "../../../middleware/database";
 import Utils from "../../../middleware/utils";
 import Block from "../../../models/block"
 
-
 export default async function blocks (req, res) {
   await DB();
   if (!Utils.isUserLoggedIn(req, res)) {
     return
   }
-  
   if (req.method !== 'POST') {
     return res.status(405).send()
   }
   
   switch (req.body.operation) {
-    case "FIND":
+    case "GET":
       const blocks = await Block.find({
         page: req.body.page,
       })

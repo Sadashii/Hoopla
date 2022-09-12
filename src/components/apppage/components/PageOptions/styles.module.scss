@@ -3,4 +3,17 @@
 .pageOptions {
   padding: 0 $spacing-1;
 
+  .breadcrumbButton {
+    color: black !important;
+    padding: 0 .3em;
+    margin: 0 .2em;
+
+    .pageIcon {
+      margin-right: .25em;
+    }
+
+    &:hover {
+      background-color: $gray-3;
+    }
+  }
 }
