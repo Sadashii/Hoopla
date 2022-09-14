@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FlexBox, Tooltip } from "../../../atoms";
@@ -81,11 +81,19 @@ const PageOptions = ({
         {/* <p>edited</p> */}
         {/* <p>share</p> */}
         <div>
-          <Tooltip title={"Page settings"} icon>
-            <MoreHorizIcon onClick={() => {
-              setShowPageOptionsMenu(true)
-            }} />
-          </Tooltip>
+          {showPageOptionsMenu ? (
+            <IconButton>
+              <MoreHorizIcon onClick={() => {
+                setShowPageOptionsMenu(true)
+              }} />
+            </IconButton>
+          ) : (
+            <Tooltip title={"Page settings"} icon>
+              <MoreHorizIcon onClick={() => {
+                setShowPageOptionsMenu(true)
+              }} />
+            </Tooltip>
+          )}
           {showPageOptionsMenu && (
             <PageOptionsMenu
               onCancel={() => setShowPageOptionsMenu(false)}

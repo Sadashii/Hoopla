@@ -19,8 +19,18 @@ const PageContentEditor = ({
           page: pageData._id,
         })
         .then(res => {
-          setPageContent(res.data.blocks)
-          setPageContentVersion(res.data.__v)
+          if (res.data.blocks.length > 0) {
+            setPageContent(res.data.blocks.sort((a, b) => a.position - b.position))
+            setPageContentVersion(res.data.__v)
+          } else {
+            addBlock({
+              type: 'text',
+              properties: {
+                content: ''
+              },
+              page: pageData._id,
+            }) // Add an empty block for person to start with
+          }
         })
     }
   }, [pageData])
@@ -68,13 +78,24 @@ const PageContentEditor = ({
   }
   
   const addBlock = (blockData, currentBlock) => {
+    let thisPos = 1
+    let cbIndex = pageContent.indexOf(currentBlock)
+    if (cbIndex !== -1) { // Not an empty pageContent
+      if (pageContent.length - 1 === cbIndex) { // This is last block
+        thisPos = pageContent.length + 1
+      } else {
+        thisPos = (pageContent[cbIndex].position + pageContent[cbIndex + 1].position) / 2
+      }
+    }
+
     axios
       .post(`/api/workspace/blocks`, {
         operation: "CREATE",
+        position: thisPos,
         ...blockData
       })
       .then(res => {
-        pageContent.splice(pageContent.indexOf(currentBlock) + 1, 0, res.data);
+        pageContent.splice(cbIndex + 1, 0, res.data);
         setPageContent([...pageContent])
         setFocusOnBlockID(res.data._id)
       })
@@ -138,17 +159,6 @@ const PageContentEditor = ({
           }}
         />
       ))}
-      {pageContent?.length === 0 && (
-        <Button variant={'text'} style={{color: 'black'}} onClick={() => addBlock({
-          type: 'text',
-          properties: {
-            content: ''
-          },
-          page: pageData._id,
-        }, null)}>
-          Click me to get started
-        </Button>
-      )}
     </>
   )
 }

@@ -14,7 +14,7 @@ const FloatingMenu = ({
   const menu = useRef()
   
   const removeInstance = () => {
-    instances = instances.filter(ins => ins !== menu)
+    instances = instances.filter(ins => ins !== menu.current)
     onClickOutside()
   }
   
@@ -26,7 +26,7 @@ const FloatingMenu = ({
   }
   
   const onKeyDownListener = (e) => {
-    if (e.code === 'Escape' && instances[instances.length - 1] === menu) {
+    if (e.key === 'Escape' && instances[instances.length - 1] === menu.current) {
       document.removeEventListener("mousedown", onClickOutsideListener)
       return removeInstance()
     }
@@ -37,7 +37,7 @@ const FloatingMenu = ({
     document.addEventListener('keydown', onKeyDownListener)
 
     let offsetCoords = {
-      zIndex: instances.length + (instances.length * 10 + 10)
+      opacity: 1,
     }
     let rect = menu.current.getBoundingClientRect()
     if (rect.top < 12) {
@@ -56,8 +56,8 @@ const FloatingMenu = ({
 
     setOffsetStyles(offsetCoords)
     
-    if (instances.length === 0 || instances[instances.length - 1] !== menu) {
-      instances.push(menu)
+    if (instances.length === 0 || instances[instances.length - 1] !== menu.current) {
+      instances.push(menu.current)
     }
   }, [])
   

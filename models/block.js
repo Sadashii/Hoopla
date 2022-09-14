@@ -9,6 +9,7 @@ const block = new Schema({
   properties: Schema.Types.Mixed,
   page: {type: Schema.Types.ObjectId, ref: 'page'},
   updatedBy: {type: Schema.Types.ObjectId, ref: 'user'},
+  position: Schema.Types.Number,
   createdAt: Schema.Types.Date,
   updatedAt: Schema.Types.Date,
 }, {

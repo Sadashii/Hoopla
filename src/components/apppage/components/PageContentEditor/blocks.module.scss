@@ -1,8 +1,9 @@
 @import "src/variables.module";
 
 .blockWrapper {
-  transform: translateX(-18px);
+  transform: translateX(-42px);
   .blockOptions {
+    height: 28px;
     opacity: 0;
     cursor: pointer;
   }

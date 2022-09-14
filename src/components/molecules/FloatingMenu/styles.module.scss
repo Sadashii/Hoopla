@@ -8,6 +8,8 @@
   max-width: calc(100vw - 24px);
   max-height: 70vh;
   width: 250px;
+  opacity: 0;
+  z-index: 1;
 
   .menuSection {
     display: flex;

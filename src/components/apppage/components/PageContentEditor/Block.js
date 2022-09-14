@@ -7,6 +7,7 @@ import styles from "./blocks.module.scss"
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import AddIcon from '@mui/icons-material/Add';
 
 const block_config = {
   "text": {
@@ -92,6 +93,15 @@ const Block = ({
       }
     })
     closeOptionsMenu()
+  }
+  const onClickAddAfter = () => {
+    addBlock({
+      type: 'text',
+      properties: {
+        content: ''
+      },
+      page: block.page,
+    }, block)
   }
   
   const onKeyDown = useRefCallback((e) => {
@@ -322,9 +332,10 @@ const Block = ({
         data-block-id={block._id}
         tabIndex={1}
       >
-        <div className={clsx(styles.blockOptions, showBlockOptionsMenu && styles.blockOptionsHoverOn)}>
+        <FlexBox className={clsx(styles.blockOptions, showBlockOptionsMenu && styles.blockOptionsHoverOn)}>
+          <AddIcon onClick={onClickAddAfter} />
           <DragIndicatorIcon onClick={openOptionsMenu} />
-        </div>
+        </FlexBox>
         <FlexBox style={{
           color: block.properties.textColor || 'black',
           backgroundColor: block.properties.backgroundColor || 'transparent',
@@ -335,7 +346,10 @@ const Block = ({
           {renderBlockContent()}
         </FlexBox>
       </FlexBox>
-      <div style={{marginTop: blockRef.current?.offsetTop - blockRef.current?.clientHeight, position: 'absolute'}}>
+      <div style={{
+        marginTop: blockRef.current?.offsetTop - blockRef.current?.clientHeight,
+        position: 'absolute'
+      }}>
         {showBlockOptionsMenu && (
           <BlockOptionsMenu
             onClickOutside={closeOptionsMenu}
