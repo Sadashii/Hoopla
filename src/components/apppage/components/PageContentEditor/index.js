@@ -1,13 +1,13 @@
+import { Button } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useStickyState } from "../../../../utils/useStickyState";
 import Block from "./Block";
 
 const PageContentEditor = ({
   user,
   pageData
 }) => {
-  const [pageContent, setPageContent] = useState([])
+  const [pageContent, setPageContent] = useState(null)
   const [pageContentVersion, setPageContentVersion] = useState("")
   const [focusOnBlockID, setFocusOnBlockID] = useState(undefined)
 
@@ -115,7 +115,7 @@ const PageContentEditor = ({
   
   return (
     <>
-      {pageContent.map(block => (
+      {pageContent?.map(block => (
         <Block
           key={block._id}
           block={block}
@@ -138,6 +138,17 @@ const PageContentEditor = ({
           }}
         />
       ))}
+      {pageContent?.length === 0 && (
+        <Button variant={'text'} style={{color: 'black'}} onClick={() => addBlock({
+          type: 'text',
+          properties: {
+            content: ''
+          },
+          page: pageData._id,
+        }, null)}>
+          Click me to get started
+        </Button>
+      )}
     </>
   )
 }

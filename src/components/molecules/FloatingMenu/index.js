@@ -7,6 +7,7 @@ let instances = []
 const FloatingMenu = ({
   onClickOutside,
   children,
+  style: propStyles,
   ...props
 }) => {
   const [offsetStyles, setOffsetStyles] = useState({})
@@ -61,7 +62,7 @@ const FloatingMenu = ({
   }, [])
   
   return (
-    <FlexBox column className={styles.floatingMenu} {...props} ref={menu} style={offsetStyles}>
+    <FlexBox column className={styles.floatingMenu} {...props} ref={menu} style={{...offsetStyles, ...propStyles}}>
       {children}
     </FlexBox>
   )

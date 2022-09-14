@@ -78,8 +78,8 @@ const PageOptions = ({
         })}
       </FlexBox>
       <FlexBox align>
-        <p>edited</p>
-        <p>share</p>
+        {/* <p>edited</p> */}
+        {/* <p>share</p> */}
         <div>
           <Tooltip title={"Page settings"} icon>
             <MoreHorizIcon onClick={() => {

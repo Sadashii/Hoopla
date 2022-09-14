@@ -45,14 +45,11 @@ const IconSelector = ({
       </FloatingMenuSection>
       <FloatingMenuSection>
         <FlexBox column fullWidth className={styles.iconSearchContainer}>
-          <TextField placeholder={"Filter..."} value={filter} onChange={(e) => setFilter(e.target.value)} id={'icon-filter'} />
+          <TextField placeholder={"Filter..."} value={filter} onChange={(e) => setFilter(e.target.value)} id={'icon-filter'} autoFocus inputProps={{autoComplete:'off'}}/>
         </FlexBox>
       </FloatingMenuSection>
       <FloatingMenuSection>
         <FlexBox fullWidth className={styles.iconSelectorIconsContainer}>
-          <FlexBox fullWidth style={{fontSize: '.75em', borderBottom: '1px solid grey', marginBottom: '.5rem'}}>
-            {filter.length > 0 ? "RESULTS" : "ALL EMOJIS"}
-          </FlexBox>
           {Object.keys(emojis).map(emojiName => {
             if (filter.length > 0 && !emojiName.includes(filter)) {
               return null
