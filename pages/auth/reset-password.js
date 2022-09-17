@@ -95,7 +95,6 @@ const ResetPassword = ({}) => {
                 label="Email"
                 variant="outlined"
                 type={"email"}
-                required
                 value={details.email}
                 error={errorDetails.email !== undefined}
                 helperText={errorDetails.email}

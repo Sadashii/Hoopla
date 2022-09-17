@@ -1,9 +1,10 @@
 import axios from "axios";
 
 class UserHelper {
-  postLogin = (token) => {
+  postLogin = (token, router) => {
     if (typeof window !== "undefined") {
       localStorage.setItem("user_token", token);
+      router.push('/app')
     }
   };
   

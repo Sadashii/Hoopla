@@ -189,7 +189,6 @@ const Signup = ({}) => {
                 fullWidth
                 value={details.firstName}
                 className={styles.inputField}
-                required
                 error={errorDetails.firstName !== undefined}
                 helperText={errorDetails.firstName}
                 onChange={(e) => setField("firstName", e)}
@@ -198,7 +197,6 @@ const Signup = ({}) => {
                 fullWidth
                 label="Last name"
                 variant="outlined"
-                required
                 value={details.lastName}
                 error={errorDetails.lastName !== undefined}
                 helperText={errorDetails.lastName}
@@ -212,7 +210,6 @@ const Signup = ({}) => {
                 label="Email"
                 variant="outlined"
                 type={"email"}
-                required
                 value={details.email}
                 error={errorDetails.email !== undefined}
                 helperText={errorDetails.email}
@@ -225,7 +222,6 @@ const Signup = ({}) => {
                 label="Password"
                 variant="outlined"
                 fullWidth
-                required
                 type={details.showPassword ? "text" : "password"}
                 value={details.password}
                 error={errorDetails.password !== undefined}

@@ -76,8 +76,7 @@ const Login = ({}) => {
     if (verifyFields()) {
       await axios.post("/api/auth/login", details)
         .then(res => {
-          UserHelper.postLogin(res.data.token);
-          router.push("/");
+          UserHelper.postLogin(res.data.token, router);
         })
         .catch((err) => {
           switch (err.response.data.error) {
@@ -133,7 +132,6 @@ const Login = ({}) => {
             <Divider variant={"fullWidth"} textAlign="center" style={{margin: "8px 3px"}}>or</Divider>
           </div>
           
-          
           <FormControl>
             <FlexBox fullWidth className={styles.inputRow}>
               <TextField
@@ -141,7 +139,6 @@ const Login = ({}) => {
                 label="Email"
                 variant="outlined"
                 type={"email"}
-                required
                 value={details.email}
                 error={errorDetails.email !== undefined}
                 helperText={errorDetails.email}
@@ -154,7 +151,6 @@ const Login = ({}) => {
                 label="Password"
                 variant="outlined"
                 fullWidth
-                required
                 type={details.showPassword ? "text" : "password"}
                 value={details.password}
                 error={errorDetails.password !== undefined}
@@ -200,9 +196,7 @@ const Login = ({}) => {
             <Typography variant="subtitle2" sx={{marginTop: "16px", textAlign: "center", opacity: ".8"}}>
               Don't have an account? <Link href={"/auth/signup/"} noLinkStyle>Sign up now</Link>
             </Typography>
-          
           </FormControl>
-        
         </FlexBox>
       </Container>
     </Layout>

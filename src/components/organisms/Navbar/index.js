@@ -49,7 +49,7 @@ const Navbar = ({logoOnly}) => {
                 )}
               </FlexBox>
             </Link>
-            {!isMobile && (
+            {!logoOnly && !isMobile && (
               <>
                 {navbarItems.map(item => {
                   if (!item.mobileOnly) {
