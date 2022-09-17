@@ -37,14 +37,14 @@ const AppPage = () => {
   }, [])
   
   useEffect(() => {
-    if (fetchedWorkspaceID && workspaceID === null) {
+    if (user && fetchedWorkspaceID && workspaceID === null) {
       setWorkspaceID(user._id)
     }
   
     if (fetchedWorkspaceData && workspaceID) {
       fetchWorkspace(workspaceID, workspaceData?._id ? workspaceData.__v : null)
     }
-  }, [fetchedWorkspaceID, workspaceID, fetchedWorkspaceData])
+  }, [user, fetchedWorkspaceID, workspaceID, fetchedWorkspaceData])
   
   useEffect(() => {
     if (workspacePagesData && fetchedPageID && currentPageID !== null) {
