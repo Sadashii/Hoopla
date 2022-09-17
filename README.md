@@ -1,41 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped
-with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">Hoopla</h1>
+<h3 align="center">A Next.js/MongoDB based notion-like to-software app</h3>
 
-## Getting Started
+<p align="center">
 
-First, run the development server:
+<a href="https://pypi.org/project/HypixelIO">
+    <img src="https://img.shields.io/badge/LICENSE-GNU%20v3-Hoopla" alt="GNU v3 License" />
+</a>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<a href="https://GitHub.com/janaSunrise/HypixelIO/graphs/commit-activity">
+    <img src="https://img.shields.io/badge/Maintained-Yes-Hoopla" alt="Maintenance" />
+</a>
+</p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What is GameBot?
 
-You can start editing the page by modifying `pages/account.js`. The page auto-updates as you edit the file.
+A Next.js/MongoDB based notion-like to-software app
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed
-on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited
-in `pages/api/account.js`.
+## 💻 Local Development
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated
-as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+To develop Hoopla locally, you can use the following commands:
 
-## Learn More
+- git clone https://github.com/Sadashii/Hoopla.git
+- cd GameBot
+- rename .env.example to .env and update it as required
+- npm install
+- npm run dev and visit http://localhost:4000
 
-To learn more about Next.js, take a look at the following resources:
+## 🤝 Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions, issues and feature requests are welcome. After cloning & setting up project locally, you can just submit
+a PR to this repo, and it will be deployed once it's accepted.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions
-are welcome!
+⚠️ It’s good to have descriptive commit messages, or PR titles so that other contributors can understand about your
+commit or the PR Created. Read [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) before
+making the commit message.
 
-## Deploy on Vercel
+## 👋 Show your support
 
-The easiest way to deploy your Next.js app is to use
-the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
+Be sure to drop a 🌟 if you like the project!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<div align="center">
+Made by <a href="https://GitHub.com/Sadashii">Sadashii</a> with ❤
+</div>    
