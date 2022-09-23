@@ -2,8 +2,9 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import axios from "axios";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FlexBox, Tooltip } from "../../../atoms";
+import { findPageInPages } from "../../recursion";
 import stylesP from "../../styles.module.scss";
 import { getPageIconType, pageIconTypes } from "../../utils";
 import styles from "./styles.module.scss"
@@ -21,31 +22,49 @@ const PageNav = ({
   const openPage = (page) => {
     setPageID(page._id)
   }
-  const addPage = (wid) => {
+  const addPageToWorkspace = () => {
     axios
       .post(`/api/workspace/pages`, {
         operation: "CREATE",
-        workspace: wid,
+        workspace: workspaceData._id,
+        properties: {
+          position: workspacePagesData.pages.length // At the end
+        }
       })
       .then(res => {
-        setWorkspacePagesData(workspacePagesData => ({
-          pages: [...workspacePagesData.pages, res.data],
-          __v: workspacePagesData.__v,
-        }))
+        let workspacePagesClone = {...workspacePagesData}
+        workspacePagesClone.pages.push(res.data)
+        setWorkspacePagesData(workspacePagesClone)
+        setExpandedPages([])
         openPage(res.data)
       })
       .catch(err => {
         throw new Error(err)
       })
   }
-  const addPageToPage = (pid) => {
+  const addPageToPage = (page) => {
     axios
       .post(`/api/workspace/pages`, {
         operation: "CREATE",
-        parent: pid,
+        parent: page._id,
+        properties: {
+          position: page.children?.pages.length || 0
+        }
       })
       .then(res => {
-        // TODO: Add recursive function to find this page in workspacePagesData and add the new page to it
+        let workspacePagesClone = {...workspacePagesData}
+        let pageParent = findPageInPages(page._id, workspacePagesClone)
+
+        if (!pageParent.children) {
+          pageParent.children = {
+            pages: [],
+            __v: null
+          }
+        }
+
+        pageParent.children.pages.push(res.data)
+        setWorkspacePagesData(workspacePagesClone)
+        openPage(res.data)
       })
       .catch(err => {
         throw new Error(err)
@@ -61,58 +80,39 @@ const PageNav = ({
           className={clsx(pageID === page._id ? stylesP.navOptionBold : stylesP.navOptionLightBold, styles.pageNavItem)}
           style={{paddingLeft: `${12 * level + 6}px`}}
         >
-          <ArrowRightIcon
-            className={clsx(styles.pageExpandIcon, expandedPages.includes(page._id) && styles.pageExpandedIcon)}
-            onClick={() => {
-              axios
-                .post(`/api/workspace/pages`, {
-                  operation: "GET",
-                  page: page._id,
-                  current_version: page.children?.__v || null,
-                })
-                .then(res => {
-                  // Recursion function which I don't understand ever since I wrote it
-                  let updatedData = {...workspacePagesData}
-                  const findAndReplace = (id, pages, children) => {
-                    let found = false
-                    for (const page of pages) {
-                      if (page._id === id) {
-                        page.children = children
-                        found = true
-                        return updatedData
-                      }
-                    }
-    
-                    if (!found) {
-                      for (const page of pages) {
-                        findAndReplace(id, page.children.pages || [], children)
-                      }
-                    }
-                  }
-                  findAndReplace(page._id, workspacePagesData.pages, res.data)
-                  setWorkspacePagesData(updatedData)
-
-        
-                  if (expandedPages.includes(page._id)) {
-                    setExpandedPages(expandedPages => expandedPages.filter(p => p !== page._id))
-                  } else {
-                    setExpandedPages([...expandedPages, page._id])
-                  }
-                })
-                .catch(err => {
-                  if (err.response.status === 304) {
-                    if (expandedPages.includes(page._id)) {
-                      setExpandedPages(expandedPages => expandedPages.filter(p => p !== page._id))
-                    } else {
+          <Tooltip title={null} icon>
+            <ArrowRightIcon
+              className={clsx(styles.pageExpandIcon, expandedPages.includes(page._id) && styles.pageExpandedIcon)}
+              onClick={() => {
+                if (expandedPages.includes(page._id)) {
+                  setExpandedPages(expandedPages => expandedPages.filter(p => p !== page._id))
+                } else {
+                  axios
+                    .post(`/api/workspace/pages`, {
+                      operation: "GET",
+                      page: page._id,
+                      current_version: page.children?.__v || null,
+                    })
+                    .then(res => {
+                      let updatedData = {...workspacePagesData}
+                      let parent = findPageInPages(page._id, updatedData)
+                      parent.children = res.data
+                      setWorkspacePagesData(updatedData)
                       setExpandedPages([...expandedPages, page._id])
-                    }
-                    return
-                  }
-        
-                  throw new Error(err)
-                })
-            }}
-          />
+  
+                    })
+                    .catch(err => {
+                      if (err.response.status === 304) {
+                        setExpandedPages([...expandedPages, page._id])
+                        return
+                      }
+                      
+                      throw new Error(err)
+                    })
+                }
+              }}
+            />
+          </Tooltip>
           <FlexBox fullWidth onClick={() => openPage(page)} className={styles.pageName}>
             {getPageIconType(page.icon) === pageIconTypes.EMOJI && (
               <span>
@@ -121,11 +121,13 @@ const PageNav = ({
             )}
             {page.name || "Untitled"}
           </FlexBox>
-          <FlexBox align className={clsx(styles.pageAddIcon)}>
-            <Tooltip title={"Add page inside"}>
-              <AddIcon onClick={() => addPageToPage(page._id)}/>
-            </Tooltip>
-          </FlexBox>
+          <>
+            <FlexBox align className={clsx(styles.pageAddIcon)}>
+              <Tooltip title={"Add page inside"} icon>
+                <AddIcon onClick={() => addPageToPage(page)}/>
+              </Tooltip>
+            </FlexBox>
+          </>
         </FlexBox>
         {expandedPages.includes(page._id) && (
           <>
@@ -136,7 +138,7 @@ const PageNav = ({
             ) : (
               <div
                 className={clsx(stylesP.navOptionLightBold)}
-                style={{paddingLeft: `${12 * (level + 1) + 20}px`}}
+                style={{paddingLeft: `${12 * (level + 1) + 20}px`, opacity: '.7'}}
               >
                 No pages inside
               </div>
@@ -150,7 +152,7 @@ const PageNav = ({
   return (
     <>
       {workspacePagesData?.pages.map(page => renderPage(page))}
-      <FlexBox onClick={() => addPage(workspaceData._id)} className={clsx(stylesP.navOptionLightBold, styles.pageNavItem)}>
+      <FlexBox onClick={addPageToWorkspace} className={clsx(stylesP.navOptionLightBold, styles.pageNavItem)}>
         <AddIcon style={{marginRight: '4px'}} /> Add a page
       </FlexBox>
     </>

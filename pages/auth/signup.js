@@ -13,6 +13,7 @@ import {
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import clsx from "clsx";
 import Link from "next/link";
 import { PasswordMeter } from "password-meter";
 import { useState } from "react";
@@ -281,7 +282,7 @@ const Signup = ({}) => {
               fullWidth
               variant="contained"
               color="primary"
-              className={[styles.submit, signupLoading ? "button-primary-bg-black" : "button-primary-bg-black-hover"]}
+              className={clsx(styles.submit, signupLoading ? "button-primary-bg-black" : "button-primary-bg-black-hover")}
               onClick={onSubmit}
             >
               {signupLoading ? (

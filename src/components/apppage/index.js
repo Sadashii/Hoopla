@@ -80,7 +80,11 @@ const AppPage = () => {
         current_version: __v,
       })
       .then(res => {
-        setWorkspacePagesData(res.data)
+        let pagesData = res.data
+        let pages = pagesData.pages
+        pages.sort((a, b) => a.properties.position - b.properties.position)
+        
+        setWorkspacePagesData(pagesData)
       })
       .catch(err => {
         if (err.response.status === 304) { // The current workspacePagesData for this ws has no changes

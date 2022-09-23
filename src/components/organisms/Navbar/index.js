@@ -103,13 +103,9 @@ const Navbar = ({logoOnly}) => {
           
           {!logoOnly && (
             <div>
-              {!user ? (
+              {!user && (
                 <AuthButtons login={!isMobile}/>
-              ) : (
-                <Button className={"button-primary-bg-black-hover"} href={"/app/"} style={{maxHeight: '40px'}}>
-                  Go to app
-                </Button>
-                )}
+              )}
             </div>
           )}
         </FlexBox>

@@ -3,6 +3,7 @@ import { Button, Divider, FormControl, IconButton, InputAdornment, TextField } f
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -187,7 +188,7 @@ const Login = ({}) => {
               fullWidth
               variant="contained"
               color="primary"
-              className={[styles.submit, "button-primary-bg-black-hover"]}
+              className={clsx(styles.submit, "button-primary-bg-black-hover")}
               onClick={onSubmit}
             >
               Log in

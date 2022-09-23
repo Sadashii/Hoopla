@@ -43,15 +43,11 @@ export default async function pages (req, res) {
       return res.status(200).json(page_data)
     case "CREATE":
       const page = new Page({
-        name: "Untitled",
-        slug: slugify("Untitled"),
+        name: "",
+        slug: slugify(""),
         icon: null,
         topmost: !Boolean(req.body.parent),
-        parent: req.body.parent,
-        workspace: req.body.workspace,
-        properties: {
-          fullWidth: false
-        }
+        ...req.body
       })
   
       await page.save()

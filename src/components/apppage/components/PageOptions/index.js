@@ -21,14 +21,15 @@ const PageOptions = ({
   useEffect(() => {
     if (currentPage) {
       let crumbs = [currentPage]
-      const getParent = (id) => recursion.findPageParent(id, workspacePages)
+      let formattedWorkspacePages = {children: workspacePages}
+      const getParent = (id) => recursion.findPageParent(id, formattedWorkspacePages)
       let parent = getParent(currentPage._id)
-      if (!parent.__v) {
+      if (parent?._id) {
         crumbs.unshift(parent)
       }
-      while (!parent.__v) {
+      while (parent?._id) {
         parent = getParent(crumbs[0]._id)
-        if (parent.__v) {
+        if (!parent?._id) {
           break
         }
         crumbs.unshift(parent)
@@ -81,19 +82,11 @@ const PageOptions = ({
         {/* <p>edited</p> */}
         {/* <p>share</p> */}
         <div>
-          {showPageOptionsMenu ? (
-            <IconButton>
-              <MoreHorizIcon onClick={() => {
-                setShowPageOptionsMenu(true)
-              }} />
-            </IconButton>
-          ) : (
-            <Tooltip title={"Page settings"} icon>
-              <MoreHorizIcon onClick={() => {
-                setShowPageOptionsMenu(true)
-              }} />
-            </Tooltip>
-          )}
+          <Tooltip title={showPageOptionsMenu ? null : "Page settings"} icon>
+            <MoreHorizIcon onClick={() => {
+              setShowPageOptionsMenu(true)
+            }} />
+          </Tooltip>
           {showPageOptionsMenu && (
             <PageOptionsMenu
               onCancel={() => setShowPageOptionsMenu(false)}

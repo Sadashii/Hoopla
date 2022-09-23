@@ -44,6 +44,7 @@ export default async function login (req, res) {
     
     if (!user.meta.firstLogin) {
       user.meta.firstLogin = new Date()
+      await user.save()
       const default_workspace = new Workspace({
         _id: user._id,
         name: `My Hoopla`,

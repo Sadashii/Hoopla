@@ -9,21 +9,23 @@ const findPageInPages = (id, pages) => {
   
   let pagetoreturn = null
   for (const page of pages.pages) {
-    pagetoreturn = findPageInPages(id, page.children)
-    if (pagetoreturn) {
-      return pagetoreturn
+    if (page.children) {
+      pagetoreturn = findPageInPages(id, page.children)
+      if (pagetoreturn) {
+        return pagetoreturn
+      }
     }
   }
 }
 
 const findPageParent = (id, pages) => {
-  for (const page of pages.pages || pages.children.pages || []) {
+  for (const page of pages.children?.pages || []) {
     if (page._id === id) {
       return pages
     }
   }
   
-  for (const page of pages.pages || pages.children.pages) {
+  for (const page of pages.children?.pages || []) {
     let pagetoreturn = findPageParent(id, page)
     if (pagetoreturn) {
       return pagetoreturn

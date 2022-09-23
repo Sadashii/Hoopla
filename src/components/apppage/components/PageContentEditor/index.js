@@ -7,7 +7,7 @@ const PageContentEditor = ({
   user,
   pageData
 }) => {
-  const [pageContent, setPageContent] = useState(null)
+  const [pageContent, setPageContent] = useState([])
   const [pageContentVersion, setPageContentVersion] = useState("")
   const [focusOnBlockID, setFocusOnBlockID] = useState(undefined)
 
@@ -20,7 +20,7 @@ const PageContentEditor = ({
         })
         .then(res => {
           if (res.data.blocks.length > 0) {
-            setPageContent(res.data.blocks.sort((a, b) => a.position - b.position))
+            setPageContent(res.data.blocks.sort((a, b) => a.properties.position - b.properties.position))
             setPageContentVersion(res.data.__v)
           } else {
             addBlock({
@@ -91,8 +91,11 @@ const PageContentEditor = ({
     axios
       .post(`/api/workspace/blocks`, {
         operation: "CREATE",
-        position: thisPos,
-        ...blockData
+        ...blockData,
+        properties: {
+          ...blockData.properties,
+          position: thisPos
+        }
       })
       .then(res => {
         pageContent.splice(cbIndex + 1, 0, res.data);

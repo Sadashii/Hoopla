@@ -2,6 +2,7 @@ import { Button, Divider } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -75,7 +76,7 @@ const Verify = ({}) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  className={[styles.submit, "button-primary-bg-black-hover"]}
+                  className={clsx(styles.submit, "button-primary-bg-black-hover")}
                   href={`/auth/login`}
                 >
                   Log In Now

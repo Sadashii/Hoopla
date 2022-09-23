@@ -2,6 +2,7 @@ import { Button, Divider, FormControl, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import clsx from "clsx";
 import Link from "next/link";
 import { useState } from "react";
 import { FlexBox, Layout } from "../../src/components/atoms";
@@ -118,7 +119,7 @@ const ResetPassword = ({}) => {
               fullWidth
               variant="contained"
               color="primary"
-              className={[styles.submit, "button-primary-bg-black-hover"]}
+              className={clsx(styles.submit, "button-primary-bg-black-hover")}
               onClick={onSubmit}
             >
               Reset Password
