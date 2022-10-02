@@ -5,36 +5,36 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: themeColours.primaryColor,
+      main: themeColours.primaryColor
     },
     secondary: {
-      main: themeColours.secondaryColor,
-    },
+      main: themeColours.secondaryColor
+    }
   },
   typography: {
     fontFamily: "'Open Sans', sans-serif",
     h1: {
       fontFamily: "'Raleway', sans-serif",
       fontWeight: 700,
-      fontSize: "3.5rem",
+      fontSize: "3.5rem"
     },
     h2: {
       fontFamily: "'Raleway', sans-serif",
-      fontSize: "2.5rem",
+      fontSize: "2.5rem"
     },
     h3: {
       fontFamily: "'Raleway', sans-serif",
-      fontSize: "2.2rem",
+      fontSize: "2.2rem"
     },
     h4: {
       fontFamily: "'Raleway', sans-serif",
-      fontSize: "1.5rem",
+      fontSize: "1.5rem"
     },
     button: {
       textTransform: "none",
-      textDecoration: "none",
-    },
-  },
+      textDecoration: "none"
+    }
+  }
 });
 
 export default theme;

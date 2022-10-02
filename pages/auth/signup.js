@@ -8,7 +8,7 @@ import {
   FormControlLabel,
   IconButton,
   InputAdornment,
-  TextField,
+  TextField
 } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -32,7 +32,7 @@ const Signup = ({}) => {
     email: "",
     password: "",
     showPassword: false,
-    marketingConsent: true,
+    marketingConsent: true
   });
   const [passwordStrength, setPasswordStrength] = useState({});
   const strengthColors = {
@@ -41,11 +41,11 @@ const Signup = ({}) => {
     "medium": "#feb401",
     "strong": "#929600",
     "veryStrong": "#69d300",
-    "perfect": "#00ff00",
+    "perfect": "#00ff00"
   };
   
   const verifyFields = (field = null, value = null) => {
-    const error = {...errorDetails};
+    const error = { ...errorDetails };
     
     const verifyUsername = (value) => {
       if (value.length === 0) {
@@ -81,7 +81,8 @@ const Signup = ({}) => {
         error.password = "Password must be less than 32 characters";
         return false;
       }
-      if (value.search(/[a-z]/) === -1 || value.search(/[A-Z]/) === -1 || value.search(/[0-9]/) === -1) {
+      if (value.search(/[a-z]/) === -1 || value.search(/[A-Z]/) === -1 ||
+        value.search(/[0-9]/) === -1) {
         error.password = "Password must contain at least one lowercase letter, one uppercase letter, and one number";
         return false;
       }
@@ -114,18 +115,15 @@ const Signup = ({}) => {
   const onSubmit = async () => {
     if (verifyFields()) {
       setSignupLoading(true);
-      await axios
-        .post(`/api/auth/signup`, details)
-        .then((res) => {
-          setResponse(<>We have sent you an email with the verification link.</>);
-          setIsResponseSuccess(true);
-          setSignupLoading(false);
-        })
-        .catch((err) => {
-          setResponse(<>{err.response.data.error}</>);
-          setIsResponseSuccess(false);
-          setSignupLoading(false);
-        });
+      await axios.post(`/api/auth/signup`, details).then((res) => {
+        setResponse(<>We have sent you an email with the verification link.</>);
+        setIsResponseSuccess(true);
+        setSignupLoading(false);
+      }).catch((err) => {
+        setResponse(<>{err.response.data.error}</>);
+        setIsResponseSuccess(false);
+        setSignupLoading(false);
+      });
     }
   };
   
@@ -138,25 +136,30 @@ const Signup = ({}) => {
     verifyFields(field, e.target.value);
     setDetails({
       ...details,
-      [field]: e.target.value,
+      [field]: e.target.value
     });
   };
   
   return (
     <Layout logoOnly={true}>
-      <RedirectToAppIfLoggedIn />
+      <RedirectToAppIfLoggedIn/>
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>
-          <Typography variant="h3" variantMapping={"h1"} className={styles.signupTitle}>
+          <Typography variant="h3" variantMapping={"h1"}
+                      className={styles.signupTitle}>
             Create your account
           </Typography>
-          <Typography variant="h5" variantMapping={"h2"} className={styles.signupSubtitle}>
+          <Typography variant="h5" variantMapping={"h2"}
+                      className={styles.signupSubtitle}>
             Create, share, and collaborate on your to-do lists
           </Typography>
           
           <FlexBox fullWidth column align>
-            <Button variant="contained" color="primary" className={"button-primary-bg-white"} style={{width: "100%"}}>
-              <FlexBox fullWidth align justifyBetween className={styles.externalSignup}>
+            <Button variant="contained" color="primary"
+                    className={"button-primary-bg-white"}
+                    style={{ width: "100%" }}>
+              <FlexBox fullWidth align justifyBetween
+                       className={styles.externalSignup}>
                 <FlexBox align><GoogleIcon/></FlexBox>
                 <span>Sign up with Google</span>
                 <span>&nbsp;</span>
@@ -164,8 +167,9 @@ const Signup = ({}) => {
             </Button>
           </FlexBox>
           
-          <div style={{width: "100%"}}>
-            <Divider variant={"fullWidth"} textAlign="center" style={{margin: "8px 3px"}}>or</Divider>
+          <div style={{ width: "100%" }}>
+            <Divider variant={"fullWidth"} textAlign="center"
+                     style={{ margin: "8px 3px" }}>or</Divider>
           </div>
           
           
@@ -210,46 +214,57 @@ const Signup = ({}) => {
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={() => setDetails({...details, showPassword: !details.showPassword})}
+                        onClick={() => setDetails(
+                          { ...details, showPassword: !details.showPassword })}
                         onMouseDown={(e) => e.preventDefault()}
                       >
-                        {details.showPassword ? <Visibility/> : <VisibilityOff/>}
+                        {details.showPassword ? <Visibility/> :
+                          <VisibilityOff/>}
                       </IconButton>
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
             </FlexBox>
-            {details.password.length > 0 && passwordStrength.percent !== undefined && (
-              <div>
-                <ProgressBar
-                  value={passwordStrength.percent}
-                  height={5}
-                  primaryColor={strengthColors[passwordStrength.status]}
-                  secondaryColor={strengthColors[passwordStrength.status]}
-                  backgroundColor={"transparent"}
-                  variant={"determinate"}
-                />
-                <Typography variant="body2" sx={{textAlign: "right", textTransform: "capitalize"}}>
-                  {passwordStrength.status}
-                </Typography>
-              </div>
-            )}
+            {details.password.length > 0 && passwordStrength.percent !==
+              undefined && (
+                <div>
+                  <ProgressBar
+                    value={passwordStrength.percent}
+                    height={5}
+                    primaryColor={strengthColors[passwordStrength.status]}
+                    secondaryColor={strengthColors[passwordStrength.status]}
+                    backgroundColor={"transparent"}
+                    variant={"determinate"}
+                  />
+                  <Typography variant="body2" sx={{
+                    textAlign: "right",
+                    textTransform: "capitalize"
+                  }}>
+                    {passwordStrength.status}
+                  </Typography>
+                </div>
+              )}
             
             <FormControlLabel
               control={
                 <Checkbox
                   checked={details.marketingConsent}
-                  onClick={() => setDetails({...details, marketingConsent: !details.marketingConsent})}
+                  onClick={() => setDetails({
+                    ...details,
+                    marketingConsent: !details.marketingConsent
+                  })}
                 />
               }
               label="I agree to receive cool marketing emails and occasional updates, we promise to not spam you :)"
-              sx={{marginTop: "1.5rem"}}
+              sx={{ marginTop: "1.5rem" }}
             />
             
             {response && (
-              <div className={isResponseSuccess ? "alert-container-success" : "alert-container-error"}
-                   style={{marginTop: "1rem"}}>
+              <div className={isResponseSuccess
+                ? "alert-container-success"
+                : "alert-container-error"}
+                   style={{ marginTop: "1rem" }}>
                 {response}
               </div>
             )}
@@ -259,7 +274,9 @@ const Signup = ({}) => {
               fullWidth
               variant="contained"
               color="primary"
-              className={clsx(styles.submit, signupLoading ? "button-primary-bg-black" : "button-primary-bg-black-hover")}
+              className={clsx(styles.submit, signupLoading
+                ? "button-primary-bg-black"
+                : "button-primary-bg-black-hover")}
               onClick={onSubmit}
             >
               {signupLoading ? (
@@ -267,13 +284,24 @@ const Signup = ({}) => {
               ) : "Sign up"}
             </Button>
             
-            <Typography variant="subtitle2" sx={{marginTop: "8px", textAlign: "center", opacity: ".8"}}>
-              By signing up, you agree to our <Link href={"/terms#tos"} noLinkStyle>Terms of Service</Link> and <Link
+            <Typography variant="subtitle2" sx={{
+              marginTop: "8px",
+              textAlign: "center",
+              opacity: ".8"
+            }}>
+              By signing up, you agree to our <Link href={"/terms#tos"}
+                                                    noLinkStyle>Terms of
+              Service</Link> and <Link
               href={"/terms#privacy"}>Privacy Policy</Link>
             </Typography>
             
-            <Typography variant="subtitle2" sx={{marginTop: "16px", textAlign: "center", opacity: ".8"}}>
-              Have an account? <Link href={"/auth/login/"} noLinkStyle>Go to login</Link>
+            <Typography variant="subtitle2" sx={{
+              marginTop: "16px",
+              textAlign: "center",
+              opacity: ".8"
+            }}>
+              Have an account? <Link href={"/auth/login/"} noLinkStyle>Go to
+              login</Link>
             </Typography>
           
           </FormControl>

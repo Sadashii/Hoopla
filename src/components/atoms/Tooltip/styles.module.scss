@@ -4,9 +4,11 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
 .hoverLight:hover {
   background-color: $gray-3;
 }
+
 .hoverDark:hover {
   background-color: $gray-6;
 }

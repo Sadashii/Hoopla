@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const useStickyState = (defaultValue, key) => {
-  const [fetched, setFetched] = useState(false)
+  const [fetched, setFetched] = useState(false);
   const [value, setValue] = useState(null);
   
   useEffect(() => {
@@ -11,14 +11,14 @@ export const useStickyState = (defaultValue, key) => {
     } else {
       setValue(defaultValue);
     }
-    setFetched(true)
-  }, [])
+    setFetched(true);
+  }, []);
   
   useEffect(() => {
     if (fetched) {
-      window.localStorage.setItem(key, JSON.stringify(value))
+      window.localStorage.setItem(key, JSON.stringify(value));
     }
-  }, [fetched, key, value])
+  }, [fetched, key, value]);
   
   return [value, setValue, fetched];
 };

@@ -1,14 +1,15 @@
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import { Button, IconButton } from "@mui/material";
+import KeyboardDoubleArrowRightIcon
+  from "@mui/icons-material/KeyboardDoubleArrowRight";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Button } from "@mui/material";
 import axios from "axios";
+import emojis from "node-emoji/lib/emoji.json";
 import { useEffect, useState } from "react";
 import { FlexBox, Tooltip } from "../../../atoms";
 import recursion from "../../recursion";
 import { getPageIconType, pageIconTypes } from "../../utils";
 import PageOptionsMenu from "./PageOptionsMenu";
-import styles from "./styles.module.scss"
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import emojis from "node-emoji/lib/emoji.json"
+import styles from "./styles.module.scss";
 
 const PageOptions = ({
   workspacePages,
@@ -17,60 +18,61 @@ const PageOptions = ({
   openPage,
   navbarOpen,
   toggleNavbar
-                     }) => {
-  const [showPageOptionsMenu, setShowPageOptionsMenu] = useState(false)
-  const [breadcrumbs, setBreadcrumbs] = useState([])
+}) => {
+  const [showPageOptionsMenu, setShowPageOptionsMenu] = useState(false);
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
   
   useEffect(() => {
     if (currentPage) {
-      let crumbs = [currentPage]
-      let formattedWorkspacePages = {children: workspacePages}
-      const getParent = (id) => recursion.findPageParent(id, formattedWorkspacePages)
-      let parent = getParent(currentPage._id)
+      let crumbs = [currentPage];
+      let formattedWorkspacePages = { children: workspacePages };
+      const getParent = (id) => recursion.findPageParent(id,
+        formattedWorkspacePages);
+      let parent = getParent(currentPage._id);
       if (parent?._id) {
-        crumbs.unshift(parent)
+        crumbs.unshift(parent);
       }
       while (parent?._id) {
-        parent = getParent(crumbs[0]._id)
+        parent = getParent(crumbs[0]._id);
         if (!parent?._id) {
-          break
+          break;
         }
-        crumbs.unshift(parent)
+        crumbs.unshift(parent);
       }
-      setBreadcrumbs(crumbs)
+      setBreadcrumbs(crumbs);
     }
-  }, [currentPage])
+  }, [currentPage]);
   
   const updatePageProperty = (property, value) => {
-    let clone = {...currentPage}
-    clone.properties[property] = value
-    clone.updatedAt = new Date()
-    let properties = clone.properties
+    let clone = { ...currentPage };
+    clone.properties[property] = value;
+    clone.updatedAt = new Date();
+    let properties = clone.properties;
     
-    setCurrentPage(clone)
+    setCurrentPage(clone);
     
-    axios
-      .post(`/api/workspace/pages`, {
-        operation: "UPDATE",
-        _id: currentPage._id,
-        properties: {
-          ...properties
-        }
-      })
-  }
+    axios.post(`/api/workspace/pages`, {
+      operation: "UPDATE",
+      _id: currentPage._id,
+      properties: {
+        ...properties
+      }
+    });
+  };
   
   return (
     <FlexBox align fullWidth justifyBetween className={styles.pageOptions}>
       <FlexBox>
         {!navbarOpen && (
           <Tooltip title={"Open sidebar"} shortcut={"Ctrl + /"} icon hoverLight>
-            <KeyboardDoubleArrowRightIcon onClick={toggleNavbar} />
+            <KeyboardDoubleArrowRightIcon onClick={toggleNavbar}/>
           </Tooltip>
         )}
         {breadcrumbs.map(bread => {
           return (
             <>
-              <Button variant={"text"} className={styles.breadcrumbButton} onClick={() => openPage(bread._id)}>
+              <Button variant={"text"} className={styles.breadcrumbButton}
+                      onClick={() => openPage(bread._id)}>
                 <span className={styles.pageIcon}>
                   {getPageIconType(bread.icon) === pageIconTypes.EMOJI && (
                     <p className={styles.pageIconEmoji}>
@@ -80,22 +82,23 @@ const PageOptions = ({
                 </span>
                 {bread.name}
                 {bread.name === "" && (
-                  <span style={{opacity: .7}}>Untitled</span>
+                  <span style={{ opacity: .7 }}>Untitled</span>
                 )}
               </Button>
-              <p style={{opacity: .7}}>/</p>
+              <p style={{ opacity: .7 }}>/</p>
             </>
-          )
+          );
         })}
       </FlexBox>
       <FlexBox align>
         {/* <p>edited</p> */}
         {/* <p>share</p> */}
         <div>
-          <Tooltip title={showPageOptionsMenu ? null : "Page settings"} icon hoverLight>
+          <Tooltip title={showPageOptionsMenu ? null : "Page settings"} icon
+                   hoverLight>
             <MoreHorizIcon onClick={() => {
-              setShowPageOptionsMenu(true)
-            }} />
+              setShowPageOptionsMenu(true);
+            }}/>
           </Tooltip>
           {showPageOptionsMenu && (
             <PageOptionsMenu
@@ -107,7 +110,7 @@ const PageOptions = ({
         </div>
       </FlexBox>
     </FlexBox>
-  )
-}
+  );
+};
 
 export default PageOptions;

@@ -12,10 +12,10 @@ export default async function resendVerify (req, res) {
   
   if (req.method === "POST") {
     // Check if user exists
-    let user = await User.findOne({"email.address": req.body.email});
+    let user = await User.findOne({ "email.address": req.body.email });
     if (!user) {
       return res.status(400).json({
-        error: "NO_ACCOUNT",
+        error: "NO_ACCOUNT"
       });
     }
     
@@ -28,12 +28,12 @@ export default async function resendVerify (req, res) {
       {
         name: `${req.body.username}`,
         url: `${process.env.WEBSITE_URL}/auth/verify?code=${verificationToken}`,
-        domain: process.env.WEBSITE_DOMAIN,
+        domain: process.env.WEBSITE_DOMAIN
       },
       {
         to: req.body.email,
-        subject: "Hoopla - verify your email",
-      },
+        subject: "Hoopla - verify your email"
+      }
     );
     
     res.status(200).send();

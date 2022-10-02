@@ -3,14 +3,14 @@ import { model, models, Schema } from "mongoose";
 const block = new Schema({
   _id: {
     type: Schema.Types.ObjectId,
-    auto: true,
+    auto: true
   },
   type: Schema.Types.String,
   properties: Schema.Types.Mixed,
-  page: {type: Schema.Types.ObjectId, ref: 'page'},
-  updatedBy: {type: Schema.Types.ObjectId, ref: 'user'},
+  page: { type: Schema.Types.ObjectId, ref: "page" },
+  updatedBy: { type: Schema.Types.ObjectId, ref: "user" },
   createdAt: Schema.Types.Date,
-  updatedAt: Schema.Types.Date,
+  updatedAt: Schema.Types.Date
 }, {
   timestamps: true
 });

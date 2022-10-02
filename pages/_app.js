@@ -18,7 +18,7 @@ import "../styles/styles.scss";
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp (props) {
-  const {Component, emotionCache = clientSideEmotionCache, pageProps} = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   
   axios.defaults.baseURL = process.env.API_URL;
   
@@ -34,10 +34,9 @@ export default function MyApp (props) {
     timeout: 5000,
     transition: transitions.SCALE,
     containerStyle: {
-      zIndex: 9999,
-    },
+      zIndex: 9999
+    }
   };
-  
   
   return (
     <CacheProvider value={emotionCache}>
@@ -58,5 +57,5 @@ export default function MyApp (props) {
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   emotionCache: PropTypes.object,
-  pageProps: PropTypes.object.isRequired,
+  pageProps: PropTypes.object.isRequired
 };

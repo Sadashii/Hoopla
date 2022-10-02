@@ -2,10 +2,12 @@ import React from "react";
 
 const BG_COLOR = "#d5dce0";
 
-const BaseIcon = ({color, pushRight = true, children}) => (
-  <svg xmlns={"http://www.w3.org/2000/svg"} width={"24"} height={"24"} viewBox={"0 0 24 24"} fill={"none"}
-       stroke={color} strokeWidth={2} strokeLinecap={"round"} strokeLinejoin={"round"}
-       style={{marginRight: pushRight ? "20px" : "0", minWidth: 24}}>
+const BaseIcon = ({ color, pushRight = true, children }) => (
+  <svg xmlns={"http://www.w3.org/2000/svg"} width={"24"} height={"24"}
+       viewBox={"0 0 24 24"} fill={"none"}
+       stroke={color} strokeWidth={2} strokeLinecap={"round"}
+       strokeLinejoin={"round"}
+       style={{ marginRight: pushRight ? "20px" : "0", minWidth: 24 }}>
     {children}
   </svg>
 );
@@ -32,7 +34,6 @@ const ErrorIcon = () => (
     <line x1={12} y1={16} x2={12} y2={16}/>
   </BaseIcon>
 );
-
 
 const CloseIcon = () => (
   <BaseIcon color={"black"} pushRight={false}>
@@ -64,17 +65,17 @@ const alertStyle = {
   boxShadow: "0px 2px 2px 2px rgba(0, 0, 0, 0.03)",
   fontFamily: "Arial",
   width: "300px",
-  boxSizing: "border-box",
+  boxSizing: "border-box"
 };
 
 const buttonStyle = {
   marginLeft: "20px",
   border: "none",
   backgroundColor: "transparent",
-  cursor: "pointer",
+  cursor: "pointer"
 };
 
-const AlertTemplate = ({message, options, style, close}) => {
+const AlertTemplate = ({ message, options, style, close }) => {
   return (
     <div style={_extends({}, alertStyle, style)}>
       <>
@@ -82,7 +83,7 @@ const AlertTemplate = ({message, options, style, close}) => {
         {options.type === "success" && <SuccessIcon/>}
         {options.type === "error" && <ErrorIcon/>}
       </>
-      <span style={{flex: 2}}>{message}</span>
+      <span style={{ flex: 2 }}>{message}</span>
       <button style={buttonStyle} onClick={close}><CloseIcon/></button>
     </div>
   );

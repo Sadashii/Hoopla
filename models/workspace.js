@@ -3,7 +3,7 @@ import { model, models, Schema } from "mongoose";
 const workspace = new Schema({
   _id: {
     type: Schema.Types.ObjectId,
-    auto: true,
+    auto: true
   },
   name: Schema.Types.String,
   slug: Schema.Types.String,
@@ -17,7 +17,7 @@ const workspace = new Schema({
         ref: "user"
       }
     }
-  ],
+  ]
 }, {
   timestamps: true
 });

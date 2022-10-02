@@ -1,12 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 const isRoute = (prefix, pathname) => {
   return pathname.startsWith(prefix);
-}
+};
 
-export async function middleware(req) {
+export async function middleware (req) {
   const { pathname } = req.nextUrl;
-
+  
   return NextResponse.next();
 }
 

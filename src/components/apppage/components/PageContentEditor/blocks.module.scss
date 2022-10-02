@@ -2,14 +2,17 @@
 
 .blockWrapper {
   transform: translateX(-42px);
+
   .blockOptions {
     height: 28px;
     opacity: 0;
     cursor: pointer;
   }
+
   .blockOptionsHoverOn {
     opacity: 1;
   }
+
   &:hover {
     .blockOptions {
       opacity: 1;
@@ -18,11 +21,13 @@
 
   &:focus {
     outline: none;
+
     .editorContainer {
       border-radius: 4px;
       background-color: $teal-2 !important;
     }
   }
+
   * {
     transition: all $transition-duration;
   }
@@ -33,6 +38,7 @@
   padding: 0 5px;
 
 }
+
 .formatColorBackgroundColor {
   font-weight: bold;
   padding: 0 5px;
@@ -61,6 +67,7 @@
     }
   }
 }
+
 .blockH1 {
   @extend .baseBlock;
   $size: 2.25em;
@@ -75,6 +82,7 @@
     }
   }
 }
+
 .blockH2 {
   @extend .baseBlock;
   $size: 1.75em;
@@ -89,6 +97,7 @@
     }
   }
 }
+
 .blockH3 {
   @extend .baseBlock;
   $size: 1.25em;
@@ -103,6 +112,7 @@
     }
   }
 }
+
 .todo {
   @extend .baseBlock;
 
@@ -110,6 +120,7 @@
     margin-right: 4px;
     cursor: pointer;
   }
+
   .editor {
     &:empty:after {
       content: "To-do";
@@ -117,6 +128,7 @@
     }
   }
 }
+
 .bulletedList {
   @extend .baseBlock;
 
@@ -136,6 +148,7 @@
     }
   }
 }
+
 .blockQuote {
   @extend .baseBlock;
   margin-top: .5em !important;

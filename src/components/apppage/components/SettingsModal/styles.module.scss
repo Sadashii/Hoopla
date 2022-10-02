@@ -21,6 +21,7 @@
     color: $gray-8;
     padding: $spacing-0-5 $spacing-0-5 0;
   }
+
   .settingsNavigator {
     width: $sidebarWidth;
     height: 100%;
@@ -39,6 +40,7 @@
         margin-right: .25rem;
       }
     }
+
     .settingNavSelected {
       background-color: $gray-4;
     }
@@ -51,6 +53,7 @@
     .settingTitle {
       font-size: 1.25rem;
     }
+
     .settingCategory {
       border-bottom: 1px solid $gray-7;
       padding: 1rem 0;
@@ -93,7 +96,7 @@
       height: 30px;
     }
 
-    .buttonUpdate{
+    .buttonUpdate {
       @extend .buttonBase;
       background-color: #32c1ff;
       font-weight: bold;

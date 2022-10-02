@@ -1,13 +1,12 @@
 const pageIconTypes = {
-  'EMOJI': 'EMOJI'
-}
+  "EMOJI": "EMOJI"
+};
 
 const getPageIconType = (icon) => {
-  return pageIconTypes.EMOJI
-}
-
+  return pageIconTypes.EMOJI;
+};
 
 module.exports = {
   getPageIconType,
   pageIconTypes
-}
+};

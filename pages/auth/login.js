@@ -1,5 +1,12 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Button, Divider, FormControl, IconButton, InputAdornment, TextField } from "@mui/material";
+import {
+  Button,
+  Divider,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  TextField
+} from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
@@ -19,12 +26,12 @@ const Login = ({}) => {
   const [details, setDetails] = useState({
     email: "",
     password: "",
-    showPassword: false,
+    showPassword: false
   });
   const router = useRouter();
   
   const verifyFields = (field = null, value = null) => {
-    const error = {...errorDetails};
+    const error = { ...errorDetails };
     
     const verifyEmail = (value) => {
       if (value.length === 0) {
@@ -71,27 +78,26 @@ const Login = ({}) => {
   
   const onSubmit = async () => {
     if (verifyFields()) {
-      await axios.post("/api/auth/login", details)
-        .then(res => {
-          UserHelper.postLogin(res.data.token, router);
-        })
-        .catch((err) => {
-          switch (err.response.data.error) {
-            case "NO_ACCOUNT":
-              setError("There is no account with this email.");
-              break;
-            case "INVALID_PASSWORD":
-              setError("The password is incorrect.");
-              break;
-            case "NOT_VERIFIED":
-              setError(<>
-                Your account is not verified, <Link href={"/auth/resend-verify"}>resend verification email</Link>.
-              </>);
-              break;
-            default:
-              setError("An unknown error has occurred, please try again later.");
-          }
-        });
+      await axios.post("/api/auth/login", details).then(res => {
+        UserHelper.postLogin(res.data.token, router);
+      }).catch((err) => {
+        switch (err.response.data.error) {
+          case "NO_ACCOUNT":
+            setError("There is no account with this email.");
+            break;
+          case "INVALID_PASSWORD":
+            setError("The password is incorrect.");
+            break;
+          case "NOT_VERIFIED":
+            setError(<>
+              Your account is not verified, <Link href={"/auth/resend-verify"}>resend
+              verification email</Link>.
+            </>);
+            break;
+          default:
+            setError("An unknown error has occurred, please try again later.");
+        }
+      });
     }
   };
   
@@ -99,25 +105,30 @@ const Login = ({}) => {
     verifyFields(field, e.target.value);
     setDetails({
       ...details,
-      [field]: e.target.value,
+      [field]: e.target.value
     });
   };
   
   return (
     <Layout logoOnly={true}>
-      <RedirectToAppIfLoggedIn />
+      <RedirectToAppIfLoggedIn/>
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>
-          <Typography variant="h3" variantMapping={"h1"} className={styles.signupTitle}>
+          <Typography variant="h3" variantMapping={"h1"}
+                      className={styles.signupTitle}>
             Log in
           </Typography>
-          <Typography variant="h5" variantMapping={"h2"} className={styles.signupSubtitle}>
+          <Typography variant="h5" variantMapping={"h2"}
+                      className={styles.signupSubtitle}>
             Login and start your journey with us
           </Typography>
           
           <FlexBox fullWidth column align>
-            <Button variant="contained" color="primary" className={"button-primary-bg-white"} style={{width: "100%"}}>
-              <FlexBox fullWidth align justifyBetween className={styles.externalSignup}>
+            <Button variant="contained" color="primary"
+                    className={"button-primary-bg-white"}
+                    style={{ width: "100%" }}>
+              <FlexBox fullWidth align justifyBetween
+                       className={styles.externalSignup}>
                 <FlexBox align><GoogleIcon/></FlexBox>
                 <span>Log in with Google</span>
                 <span>&nbsp;</span>
@@ -125,8 +136,9 @@ const Login = ({}) => {
             </Button>
           </FlexBox>
           
-          <div style={{width: "100%"}}>
-            <Divider variant={"fullWidth"} textAlign="center" style={{margin: "8px 3px"}}>or</Divider>
+          <div style={{ width: "100%" }}>
+            <Divider variant={"fullWidth"} textAlign="center"
+                     style={{ margin: "8px 3px" }}>or</Divider>
           </div>
           
           <FormControl>
@@ -143,7 +155,8 @@ const Login = ({}) => {
               />
             </FlexBox>
             
-            <FlexBox fullWidth column justifyBetween className={styles.inputRow}>
+            <FlexBox fullWidth column justifyBetween
+                     className={styles.inputRow}>
               <TextField
                 label="Password"
                 variant="outlined"
@@ -158,16 +171,23 @@ const Login = ({}) => {
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={() => setDetails({...details, showPassword: !details.showPassword})}
+                        onClick={() => setDetails(
+                          { ...details, showPassword: !details.showPassword })}
                         onMouseDown={(e) => e.preventDefault()}
                       >
-                        {details.showPassword ? <Visibility/> : <VisibilityOff/>}
+                        {details.showPassword ? <Visibility/> :
+                          <VisibilityOff/>}
                       </IconButton>
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
-              <div style={{width: "100%", textAlign: "right", fontSize: ".8rem", marginTop: ".25rem"}}>
+              <div style={{
+                width: "100%",
+                textAlign: "right",
+                fontSize: ".8rem",
+                marginTop: ".25rem"
+              }}>
                 <Link href={"/auth/reset-password"}>Forgot password?</Link>
               </div>
             </FlexBox>
@@ -190,8 +210,13 @@ const Login = ({}) => {
               Log in
             </Button>
             
-            <Typography variant="subtitle2" sx={{marginTop: "16px", textAlign: "center", opacity: ".8"}}>
-              Don't have an account? <Link href={"/auth/signup/"} noLinkStyle>Sign up now</Link>
+            <Typography variant="subtitle2" sx={{
+              marginTop: "16px",
+              textAlign: "center",
+              opacity: ".8"
+            }}>
+              Don't have an account? <Link href={"/auth/signup/"} noLinkStyle>Sign
+              up now</Link>
             </Typography>
           </FormControl>
         </FlexBox>

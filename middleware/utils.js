@@ -16,17 +16,17 @@ class Utils {
   }
   
   isUserLoggedIn (req, res) {
-    let token = req.headers.authorization
+    let token = req.headers.authorization;
     if (!token) {
-      res.status(403).send()
-      return false
+      res.status(403).send();
+      return false;
     }
-    token = token.split("Bearer ")[1]
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-  
-    req.user = decoded.user
+    token = token.split("Bearer ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    return true
+    req.user = decoded.user;
+    
+    return true;
   }
 }
 

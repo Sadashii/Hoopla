@@ -10,22 +10,20 @@ import { AuthButtons } from "../../molecules";
 import navbarItems from "./NavbarItems";
 import styles from "./styles.module.scss";
 
-const Navbar = ({logoOnly}) => {
-  const [sidenavOpen, setSidenavOpen] = useState(false)
+const Navbar = ({ logoOnly }) => {
+  const [sidenavOpen, setSidenavOpen] = useState(false);
   const [logoSize, setLogoSize] = useState(50);
   const isMobile = useMobileView(768);
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
   
   useEffect(() => {
     if (UserHelper.getUserToken()) {
-      setUser(UserHelper.getUser())
-      UserHelper
-        .getLatestUser()
-        .then(user => {
-          setUser(user)
-        })
+      setUser(UserHelper.getUser());
+      UserHelper.getLatestUser().then(user => {
+        setUser(user);
+      });
     }
-  }, [])
+  }, []);
   
   return (
     <AppBar
@@ -37,13 +35,18 @@ const Navbar = ({logoOnly}) => {
         <FlexBox fullWidth align justifyBetween className={styles.navbarInner}>
           <FlexBox align>
             {isMobile && (
-              <FlexBox column align justify className={styles.hamburgerContainer} onClick={() => setSidenavOpen(!sidenavOpen)}>
-                <div className={styles.hamburger} />
+              <FlexBox column align justify
+                       className={styles.hamburgerContainer}
+                       onClick={() => setSidenavOpen(!sidenavOpen)}>
+                <div className={styles.hamburger}/>
               </FlexBox>
             )}
             <Link href="/">
-              <FlexBox align justify style={{cursor: "pointer", marginRight: '1rem'}} className={styles.navbarLogo}>
-                <Image src="/logo.png" height={logoSize} width={logoSize} alt={"Brand Logo"}/>
+              <FlexBox align justify
+                       style={{ cursor: "pointer", marginRight: "1rem" }}
+                       className={styles.navbarLogo}>
+                <Image src="/logo.png" height={logoSize} width={logoSize}
+                       alt={"Brand Logo"}/>
                 {!isMobile && (
                   <h2>Hoopla</h2>
                 )}
@@ -55,48 +58,55 @@ const Navbar = ({logoOnly}) => {
                   if (!item.mobileOnly) {
                     return (
                       <Link href={`/${item.to}`}>
-                        <Button className={styles.navButtonDesktop}>{item.title}</Button>
+                        <Button
+                          className={styles.navButtonDesktop}>{item.title}</Button>
                       </Link>
-                    )
+                    );
                   }
                 })}
               </>
             )}
           </FlexBox>
-  
+          
           {isMobile && (
-            <FlexBox column className={clsx(styles.mobileSidebar, sidenavOpen && styles.mobileSidebarOpen)}>
-              <FlexBox align justifyBetween style={{marginBottom: '1rem'}}>
+            <FlexBox column className={clsx(styles.mobileSidebar,
+              sidenavOpen && styles.mobileSidebarOpen)}>
+              <FlexBox align justifyBetween style={{ marginBottom: "1rem" }}>
                 <Link href="/">
-                  <FlexBox align style={{cursor: "pointer", marginRight: '1rem'}} className={styles.navbarLogo}>
-                    <Image src="/logo.png" height={logoSize} width={logoSize} alt={"Brand Logo"}/>
+                  <FlexBox align
+                           style={{ cursor: "pointer", marginRight: "1rem" }}
+                           className={styles.navbarLogo}>
+                    <Image src="/logo.png" height={logoSize} width={logoSize}
+                           alt={"Brand Logo"}/>
                     <h2>Hoopla</h2>
                   </FlexBox>
                 </Link>
-  
-                <FlexBox column align justify className={styles.hamburgerContainer} onClick={() => setSidenavOpen(!sidenavOpen)}>
-                  <div className={styles.hamburger} />
+                
+                <FlexBox column align justify
+                         className={styles.hamburgerContainer}
+                         onClick={() => setSidenavOpen(!sidenavOpen)}>
+                  <div className={styles.hamburger}/>
                 </FlexBox>
               </FlexBox>
               
-  
+              
               {navbarItems.map(item => {
                 if (!item.mobileOnly) {
                   return (
                     <Link href={`/${item.to}`}>
                       <FlexBox align className={styles.navButtonMobile}>
                         <FlexBox align justify className={styles.icon}>
-                          <item.icon />
+                          <item.icon/>
                         </FlexBox>
                         {item.title}
                       </FlexBox>
                     </Link>
-                  )
+                  );
                 }
               })}
               
-              <FlexBox align justifyBetween style={{padding: '1rem 1.5rem'}}>
-                <AuthButtons />
+              <FlexBox align justifyBetween style={{ padding: "1rem 1.5rem" }}>
+                <AuthButtons/>
               </FlexBox>
             </FlexBox>
           )}

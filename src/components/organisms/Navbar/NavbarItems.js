@@ -5,13 +5,13 @@ const NavbarItems = [
     title: "home",
     to: "/",
     icon: Home,
-    mobileOnly: true,
+    mobileOnly: true
   },
   {
     title: "Team",
     to: "/team/",
-    icon: People,
-  },
+    icon: People
+  }
 ];
 
 export default NavbarItems;

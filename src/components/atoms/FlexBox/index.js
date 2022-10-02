@@ -14,20 +14,20 @@ const FlexBox = forwardRef(({
   fullWidth,
   ...props
 }, ref) => {
-    const columnCN = column && styles.column;
-    
-    const justifyCN = justify && styles.justifyCenter;
-    const justifyBetweenCN = justifyBetween && styles.justifyBetween;
-    const justifyEndCN = justifyEnd && styles.justifyEnd;
-    
-    const alignCN = align && styles.alignCenter;
-    const alignEndCN = alignEnd && styles.alignEnd;
-    const fullWidthCN = fullWidth && styles.fullWidth;
-    const noShrinkCN = noShrink && styles.noShrink;
-    const fullCN = `${styles.flexbox} ${fullWidthCN} ${columnCN} ${justifyCN} ${alignCN} ${justifyBetweenCN} ${justifyEndCN} ${alignEndCN} ${noShrinkCN} ${className}`;
-    
-    return <div ref={ref} className={fullCN} {...props} />;
-})
+  const columnCN = column && styles.column;
+  
+  const justifyCN = justify && styles.justifyCenter;
+  const justifyBetweenCN = justifyBetween && styles.justifyBetween;
+  const justifyEndCN = justifyEnd && styles.justifyEnd;
+  
+  const alignCN = align && styles.alignCenter;
+  const alignEndCN = alignEnd && styles.alignEnd;
+  const fullWidthCN = fullWidth && styles.fullWidth;
+  const noShrinkCN = noShrink && styles.noShrink;
+  const fullCN = `${styles.flexbox} ${fullWidthCN} ${columnCN} ${justifyCN} ${alignCN} ${justifyBetweenCN} ${justifyEndCN} ${alignEndCN} ${noShrinkCN} ${className}`;
+  
+  return <div ref={ref} className={fullCN} {...props} />;
+});
 
 FlexBox.propTypes = {
   className: PropTypes.string,
@@ -38,7 +38,7 @@ FlexBox.propTypes = {
   justifyBetween: PropTypes.bool,
   fullWidth: PropTypes.bool,
   justifyEnd: PropTypes.bool,
-  alignEnd: PropTypes.bool,
+  alignEnd: PropTypes.bool
 };
 
 FlexBox.defaultProps = {
@@ -50,7 +50,7 @@ FlexBox.defaultProps = {
   justifyBetween: false,
   fullWidth: false,
   justifyEnd: false,
-  alignEnd: false,
+  alignEnd: false
 };
 
 export default FlexBox;

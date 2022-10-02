@@ -14,11 +14,11 @@ const ResetPassword = ({}) => {
   const [isResponseSuccess, setIsResponseSuccess] = useState(false);
   const [errorDetails, setErrorDetails] = useState({});
   const [details, setDetails] = useState({
-    email: "",
+    email: ""
   });
   
   const verifyFields = (field = null, value = null) => {
-    const error = {...errorDetails};
+    const error = { ...errorDetails };
     
     const verifyEmail = (value) => {
       if (value.length === 0) {
@@ -49,22 +49,21 @@ const ResetPassword = ({}) => {
   
   const onSubmit = async () => {
     if (verifyFields()) {
-      await axios.post("/api/auth/reset-password", details)
-        .then(res => {
-          setResponse(<>We have sent you an email with the password reset link.</>);
-          setIsResponseSuccess(true);
-        })
-        .catch((err) => {
-          setIsResponseSuccess(false);
-          switch (err.response.data.error) {
-            case "NO_ACCOUNT":
-              setResponse(<>We could not find an account with that email.</>);
-              break;
-            default:
-              setResponse(<>Something went wrong.</>);
-              break;
-          }
-        });
+      await axios.post("/api/auth/reset-password", details).then(res => {
+        setResponse(<>We have sent you an email with the password reset
+          link.</>);
+        setIsResponseSuccess(true);
+      }).catch((err) => {
+        setIsResponseSuccess(false);
+        switch (err.response.data.error) {
+          case "NO_ACCOUNT":
+            setResponse(<>We could not find an account with that email.</>);
+            break;
+          default:
+            setResponse(<>Something went wrong.</>);
+            break;
+        }
+      });
     }
   };
   
@@ -72,25 +71,28 @@ const ResetPassword = ({}) => {
     verifyFields(field, e.target.value);
     setDetails({
       ...details,
-      [field]: e.target.value,
+      [field]: e.target.value
     });
   };
   
   return (
     <Layout logoOnly={true}>
-      <RedirectToAppIfLoggedIn />
+      <RedirectToAppIfLoggedIn/>
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>
-          <Typography variant="h3" variantMapping={"h1"} className={styles.signupTitle}>
+          <Typography variant="h3" variantMapping={"h1"}
+                      className={styles.signupTitle}>
             Reset Password
           </Typography>
           
-          <div style={{width: "100%"}}>
-            <Divider variant={"fullWidth"} textAlign="center" style={{margin: "8px 3px"}}/>
+          <div style={{ width: "100%" }}>
+            <Divider variant={"fullWidth"} textAlign="center"
+                     style={{ margin: "8px 3px" }}/>
           </div>
           
           <FormControl>
-            <FlexBox fullWidth className={styles.inputRow} style={{marginTop: "1.5rem"}}>
+            <FlexBox fullWidth className={styles.inputRow}
+                     style={{ marginTop: "1.5rem" }}>
               <TextField
                 fullWidth
                 label="Email"
@@ -104,7 +106,9 @@ const ResetPassword = ({}) => {
             </FlexBox>
             
             {response && (
-              <div className={isResponseSuccess ? "alert-container-success" : "alert-container-error"}>
+              <div className={isResponseSuccess
+                ? "alert-container-success"
+                : "alert-container-error"}>
                 {response} &nbsp;
                 {isResponseSuccess && (
                   <Link href={"/auth/login"}>

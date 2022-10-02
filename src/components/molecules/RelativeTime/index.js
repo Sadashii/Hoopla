@@ -1,12 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React from "react";
 
 /*
-    References
-    moment.js
-    jQuery Timeago plugin, http://timeago.yarp.com/, http://timeago.yarp.com/jquery.timeago.js
-*/
-
+ References
+ moment.js
+ jQuery Timeago plugin, http://timeago.yarp.com/, http://timeago.yarp.com/jquery.timeago.js
+ */
 
 export default class RelativeTime extends React.Component {
   static propTypes = {
@@ -18,49 +17,45 @@ export default class RelativeTime extends React.Component {
     ]).isRequired,
     
     /* Datetime format which is used to set title attribute on dates. */
-    titleFormat: PropTypes.string,
-  }
-  
+    titleFormat: PropTypes.string
+  };
   
   static defaultProps = {
-    titleFormat: 'iso8601',
-  }
-  
+    titleFormat: "iso8601"
+  };
   
   /* Strings for time difference */
   tokens = {
     prefixAgo: null,
     prefixFromNow: null,
-    suffixAgo: 'ago',
-    suffixFromNow: 'from now',
-    inPast: 'any moment now',
-    seconds: 'a few seconds',
-    minute: 'a minute',
-    minutes: '%d minutes',
-    hour: 'an hour',
-    hours: '%d hours',
-    day: 'a day',
-    days: '%d days',
-    month: 'a month',
-    months: '%d months',
-    year: 'a year',
-    years: '%d years',
-    wordSeparator: ' ',
+    suffixAgo: "ago",
+    suffixFromNow: "from now",
+    inPast: "any moment now",
+    seconds: "a few seconds",
+    minute: "a minute",
+    minutes: "%d minutes",
+    hour: "an hour",
+    hours: "%d hours",
+    day: "a day",
+    days: "%d days",
+    month: "a month",
+    months: "%d months",
+    year: "a year",
+    years: "%d years",
+    wordSeparator: " ",
     numbers: []
-  }
-  
+  };
   
   /* Convert string time to Date() */
-  parseTimestring(iso8601) {
+  parseTimestring (iso8601) {
     let str = iso8601.trim();
-    str = str.replace(/\.\d+/,''); // remove milliseconds
-    str = str.replace(/-/,'/').replace(/-/,'/');
-    str = str.replace(/T/,' ').replace(/Z/,' UTC');
-    str = str.replace(/([+-]\d\d):?(\d\d)/,' $1$2'); // -04:00 -> -0400
-    str = str.replace(/([+-]\d\d)$/,' $100'); // +09 -> +0900
+    str = str.replace(/\.\d+/, ""); // remove milliseconds
+    str = str.replace(/-/, "/").replace(/-/, "/");
+    str = str.replace(/T/, " ").replace(/Z/, " UTC");
+    str = str.replace(/([+-]\d\d):?(\d\d)/, " $1$2"); // -04:00 -> -0400
+    str = str.replace(/([+-]\d\d)$/, " $100"); // +09 -> +0900
     return new Date(str);
   }
-  
   
   /* Replace %d in token with number */
   substituteToken (string, number) {
@@ -68,11 +63,10 @@ export default class RelativeTime extends React.Component {
     return string.replace(/%d/i, value);
   }
   
-  
   /* Relative time in words */
-  relativeTimeString(date) {
+  relativeTimeString (date) {
     if (!(date instanceof Date)) {
-      return '';
+      return "";
     }
     
     const delta = Date.now() - date.getTime();
@@ -91,7 +85,6 @@ export default class RelativeTime extends React.Component {
     let hours = minutes / 60;
     let days = hours / 24;
     let years = days / 365;
-    
     
     let words;
     
@@ -130,18 +123,16 @@ export default class RelativeTime extends React.Component {
       
     }
     
-    
     return [prefix, words, suffix].join(this.tokens.wordSeparator).trim();
   }
   
-  
   /* Generate time string in specifier pattern */
-  format(date, pattern) {
+  format (date, pattern) {
     if (!(date instanceof Date)) {
-      return '';
+      return "";
     }
     
-    if (pattern.toLowerCase() === 'iso8601') {
+    if (pattern.toLowerCase() === "iso8601") {
       return date.toISOString();
     }
     
@@ -154,25 +145,23 @@ export default class RelativeTime extends React.Component {
     };
     
     // replace M, D, H, m, s
-    pattern = pattern.replace(/(M+|D+|H+|m+|s+)/g, function(test) {
+    pattern = pattern.replace(/(M+|D+|H+|m+|s+)/g, function (test) {
       const key = test.slice(-1);
-      return ((test.length > 1 ? '0' : '') + patterns[key]).slice(-2);
+      return ((test.length > 1 ? "0" : "") + patterns[key]).slice(-2);
     });
     
     // replace Y
-    return pattern.replace(/(Y+)/g, function(test) {
+    return pattern.replace(/(Y+)/g, function (test) {
       return date.getFullYear().toString().slice(-test.length);
     });
   }
   
-  
   /* Display */
-  render() {
+  render () {
     let {
-      value, titleFormat,
-      ...props
-    } = this.props;
-    
+          value, titleFormat,
+          ...props
+        } = this.props;
     
     /* Type conversion */
     let date;
@@ -180,10 +169,10 @@ export default class RelativeTime extends React.Component {
     if (value instanceof Date) {
       date = value;
       
-    } else if (typeof value === 'string') {
+    } else if (typeof value === "string") {
       date = this.parseTimestring(value);
       
-    } else if (typeof value === 'number') {
+    } else if (typeof value === "number") {
       date = new Date(value);
       
     } else {
@@ -191,9 +180,8 @@ export default class RelativeTime extends React.Component {
       
     }
     
-    
     /* Format conversion */
-    let machineReadable = this.format(date, 'iso8601');    //  ISO-8601
+    let machineReadable = this.format(date, "iso8601");    //  ISO-8601
     let humanReadable = this.relativeTimeString(date);
     
     return (

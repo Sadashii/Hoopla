@@ -2,17 +2,20 @@ import clsx from "clsx";
 import styles from "./styles.module.scss";
 
 const FloatingMenuOption = ({
-                               children,
+  children,
   className,
-  preserveOriginalClass=true,
-                               ...props
-                             }) => {
+  preserveOriginalClass = true,
+  ...props
+}) => {
   
   return (
-    <div className={clsx(className ? preserveOriginalClass && styles.menuOption: styles.menuOption, className)} {...props}>
+    <div
+      className={clsx(className
+        ? preserveOriginalClass && styles.menuOption
+        : styles.menuOption, className)} {...props}>
       {children}
     </div>
-  )
-}
+  );
+};
 
 export default FloatingMenuOption;

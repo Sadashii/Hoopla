@@ -14,37 +14,38 @@ export default async function login (req, res) {
   
   if (req.method === "POST") {
     // Check if user exists
-    let user = await User.findOne({"email.address": req.body.email});
+    let user = await User.findOne({ "email.address": req.body.email });
     if (!user) {
       return res.status(400).json({
-        error: "NO_ACCOUNT",
+        error: "NO_ACCOUNT"
       });
     }
     
     // Check if password is correct
-    if (!await Utils.compareHash(req.body.password, user.services.password.bcrypt)) {
+    if (!await Utils.compareHash(req.body.password,
+      user.services.password.bcrypt)) {
       return res.status(400).json({
-        error: "INVALID_PASSWORD",
+        error: "INVALID_PASSWORD"
       });
     }
     
     // Check if user is verified
     if (!user.email.verified) {
       return res.status(400).json({
-        error: "NOT_VERIFIED",
+        error: "NOT_VERIFIED"
       });
     }
     
     // Login user
     const body = {
       _id: user._id,
-      email: user.email.address,
+      email: user.email.address
     };
-    const token = jwt.sign({user: body}, process.env.JWT_SECRET);
+    const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
     
     if (!user.meta.firstLogin) {
-      user.meta.firstLogin = new Date()
-      await user.save()
+      user.meta.firstLogin = new Date();
+      await user.save();
       const default_workspace = new Workspace({
         _id: user._id,
         name: `My Hoopla`,
@@ -57,11 +58,11 @@ export default async function login (req, res) {
             user: user._id
           }
         ]
-      })
-      await default_workspace.save()
+      });
+      await default_workspace.save();
     }
     
-    res.status(200).json({token});
+    res.status(200).json({ token });
   }
   
   res.status(405).send();

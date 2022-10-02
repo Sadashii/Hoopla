@@ -6,8 +6,8 @@ let transport = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   auth: {
     user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
+    pass: process.env.SMTP_PASSWORD
+  }
 });
 
 transport.verify(function (err) {
@@ -28,7 +28,7 @@ const sendEmail = async (template, vars, mailOptions) => {
       mailOptions = {
         from: `"Hoopla" <no-reply@${process.env.WEBSITE_DOMAIN}>`,
         html: data,
-        ...mailOptions,
+        ...mailOptions
       };
       await transport.sendMail(mailOptions, function (err, info) {
         if (err) {
@@ -36,7 +36,7 @@ const sendEmail = async (template, vars, mailOptions) => {
         }
         return [true, info];
       });
-    },
+    }
   );
 };
 
