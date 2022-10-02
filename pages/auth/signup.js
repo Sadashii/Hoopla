@@ -28,8 +28,7 @@ const Signup = ({}) => {
   const [signupLoading, setSignupLoading] = useState(false);
   const [errorDetails, setErrorDetails] = useState({});
   const [details, setDetails] = useState({
-    firstName: "",
-    lastName: "",
+    username: "",
     email: "",
     password: "",
     showPassword: false,
@@ -48,23 +47,15 @@ const Signup = ({}) => {
   const verifyFields = (field = null, value = null) => {
     const error = {...errorDetails};
     
-    const verifyFirstName = (value) => {
+    const verifyUsername = (value) => {
       if (value.length === 0) {
-        error.firstName = "First name is required";
+        error.username = "Display name is required";
         return false;
       }
-      delete error.firstName;
+      delete error.username;
       return true;
     };
     
-    const verifyLastName = (value) => {
-      if (value.length === 0) {
-        error.lastName = "Last name is required";
-        return false;
-      }
-      delete error.lastName;
-      return true;
-    };
     const verifyEmail = (value) => {
       if (value.length === 0) {
         error.email = "Email is required";
@@ -100,11 +91,8 @@ const Signup = ({}) => {
     
     if (field) {
       switch (field) {
-        case "firstName":
-          verifyFirstName(value);
-          break;
-        case "lastName":
-          verifyLastName(value);
+        case "username":
+          verifyUsername(value);
           break;
         case "email":
           verifyEmail(value);
@@ -114,8 +102,7 @@ const Signup = ({}) => {
           break;
       }
     } else {
-      verifyFirstName(details.firstName);
-      verifyLastName(details.lastName);
+      verifyUsername(details.username);
       verifyEmail(details.email);
       verifyPassword(details.password);
     }
@@ -183,25 +170,15 @@ const Signup = ({}) => {
           
           
           <FormControl>
-            <FlexBox fullWidth justifyBetween className={styles.inputRow}>
+            <FlexBox fullWidth className={styles.inputRow}>
               <TextField
-                label="First name"
+                label="Display name"
                 variant="outlined"
                 fullWidth
-                value={details.firstName}
-                className={styles.inputField}
-                error={errorDetails.firstName !== undefined}
-                helperText={errorDetails.firstName}
-                onChange={(e) => setField("firstName", e)}
-              />
-              <TextField
-                fullWidth
-                label="Last name"
-                variant="outlined"
-                value={details.lastName}
-                error={errorDetails.lastName !== undefined}
-                helperText={errorDetails.lastName}
-                onChange={(e) => setField("lastName", e)}
+                value={details.username}
+                error={errorDetails.username !== undefined}
+                helperText={errorDetails.username}
+                onChange={(e) => setField("username", e)}
               />
             </FlexBox>
             

@@ -1,12 +1,7 @@
 @import "src/variables.module";
 
 .mainContainer {
-  * {
-    margin: 0;
-    transition: all ease-in $transition-duration;
-  }
   height: 100vh;
-
 
   .leftNavbar {
     background-color: $gray-3;
@@ -41,27 +36,27 @@
   .leftNavbarOpenPage {
     margin-left: 16rem;
   }
+}
 
-  .navOption {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    overflow: hidden;
+.navOption {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
 
 
-    padding: $spacing-0-5 / 4 $spacing-0-5 / 2;
-    &:hover {
-      background-color: $gray-5;
-    }
+  padding: $spacing-0-5 / 4 $spacing-0-5 / 2;
+  &:hover {
+    background-color: $gray-5;
   }
-  .navOptionBold {
-    @extend .navOption;
-    font-weight: $fontWeight-bold;
-  }
-  .navOptionLightBold {
-    @extend .navOptionBold;
-    opacity: .75;
-  }
+}
+.navOptionBold {
+  @extend .navOption;
+  font-weight: $fontWeight-bold;
+}
+.navOptionLightBold {
+  @extend .navOptionBold;
+  opacity: .75;
 }
 
 .pageContainerContainer {

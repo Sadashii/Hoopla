@@ -26,7 +26,7 @@ export default async function resendVerify (req, res) {
     await sendEmail(
       "verify",
       {
-        name: `${req.body.firstName} ${req.body.lastName}`,
+        name: `${req.body.username}`,
         url: `${process.env.WEBSITE_URL}/auth/verify?code=${verificationToken}`,
         domain: process.env.WEBSITE_DOMAIN,
       },

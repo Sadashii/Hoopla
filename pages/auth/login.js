@@ -47,10 +47,6 @@ const Login = ({}) => {
         error.password = "Password is too short";
         return false;
       }
-      if (value.length > 32) {
-        error.password = "Password is too long";
-        return false;
-      }
       delete error.password;
       return true;
     };

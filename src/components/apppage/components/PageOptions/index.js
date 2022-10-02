@@ -1,3 +1,4 @@
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { Button, IconButton } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -13,7 +14,9 @@ const PageOptions = ({
   workspacePages,
   currentPage,
   setCurrentPage,
-  openPage
+  openPage,
+  navbarOpen,
+  toggleNavbar
                      }) => {
   const [showPageOptionsMenu, setShowPageOptionsMenu] = useState(false)
   const [breadcrumbs, setBreadcrumbs] = useState([])
@@ -59,8 +62,12 @@ const PageOptions = ({
   return (
     <FlexBox align fullWidth justifyBetween className={styles.pageOptions}>
       <FlexBox>
+        {!navbarOpen && (
+          <Tooltip title={"Open sidebar"} shortcut={"Ctrl + /"} icon hoverLight>
+            <KeyboardDoubleArrowRightIcon onClick={toggleNavbar} />
+          </Tooltip>
+        )}
         {breadcrumbs.map(bread => {
-          
           return (
             <>
               <Button variant={"text"} className={styles.breadcrumbButton} onClick={() => openPage(bread._id)}>
@@ -72,6 +79,9 @@ const PageOptions = ({
                   )}
                 </span>
                 {bread.name}
+                {bread.name === "" && (
+                  <span style={{opacity: .7}}>Untitled</span>
+                )}
               </Button>
               <p style={{opacity: .7}}>/</p>
             </>
@@ -82,7 +92,7 @@ const PageOptions = ({
         {/* <p>edited</p> */}
         {/* <p>share</p> */}
         <div>
-          <Tooltip title={showPageOptionsMenu ? null : "Page settings"} icon>
+          <Tooltip title={showPageOptionsMenu ? null : "Page settings"} icon hoverLight>
             <MoreHorizIcon onClick={() => {
               setShowPageOptionsMenu(true)
             }} />

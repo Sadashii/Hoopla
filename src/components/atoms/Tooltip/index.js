@@ -1,11 +1,12 @@
 import { Tooltip as MUITooltip } from "@mui/material";
+import clsx from "clsx";
 import { FlexBox } from "../index";
 import styles from "./styles.module.scss";
 
-const Tooltip = ({ title, shortcut, children, icon=false}) => {
+const Tooltip = ({ title, shortcut, children, icon=false, hoverLight=false}) => {
   if (icon && !title) {
     return (
-      <FlexBox align justify className={styles.iconButton}>
+      <FlexBox align justify className={clsx(styles.iconButton, hoverLight ? styles.hoverLight : styles.hoverDark)}>
         {children}
       </FlexBox>
     )
@@ -14,7 +15,7 @@ const Tooltip = ({ title, shortcut, children, icon=false}) => {
   return (
     <MUITooltip title={title}>
       {icon ? (
-        <FlexBox align justify className={styles.iconButton}>
+        <FlexBox align justify className={clsx(styles.iconButton, hoverLight ? styles.hoverLight : styles.hoverDark)}>
           {children}
         </FlexBox>
       ) : (

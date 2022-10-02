@@ -5,8 +5,7 @@ const user = new Schema({
     type: Schema.Types.ObjectId,
     auto: true,
   },
-  firstName: String,
-  lastName: String,
+  username: String,
   createdAt: Date,
   email: {
     address: String,

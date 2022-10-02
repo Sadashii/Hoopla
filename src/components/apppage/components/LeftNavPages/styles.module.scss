@@ -25,3 +25,11 @@
     }
   }
 }
+
+.settingsItem {
+  padding: $spacing-0-5 / 4 $spacing-1 !important;
+
+  svg {
+    margin-right: $spacing-0-5;
+  }
+}

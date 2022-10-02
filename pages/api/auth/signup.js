@@ -26,8 +26,7 @@ export default async function signup (req, res) {
     const verificationToken = randomstring.generate(44);
     
     user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+      username: req.body.username,
       createdAt: new Date(),
       email: {
         address: req.body.email,
@@ -49,7 +48,7 @@ export default async function signup (req, res) {
     await sendEmail(
       "verify",
       {
-        name: `${req.body.firstName} ${req.body.lastName}`,
+        name: `${req.body.username}`,
         url: `${process.env.WEBSITE_URL}/auth/verify?code=${verificationToken}`,
         domain: process.env.WEBSITE_DOMAIN,
       },

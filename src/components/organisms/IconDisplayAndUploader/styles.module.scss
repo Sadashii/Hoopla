@@ -1,0 +1,54 @@
+@import "src/variables.module";
+
+.profilePictureUploadContainer {
+  label {
+    border-radius: 50%;
+    background: $gray-4;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $gray-5;
+    }
+
+    svg {
+      font-size: 2rem;
+    }
+  }
+}
+
+.profilePictureImageContainer {
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    width: 100%;
+    object-fit: cover;
+    background-color: $gray-4;
+  }
+
+  label {
+    position: absolute;
+    background-color: $gray-5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    opacity: 0;
+
+    svg {
+      font-size: 2rem;
+    }
+
+    &:hover {
+      opacity: .5;
+    }
+  }
+}

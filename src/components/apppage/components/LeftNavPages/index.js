@@ -1,5 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { Divider } from "@mui/material";
 import axios from "axios";
 import clsx from "clsx";
 import { useState } from "react";
@@ -16,6 +18,7 @@ const PageNav = ({
   workspaceData,
   pageID,
   setPageID,
+ toggleSettingsModal
 }) => {
   const [expandedPages, setExpandedPages] = useState([])
 
@@ -73,7 +76,7 @@ const PageNav = ({
   
   const renderPage = (page, level=0) => {
     return (
-      <>
+      <FlexBox column data-block-id={page._id}>
         <FlexBox
           justifyBetween
           fullWidth
@@ -99,14 +102,14 @@ const PageNav = ({
                       parent.children = res.data
                       setWorkspacePagesData(updatedData)
                       setExpandedPages([...expandedPages, page._id])
-  
+                
                     })
                     .catch(err => {
                       if (err.response.status === 304) {
                         setExpandedPages([...expandedPages, page._id])
                         return
                       }
-                      
+                
                       throw new Error(err)
                     })
                 }
@@ -145,12 +148,17 @@ const PageNav = ({
             )}
           </>
         )}
-      </>
+      </FlexBox>
     )
   }
   
   return (
     <>
+      <FlexBox fullWidth align className={clsx(stylesP.navOptionLightBold, styles.pageNavItem, styles.settingsItem)} onClick={toggleSettingsModal}>
+        <SettingsIcon fontSize={"small"} />
+        <span>Settings</span>
+      </FlexBox>
+      <Divider />
       {workspacePagesData?.pages.map(page => renderPage(page))}
       <FlexBox onClick={addPageToWorkspace} className={clsx(stylesP.navOptionLightBold, styles.pageNavItem)}>
         <AddIcon style={{marginRight: '4px'}} /> Add a page

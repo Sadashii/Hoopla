@@ -1,0 +1,114 @@
+@import "src/variables.module";
+
+.settingsModal {
+  $modalWidth: 1100px;
+  $sidebarWidth: 220px;
+  $panelWidth: $modalWidth - $sidebarWidth;
+
+  width: $modalWidth;
+  height: calc(100vh - 100px);
+  max-height: 700px;
+  background-color: $gray-3;
+
+  .contentContainer {
+    height: 100%;
+  }
+
+  .settingsCategoryTitle {
+    font-weight: bold;
+    font-size: .75rem;
+    text-transform: uppercase;
+    color: $gray-8;
+    padding: $spacing-0-5 $spacing-0-5 0;
+  }
+  .settingsNavigator {
+    width: $sidebarWidth;
+    height: 100%;
+    background-color: $gray-2;
+    border-right: 1px solid $gray-5;
+
+    .settingNav {
+      padding: $spacing-0-5 / 4 $spacing-0-5 !important;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $gray-4;
+      }
+
+      svg {
+        margin-right: .25rem;
+      }
+    }
+    .settingNavSelected {
+      background-color: $gray-4;
+    }
+  }
+
+  .settingsPane {
+    height: 100%;
+    padding: $spacing-2;
+
+    .settingTitle {
+      font-size: 1.25rem;
+    }
+    .settingCategory {
+      border-bottom: 1px solid $gray-7;
+      padding: 1rem 0;
+
+      .settingName {
+        margin-bottom: 4px;
+
+      }
+
+      .inputLabel {
+        font-size: .8rem;
+        opacity: .8;
+        margin-bottom: 2px;
+      }
+
+      .settingInputText {
+        margin-bottom: .5rem;
+
+        input {
+          padding: $spacing-0-5 / 2 $spacing-0-5 * 1.5;
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+
+  .updateOrCancelFooter {
+    position: absolute;
+    width: calc(100% - $sidebarWidth);
+    left: $sidebarWidth;
+    bottom: 0;
+    padding: $spacing-1 $spacing-2;
+    background-color: transparent;
+    border-top: 1px solid $gray-7;
+
+    .buttonBase {
+      height: 30px;
+    }
+
+    .buttonUpdate{
+      @extend .buttonBase;
+      background-color: #32c1ff;
+      font-weight: bold;
+      color: whitesmoke;
+      margin-right: $spacing-1;
+
+      &:hover {
+        background-color: #008ce3;
+      }
+    }
+
+    .buttonCancel {
+      @extend .buttonBase;
+      border: 1px solid $gray-7;
+      color: black;
+    }
+  }
+}

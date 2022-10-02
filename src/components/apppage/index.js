@@ -1,4 +1,3 @@
-import { IconButton } from "@mui/material";
 import axios from "axios";
 import clsx from "clsx";
 import Image from "next/image";
@@ -11,13 +10,13 @@ import PageContentEditor from "./components/PageContentEditor";
 import PageNav from "./components/LeftNavPages";
 import PageOptions from "./components/PageOptions";
 import PageTitleEditor from "./components/PageTitleEditor";
+import SettingsModal from "./components/SettingsModal";
 import { findPageInPages } from "./recursion";
 import styles from "./styles.module.scss"
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 
 const AppPage = () => {
-  const user = UserHelper.getUser()
+  let user = UserHelper.getUser()
   const router = useRouter()
   
   const [navbarOpen, setNavbarOpen] = useStickyState(true, 'user_show_sidebar')
@@ -29,6 +28,8 @@ const AppPage = () => {
   
   const [currentPageID, setCurrentPageID, fetchedPageID] = useStickyState(null, "user_current_page")
   const [currentPage, setCurrentPage] = useState(null)
+  
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
   
   useEffect(() => {
     if (!user) {
@@ -104,60 +105,70 @@ const AppPage = () => {
                 <Image src={workspaceData.icon} height={35} width={35} alt={"Brand Logo"}/>
                 <h3>{workspaceData.name}</h3>
               </FlexBox>
-              <Tooltip title={"Close sidebar"} shortcut={"Ctrl + /"}>
-                <IconButton>
-                  <KeyboardDoubleArrowLeftIcon
-                    className={styles.toggleNavbarIcon}
-                    onClick={() => setNavbarOpen(!navbarOpen)}
-                  />
-                </IconButton>
+              <Tooltip title={"Close sidebar"} shortcut={"Ctrl + /"} icon>
+                <KeyboardDoubleArrowLeftIcon
+                  className={styles.toggleNavbarIcon}
+                  onClick={() => setNavbarOpen(!navbarOpen)}
+                />
               </Tooltip>
             </FlexBox>
           )}
           {fetchedWorkspacePages && (
             <>
-              <PageNav workspacePagesData={workspacePagesData} setWorkspacePagesData={setWorkspacePagesData} workspaceData={workspaceData} pageID={currentPageID} setPageID={setCurrentPageID} />
+              <PageNav
+                workspacePagesData={workspacePagesData}
+                setWorkspacePagesData={setWorkspacePagesData}
+                workspaceData={workspaceData}
+                pageID={currentPageID}
+                setPageID={setCurrentPageID}
+                toggleSettingsModal={() => setShowSettingsModal(!showSettingsModal)}
+              />
             </>
           )}
         </FlexBox>
-        <FlexBox fullWidth column className={clsx(styles.page, navbarOpen && styles.leftNavbarOpenPage)}>
-          <FlexBox align justifyBetween fullWidth className={styles.pageOptions}>
-            <div>
-              {navbarOpen === false && (
-                <Tooltip title={"Open sidebar"} shortcut={"Ctrl + /"}>
-                  <IconButton>
-                    <KeyboardDoubleArrowRightIcon
-                      onClick={() => setNavbarOpen(!navbarOpen)}
-                    />
-                  </IconButton>
-                </Tooltip>
+        {currentPage && (
+          <FlexBox fullWidth column className={clsx(styles.page, navbarOpen && styles.leftNavbarOpenPage)}>
+            <FlexBox align justifyBetween fullWidth className={styles.pageOptions}>
+              <PageOptions
+                workspacePages={workspacePagesData}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                openPage={setCurrentPageID}
+                navbarOpen={navbarOpen}
+                toggleNavbar={() => setNavbarOpen(!navbarOpen)}
+              />
+    
+            </FlexBox>
+            {/* main render */}
+            <FlexBox fullWidth className={styles.pageContainerContainer}>
+              {currentPage && (
+                <FlexBox fullWidth column className={clsx(styles.pageContainer)} style={{fontSize: currentPage.properties.smallText ? '14px' : '16px', maxWidth: currentPage.properties.fullWidth ? '100%' : '900px'}}>
+                  <PageTitleEditor
+                    pageData={currentPage}
+                    setPageData={setCurrentPage}
+                    setWorkspacePagesData={setWorkspacePagesData}
+                  />
+                  <PageContentEditor
+                    user={user}
+                    pageData={currentPage}
+                  />
+                </FlexBox>
               )}
-            </div>
-            <PageOptions
-              workspacePages={workspacePagesData}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              openPage={setCurrentPageID}
-            />
-            
+            </FlexBox>
           </FlexBox>
-          {/* main render */}
-          <FlexBox fullWidth className={styles.pageContainerContainer}>
-            {currentPage && (
-              <FlexBox fullWidth column className={clsx(styles.pageContainer)} style={{fontSize: currentPage.properties.smallText ? '14px' : '16px', maxWidth: currentPage.properties.fullWidth ? '100%' : '900px'}}>
-                <PageTitleEditor
-                  pageData={currentPage}
-                  setPageData={setCurrentPage}
-                  setWorkspacePagesData={setWorkspacePagesData}
-                />
-                <PageContentEditor
-                  user={user}
-                  pageData={currentPage}
-                />
-              </FlexBox>
-            )}
-          </FlexBox>
-        </FlexBox>
+        )}
+  
+        {showSettingsModal && (
+          <SettingsModal
+            open={showSettingsModal}
+            onClose={() => {
+              setShowSettingsModal(false)
+            }}
+            user={user}
+            router={router}
+  
+          />
+        )}
       </FlexBox>
     </>
   )

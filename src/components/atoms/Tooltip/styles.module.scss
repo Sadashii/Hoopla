@@ -3,8 +3,10 @@
 .iconButton {
   border-radius: 4px;
   cursor: pointer;
-
-  &:hover {
-    background-color: $gray-6;
-  }
+}
+.hoverLight:hover {
+  background-color: $gray-3;
+}
+.hoverDark:hover {
+  background-color: $gray-6;
 }

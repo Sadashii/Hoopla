@@ -4,9 +4,25 @@ class UserHelper {
   postLogin = (token, router) => {
     if (typeof window !== "undefined") {
       localStorage.setItem("user_token", token);
-      router.push('/app')
+      this.getLatestUser().then(r => {
+        setTimeout(() => {
+          router.push('/app')
+        }, 100)
+      })
     }
   };
+  
+  logoutUser = (router) => {
+    if (typeof window !== "undefined") {
+      let keys = Object.keys(localStorage)
+      for (const key of keys) {
+        if (key.startsWith("user_")) {
+          localStorage.removeItem(key)
+        }
+      }
+      router.push('/')
+    }
+  }
   
   getUserToken = () => {
     if (typeof window !== "undefined") {
@@ -38,11 +54,12 @@ class UserHelper {
     return null;
   };
   getLatestUser = async () => {
-    const user = await axios.get("/api/account/", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("user_token")}`,
-      },
-    });
+    const user = await axios.post("/api/account/", {operation: "GET"}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      }
+    );
     await this.saveUser(user.data);
     return user.data;
   }

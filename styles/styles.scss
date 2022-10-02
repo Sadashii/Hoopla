@@ -1,5 +1,10 @@
 @import "src/variables.module";
 
+* {
+  margin: 0;
+  transition: all ease-in $transition-duration;
+}
+
 a {
   color: inherit;
 }

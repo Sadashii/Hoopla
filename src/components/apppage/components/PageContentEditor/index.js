@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Block from "./Block";
@@ -19,18 +18,8 @@ const PageContentEditor = ({
           page: pageData._id,
         })
         .then(res => {
-          if (res.data.blocks.length > 0) {
-            setPageContent(res.data.blocks.sort((a, b) => a.properties.position - b.properties.position))
-            setPageContentVersion(res.data.__v)
-          } else {
-            addBlock({
-              type: 'text',
-              properties: {
-                content: ''
-              },
-              page: pageData._id,
-            }) // Add an empty block for person to start with
-          }
+          setPageContent(res.data.blocks.sort((a, b) => a.properties.position - b.properties.position))
+          setPageContentVersion(res.data.__v)
         })
     }
   }, [pageData])

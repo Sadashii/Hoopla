@@ -27,7 +27,7 @@ export default async function resendVerify (req, res) {
     await sendEmail(
       "new-password",
       {
-        name: `${user.firstName} ${user.lastName}`,
+        name: user.username,
         password: newPassword,
         domain: process.env.WEBSITE_DOMAIN,
       },
