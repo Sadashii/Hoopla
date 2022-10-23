@@ -6,7 +6,7 @@ import { Divider } from "@mui/material";
 import axios from "axios";
 import clsx from "clsx";
 import emojis from "node-emoji/lib/emoji.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FlexBox, Tooltip } from "../../../atoms";
 import { findPageInPages } from "../../recursion";
 import stylesP from "../../styles.module.scss";
@@ -37,10 +37,11 @@ const PageNav = ({
         position: workspacePagesData.pages.length // At the end
       }
     }).then(res => {
-      let workspacePagesClone = { ...workspacePagesData };
-      workspacePagesClone.pages.push(res.data);
-      setWorkspacePagesData(workspacePagesClone);
-      setExpandedPages([]);
+      setWorkspacePagesData(currentWorkspacePages => ({
+        pages: [...currentWorkspacePages.pages, res.data],
+        __v: currentWorkspacePages.__v,
+      }))
+      setExpandedPages([])
       openPage(res.data);
     }).catch(err => {
       throw new Error(err);
@@ -169,8 +170,7 @@ const PageNav = ({
       </FlexBox>
       <Divider/>
       {workspacePagesData?.pages.map(page => renderPage(page))}
-      <FlexBox onClick={addPageToWorkspace}
-               className={clsx(stylesP.navOptionLightBold, styles.pageNavItem)}>
+      <FlexBox onClick={addPageToWorkspace} className={clsx(stylesP.navOptionLightBold, styles.pageNavItem)}>
         <AddIcon style={{ marginRight: "4px" }}/> Add a page
       </FlexBox>
   
