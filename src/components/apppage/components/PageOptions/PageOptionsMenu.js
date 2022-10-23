@@ -1,42 +1,39 @@
 import { Switch } from "@mui/material";
-import { FlexBox } from "../../../atoms";
-import FloatingMenu from "../../../molecules/FloatingMenu";
-import FloatingMenuOption
-  from "../../../molecules/FloatingMenu/FloatingMenuOption";
-import FloatingMenuSection
-  from "../../../molecules/FloatingMenu/FloatingMenuSection";
+import { FloatingMenu, FloatingMenuOption, FloatingMenuSection } from "../../../molecules";
 
 const PageOptionsMenu = ({
-  onCancel,
+  open,
+  anchor,
+  onClose,
   properties,
   updateProperty
 }) => {
   
   return (
-    <FloatingMenu onClickOutside={onCancel}>
-      <FloatingMenuSection>
-        <FloatingMenuOption>
-          <FlexBox fullWidth align justifyBetween
-                   onClick={() => updateProperty("smallText",
-                     !properties.smallText)}>
-            <p>Small text</p>
+    <FloatingMenu open={open} onClose={onClose} anchor={anchor} anchorOrigin={{
+      horizontal: 'right',
+    }}>
+      <FloatingMenuSection noDivider>
+        <FloatingMenuOption
+          onClick={() => updateProperty("smallText", !properties.smallText)}
+          title={"Small text"}
+          expandIcon={<>
             <Switch
               checked={properties.smallText}
               size={"small"}
             />
-          </FlexBox>
-        </FloatingMenuOption>
-        <FloatingMenuOption>
-          <FlexBox fullWidth align justifyBetween
-                   onClick={() => updateProperty("fullWidth",
-                     !properties.fullWidth)}>
-            <p>Full width</p>
+          </>}
+        />
+        <FloatingMenuOption
+          onClick={() => updateProperty("fullWidth", !properties.fullWidth)}
+          title={"Full width"}
+          expandIcon={<>
             <Switch
               checked={properties.fullWidth}
               size={"small"}
             />
-          </FlexBox>
-        </FloatingMenuOption>
+          </>}
+          />
       </FloatingMenuSection>
     </FloatingMenu>
   );

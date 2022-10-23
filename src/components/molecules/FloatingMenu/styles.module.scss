@@ -1,42 +1,67 @@
 @import "../../../variables.module";
 
 .floatingMenu {
-  position: absolute;
-  background-color: $gray-2;
-  border-radius: $border-radius;
-  box-shadow: 0 1px 3px 0 $gray-6;
-  max-width: calc(100vw - 24px);
-  max-height: 70vh;
-  width: 250px;
-  opacity: 0;
-  z-index: 1;
 
-  .menuSection {
-    display: flex;
-    flex-direction: column;
-    padding: $border-radius;
-    border-bottom: 1px solid $gray-6;
+  .menuDivider {
+    margin: 0;
   }
-
   .menuOption {
     display: flex;
     align-items: center;
     cursor: pointer;
     font-size: 1rem;
-    border-radius: $border-radius;
     padding: $spacing-0-5 / 4 $spacing-0-5 / 2;
+    min-width: 200px;
+
+    .menuOptionTitle {
+      svg {
+        margin-right: $border-radius;
+        font-size: 1.25rem;
+      }
+    }
+    .menuOptionRight {
+      svg {
+        font-size: 1.25rem;
+      }
+    }
 
     &:hover {
-      background-color: $gray-4;
+      background-color: $gray-3;
     }
   }
 
-  .menuOptionIcon {
-    margin-right: $border-radius;
-  }
-
   .menuOptionRightIcon {
-    opacity: .75;
+
   }
 
 }
+
+//.floatingMenu {
+//  position: absolute;
+//  background-color: $gray-2;
+//  border-radius: $border-radius;
+//  box-shadow: 0 1px 3px 0 $gray-6;
+//  max-width: calc(100vw - 24px);
+//  max-height: 70vh;
+//  width: 250px;
+//  opacity: 0;
+//  z-index: 1;
+//
+//  .menuSection {
+//    display: flex;
+//    flex-direction: column;
+//    padding: $border-radius;
+//    border-bottom: 1px solid $gray-6;
+//  }
+//
+
+//
+//  .menuOptionIcon {
+//    margin-right: $border-radius;
+//  }
+//
+//  .menuOptionRightIcon {
+//    opacity: .75;
+//  }
+//
+//}

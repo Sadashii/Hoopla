@@ -2,22 +2,14 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DoneIcon from "@mui/icons-material/Done";
-import KeyboardArrowRightOutlinedIcon
-  from "@mui/icons-material/KeyboardArrowRightOutlined";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import LinkIcon from "@mui/icons-material/Link";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UserHelper from "../../../../helper/UserHelper";
 import { FlexBox } from "../../../atoms";
-import { RelativeTime } from "../../../molecules";
-import FloatingMenu from "../../../molecules/FloatingMenu";
-import FloatingMenuOption
-  from "../../../molecules/FloatingMenu/FloatingMenuOption";
-import FloatingMenuSection
-  from "../../../molecules/FloatingMenu/FloatingMenuSection";
-import floatingMenuClasses
-  from "../../../molecules/FloatingMenu/styles.module.scss";
+import { RelativeTime, FloatingMenu, FloatingMenuOption, FloatingMenuSection } from "../../../molecules";
 import styles from "./blocks.module.scss";
 
 const colors = {
@@ -44,148 +36,111 @@ const blockTypes = {
 };
 
 const BlockOptionsMenu = ({
-  onClickOutside,
+  onClose,
   onDelete,
   onDuplicate,
   onCopyLink,
   onChangeInto,
   onTextColorChange,
   onTextBackgroundChange,
-  block
+  block,
+  anchor,
+  open
 }) => {
   const [showColorSwitcher, setShowColorSwitcher] = useState(false);
   const [showChangeInto, setShowChangeInto] = useState(false);
   
   const user = UserHelper.getUser();
   
-  const colorSwitcherMenu = () => {
-    return (
-      <FloatingMenu onClickOutside={onClickOutside}>
+  return (
+    <>
+      <FloatingMenu open={open} onClose={onClose} anchor={anchor}>
         <FloatingMenuSection>
-          {Object.entries(colors).map(color => (
-            <FloatingMenuOption onClick={() => onTextColorChange(color[1])}>
-              <FlexBox fullWidth align justifyBetween>
-                <FlexBox align>
-                  <p className={clsx(floatingMenuClasses.menuOptionIcon,
-                    styles.formatColorTextColor)}
-                     style={{ color: color[1] }}>A</p> {color[0]}
-                </FlexBox>
-                {(color[1] === block.properties.textColor ||
-                  (color[1] === "black" && !block.properties.textColor)) && (
-                  <FlexBox className={floatingMenuClasses.menuOptionRightIcon}>
-                    <DoneIcon/>
-                  </FlexBox>
-                )}
-              </FlexBox>
-            </FloatingMenuOption>
-          ))}
+          <FloatingMenuOption onClick={onDelete} icon={<DeleteOutlineIcon />} title={"Delete"} />
+          <FloatingMenuOption onClick={onDuplicate} icon={<ContentCopyIcon />} title={"Duplicate"} />
+          <FloatingMenuOption
+            id={"block-switcher-menu-item"}
+            icon={<AutorenewIcon />}
+            title={"Change Into"}
+            expandIcon={<KeyboardArrowRightOutlinedIcon />}
+            onClick={() => {
+              setShowColorSwitcher(false)
+              setShowChangeInto(true)
+            }}
+          />
+          <FloatingMenuOption onClick={onCopyLink} icon={<LinkIcon />} title={"Copy link to block"} />
         </FloatingMenuSection>
+        <FloatingMenuSection>
+          <FloatingMenuOption
+            id={"color-switcher-menu-item"}
+            icon={<PaletteOutlinedIcon />}
+            title={"Color"}
+            expandIcon={<KeyboardArrowRightOutlinedIcon />}
+            onClick={() => {
+              setShowColorSwitcher(true);
+              setShowChangeInto(false);
+            }}
+          />
+        </FloatingMenuSection>
+        <FloatingMenuSection noDivider>
+          <div style={{padding: '4px', fontSize: '.75rem'}}>
+            <p>Last edited by {user.username}</p>
+            <RelativeTime value={block.updatedAt}/>
+          </div>
+        </FloatingMenuSection>
+      </FloatingMenu>
+  
+      {/* COLOR SWITCHER MENU */}
+      <FloatingMenu open={showColorSwitcher} onClose={() => setShowColorSwitcher(false)} anchor={document.getElementById("color-switcher-menu-item")} secondary>
         <FloatingMenuSection>
           {Object.entries(colors).map(color => (
             <FloatingMenuOption
-              onClick={() => onTextBackgroundChange(color[1])}>
-              <FlexBox fullWidth align justifyBetween>
-                <FlexBox align>
-                  <p className={clsx(floatingMenuClasses.menuOptionIcon,
-                    styles.formatColorBackgroundColor)}
-                     style={{
-                       backgroundColor: color[1],
-                       color: "white"
-                     }}>A</p> {color[0]} Background
-                </FlexBox>
-                {(color[1] === block.properties.backgroundColor ||
-                  (color[1] === "white" &&
-                    !block.properties.backgroundColor)) && (
-                  <FlexBox className={floatingMenuClasses.menuOptionRightIcon}>
-                    <DoneIcon/>
-                  </FlexBox>
+              onClick={() => onTextColorChange(color[1])}
+              title={<>
+                <p className={clsx(styles.formatColorTextColor)} style={{ color: color[1] }}>A</p> {color[0]}
+              </>}
+              expandIcon={<>
+                {(color[1] === block.properties.textColor || (color[1] === "black" && !block.properties.textColor)) && (
+                  <DoneIcon/>
                 )}
-              </FlexBox>
-            </FloatingMenuOption>
+              </>}
+            />
+          ))}
+        </FloatingMenuSection>
+        <FloatingMenuSection noDivider>
+          {Object.entries(colors).map(color => (
+            <FloatingMenuOption
+              onClick={() => onTextBackgroundChange(color[1])}
+              title={<>
+                <p className={clsx(styles.formatColorBackgroundColor)} style={{ backgroundColor: color[1], color: "white" }}>A</p> {color[0]} Background
+              </>}
+              expandIcon={<>
+                {(color[1] === block.properties.backgroundColor || (color[1] === "white" && !block.properties.backgroundColor)) && (
+                  <DoneIcon/>
+                )}
+              </>}
+            />
           ))}
         </FloatingMenuSection>
       </FloatingMenu>
-    );
-  };
-  const changeIntoMenu = () => {
-    return (
-      <FloatingMenu onClickOutside={onClickOutside}>
+  
+      {/* BLOCK CHANGE MENU */}
+      <FloatingMenu open={showChangeInto} onClose={() => setShowChangeInto(false)} anchor={document.getElementById("block-switcher-menu-item")} secondary>
         <FloatingMenuSection>
           {Object.entries(blockTypes).map(bType => (
-            <FloatingMenuOption onClick={() => onChangeInto(bType[1])}>
-              <FlexBox fullWidth align justifyBetween>
-                <FlexBox align>
-                  {bType[0]}
-                </FlexBox>
+            <FloatingMenuOption
+              onClick={() => onChangeInto(bType[1])}
+              title={bType[0]}
+              expandIcon={<>
                 {bType[1] === block.type && (
-                  <FlexBox className={floatingMenuClasses.menuOptionRightIcon}>
-                    <DoneIcon/>
-                  </FlexBox>
+                  <DoneIcon/>
                 )}
-              </FlexBox>
-            </FloatingMenuOption>
+              </>}
+            />
           ))}
         </FloatingMenuSection>
       </FloatingMenu>
-    );
-  };
-  
-  return (
-    <FloatingMenu onClickOutside={onClickOutside}>
-      <FloatingMenuSection>
-        <FloatingMenuOption onClick={onDelete}>
-          <DeleteOutlineIcon fontSize={"small"}
-                             className={floatingMenuClasses.menuOptionIcon}/> Delete
-        </FloatingMenuOption>
-        <FloatingMenuOption onClick={onDuplicate}>
-          <ContentCopyIcon fontSize={"small"}
-                           className={floatingMenuClasses.menuOptionIcon}/> Duplicate
-        </FloatingMenuOption>
-        <FloatingMenuOption onMouseEnter={() => {
-          setShowChangeInto(true);
-          setShowColorSwitcher(false);
-        }}>
-          <FlexBox fullWidth align justifyBetween>
-            <FlexBox align>
-              <AutorenewIcon fontSize={"small"}
-                             className={floatingMenuClasses.menuOptionIcon}/> Change
-              into
-            </FlexBox>
-            <FlexBox className={floatingMenuClasses.menuOptionRightIcon}>
-              <KeyboardArrowRightOutlinedIcon fontSize={"small"}/>
-              {showChangeInto && changeIntoMenu()}
-            </FlexBox>
-          </FlexBox>
-        </FloatingMenuOption>
-        <FloatingMenuOption onClick={onCopyLink}>
-          <LinkIcon fontSize={"small"}
-                    className={floatingMenuClasses.menuOptionIcon}/> Copy link
-          to block
-        </FloatingMenuOption>
-      </FloatingMenuSection>
-      <FloatingMenuSection>
-        <FloatingMenuOption onMouseEnter={() => {
-          setShowColorSwitcher(true);
-          setShowChangeInto(false);
-        }}>
-          <FlexBox fullWidth align justifyBetween>
-            <FlexBox align>
-              <PaletteOutlinedIcon fontSize={"small"}
-                                   className={floatingMenuClasses.menuOptionIcon}/> Color
-            </FlexBox>
-            <FlexBox className={floatingMenuClasses.menuOptionRightIcon}>
-              <KeyboardArrowRightOutlinedIcon fontSize={"small"}/>
-              {showColorSwitcher && colorSwitcherMenu()}
-            </FlexBox>
-          </FlexBox>
-        </FloatingMenuOption>
-      </FloatingMenuSection>
-      <FloatingMenuSection
-        style={{ color: "rgba(0,0,0,0.6)", fontSize: ".9em" }}>
-        <p>Last edited by {user.firstName} {user.lastName}</p>
-        <RelativeTime value={block.updatedAt}/>
-      </FloatingMenuSection>
-    </FloatingMenu>
+    </>
   );
 };
 

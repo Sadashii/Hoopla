@@ -126,7 +126,7 @@ const ResetPassword = ({}) => {
               className={clsx(styles.submit, "button-primary-bg-black-hover")}
               onClick={onSubmit}
             >
-              Reset Password
+              Send Mail
             </Button>
           </FormControl>
         </FlexBox>

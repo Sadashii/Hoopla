@@ -1,21 +1,35 @@
+import React, { forwardRef } from "react";
+
+import { MenuItem } from "@mui/material";
 import clsx from "clsx";
+import { FlexBox } from "../../atoms";
 import styles from "./styles.module.scss";
 
-const FloatingMenuOption = ({
-  children,
-  className,
-  preserveOriginalClass = true,
+const FloatingMenuOption = forwardRef(({
+  icon,
+  title,
+  expandIcon,
+  onClick,
   ...props
 }) => {
   
   return (
-    <div
-      className={clsx(className
-        ? preserveOriginalClass && styles.menuOption
-        : styles.menuOption, className)} {...props}>
-      {children}
-    </div>
+    <MenuItem
+      disableRipple
+      className={clsx(styles.menuOption)}
+      onClick={onClick}
+      {...props}>
+      <FlexBox fullWidth align justifyBetween>
+        <FlexBox align className={styles.menuOptionTitle}>
+          {icon}
+          {title}
+        </FlexBox>
+        <FlexBox align className={styles.menuOptionRight}>
+          {expandIcon}
+        </FlexBox>
+      </FlexBox>
+    </MenuItem>
   );
-};
+});
 
 export default FloatingMenuOption;

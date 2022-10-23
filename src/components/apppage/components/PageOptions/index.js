@@ -94,19 +94,16 @@ const PageOptions = ({
         {/* <p>edited</p> */}
         {/* <p>share</p> */}
         <div>
-          <Tooltip title={showPageOptionsMenu ? null : "Page settings"} icon
-                   hoverLight>
-            <MoreHorizIcon onClick={() => {
-              setShowPageOptionsMenu(true);
-            }}/>
+          <Tooltip title={"Page settings"} icon hoverLight>
+            <MoreHorizIcon id={"page-settings-button"} onClick={() => {setShowPageOptionsMenu(true)}}/>
           </Tooltip>
-          {showPageOptionsMenu && (
-            <PageOptionsMenu
-              onCancel={() => setShowPageOptionsMenu(false)}
-              properties={currentPage.properties}
-              updateProperty={updatePageProperty}
-            />
-          )}
+          <PageOptionsMenu
+            open={showPageOptionsMenu}
+            anchor={document.getElementById("page-settings-button")}
+            onClose={() => setShowPageOptionsMenu(false)}
+            properties={currentPage.properties}
+            updateProperty={updatePageProperty}
+          />
         </div>
       </FlexBox>
     </FlexBox>

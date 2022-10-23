@@ -49,7 +49,6 @@ const Block = ({
   
   const openOptionsMenu = () => {
     setShowBlockOptionsMenu(true);
-    blockRef.current.focus();
   };
   const closeOptionsMenu = () => {
     setShowBlockOptionsMenu(false);
@@ -58,44 +57,47 @@ const Block = ({
   const selectionOffset = () => document.getSelection().anchorOffset;
   
   const onClickDelete = () => {
+    closeOptionsMenu()
     deleteBlock(block);
   };
   const onCopyLink = () => {
+    closeOptionsMenu()
   };
   const onDuplicate = () => {
+    closeOptionsMenu();
     let clone = {
       page: block.page,
       properties: block.properties,
       type: block.type
     };
     addBlock(clone, block);
-    closeOptionsMenu();
   };
   const onChangeInto = (newtype) => {
+    closeOptionsMenu();
     updateBlockContent(block, {
       type: newtype
     });
-    closeOptionsMenu();
   };
   const onTextColorChange = (color) => {
+    closeOptionsMenu();
     updateBlockContent(block, {
       properties: {
         ...block.properties,
         textColor: color
       }
     });
-    closeOptionsMenu();
   };
   const onTextBackgroundChange = (color) => {
+    closeOptionsMenu();
     updateBlockContent(block, {
       properties: {
         ...block.properties,
         backgroundColor: color
       }
     });
-    closeOptionsMenu();
   };
   const onClickAddAfter = () => {
+    closeOptionsMenu()
     addBlock({
       type: "text",
       properties: {
@@ -350,23 +352,20 @@ const Block = ({
           {renderBlockContent()}
         </FlexBox>
       </FlexBox>
-      <div style={{
-        marginTop: blockRef.current?.offsetTop - blockRef.current?.clientHeight,
-        position: "absolute"
-      }}>
-        {showBlockOptionsMenu && (
-          <BlockOptionsMenu
-            onClickOutside={closeOptionsMenu}
-            onDelete={onClickDelete}
-            onCopyLink={onCopyLink}
-            onDuplicate={onDuplicate}
-            onChangeInto={onChangeInto}
-            onTextColorChange={onTextColorChange}
-            onTextBackgroundChange={onTextBackgroundChange}
-            block={block}
-          />
-        )}
-      </div>
+      {showBlockOptionsMenu && (
+        <BlockOptionsMenu
+          onClose={closeOptionsMenu}
+          onDelete={onClickDelete}
+          onCopyLink={onCopyLink}
+          onDuplicate={onDuplicate}
+          onChangeInto={onChangeInto}
+          onTextColorChange={onTextColorChange}
+          onTextBackgroundChange={onTextBackgroundChange}
+          open={showBlockOptionsMenu}
+          block={block}
+          anchor={blockRef.current}
+        />
+      )}
     </>
   );
 };

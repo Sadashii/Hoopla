@@ -1,14 +1,18 @@
-import styles from "./styles.module.scss";
+import { Divider } from "@mui/material";
+import styles from "./styles.module.scss"
 
 const FloatingMenuSection = ({
   children,
-  ...props
+  noDivider
 }) => {
   
   return (
-    <div className={styles.menuSection} {...props}>
+    <>
       {children}
-    </div>
+      {!noDivider && (
+        <Divider className={styles.menuDivider} />
+      )}
+    </>
   );
 };
 
