@@ -1,15 +1,15 @@
 import AddIcon from "@mui/icons-material/Add";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import SettingsIcon from "@mui/icons-material/Settings";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { Divider } from "@mui/material";
 import axios from "axios";
 import clsx from "clsx";
 import emojis from "node-emoji/lib/emoji.json";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { types, useAlert } from "react-alert";
 import { FlexBox, Tooltip } from "../../../atoms";
-import { findPageInPages, findPageParent } from "../../recursion";
+import { findPageInPages } from "../../recursion";
 import stylesP from "../../styles.module.scss";
 import { getPageIconType, pageIconTypes } from "../../utils";
 import NavPageOptions from "./NavPageOptions";
@@ -21,12 +21,13 @@ const PageNav = ({
   workspaceData,
   pageID,
   setPageID,
-  toggleSettingsModal
+  toggleSettingsModal,
+  currentPage
 }) => {
-  const alert = useAlert()
+  const alert = useAlert();
   const [expandedPages, setExpandedPages] = useState([]);
   
-  const [pageOptionsPage, setPageOptionsPage] = useState(null)
+  const [pageOptionsPage, setPageOptionsPage] = useState(null);
   
   const openPage = (page) => {
     setPageID(page._id);
@@ -41,9 +42,9 @@ const PageNav = ({
     }).then(res => {
       setWorkspacePagesData(currentWorkspacePages => ({
         pages: [...currentWorkspacePages.pages, res.data],
-        __v: currentWorkspacePages.__v,
-      }))
-      setExpandedPages([])
+        __v: currentWorkspacePages.__v
+      }));
+      setExpandedPages([]);
       openPage(res.data);
     }).catch(err => {
       throw new Error(err);
@@ -90,32 +91,32 @@ const PageNav = ({
             <ArrowRightIcon
               className={clsx(styles.pageExpandIcon,
                 expandedPages.includes(page._id) && styles.pageExpandedIcon)}
-              onClick={() => {
-                if (expandedPages.includes(page._id)) {
-                  setExpandedPages(
-                    expandedPages => expandedPages.filter(p => p !== page._id));
-                } else {
-                  axios.post(`/api/workspace/pages`, {
-                    operation: "GET",
-                    page: page._id,
-                    current_version: page.children?.__v || null
-                  }).then(res => {
-                    let updatedData = { ...workspacePagesData };
-                    let parent = findPageInPages(page._id, updatedData);
-                    parent.children = res.data;
-                    setWorkspacePagesData(updatedData);
-                    setExpandedPages([...expandedPages, page._id]);
-                    
-                  }).catch(err => {
-                    if (err.response.status === 304) {
-                      setExpandedPages([...expandedPages, page._id]);
-                      return;
-                    }
-                    
-                    throw new Error(err);
-                  });
-                }
-              }}
+              //onClick={() => {
+              //  if (expandedPages.includes(page._id)) {
+              //    setExpandedPages(
+              //      expandedPages => expandedPages.filter(p => p !== page._id));
+              //  } else {
+              //    axios.post(`/api/workspace/pages`, {
+              //      operation: "GET",
+              //      page: page._id,
+              //      current_version: page.children?.__v || null
+              //    }).then(res => {
+              //      let updatedData = { ...workspacePagesData };
+              //      let parent = findPageInPages(page._id, updatedData);
+              //      parent.children = res.data;
+              //      setWorkspacePagesData(updatedData);
+              //      setExpandedPages([...expandedPages, page._id]);
+              //
+              //    }).catch(err => {
+              //      if (err.response.status === 304) {
+              //        setExpandedPages([...expandedPages, page._id]);
+              //        return;
+              //      }
+              //
+              //      throw new Error(err);
+              //    });
+              //  }
+              //}}
             />
           </Tooltip>
           <FlexBox fullWidth onClick={() => openPage(page)}
@@ -130,11 +131,11 @@ const PageNav = ({
           <>
             <FlexBox align className={clsx(styles.pageAddIcon)}>
               <Tooltip title={"Page options"} icon>
-                <MoreHorizIcon onClick={() => setPageOptionsPage(page)} data-block-type={"page-options"} />
+                <MoreHorizIcon onClick={() => setPageOptionsPage(page)} data-block-type={"page-options"}/>
               </Tooltip>
-              <Tooltip title={"Add page inside"} icon>
-                <AddIcon onClick={() => addPageToPage(page)}/>
-              </Tooltip>
+              {/* <Tooltip title={"Add page inside"} icon> */}
+              {/*   <AddIcon onClick={() => addPageToPage(page)}/> */}
+              {/* </Tooltip> */}
             </FlexBox>
           </>
         </FlexBox>
@@ -175,7 +176,7 @@ const PageNav = ({
       <FlexBox onClick={addPageToWorkspace} className={clsx(stylesP.navOptionLightBold, styles.pageNavItem)}>
         <AddIcon style={{ marginRight: "4px" }}/> Add a page
       </FlexBox>
-  
+      
       {pageOptionsPage && (
         <NavPageOptions
           open={true}
@@ -185,46 +186,30 @@ const PageNav = ({
             axios
               .post(`/api/workspace/pages`, {
                 operation: "DELETE",
-                _id: pageOptionsPage._id,
+                _id: pageOptionsPage._id
               })
               .then(res => {
-                alert.show(`Page deleted.`, {type: types.SUCCESS})
-                //setWorkspacePagesData(workspacePagesData => {
-                //  let location = []
-                //  const getParent = (id) => findPageParent(id, { children: workspacePagesData });
-                //  let child = pageOptionsPage
-                //  let parent = getParent(pageOptionsPage._id)
-                //
-                //  if (parent._id) {
-                //    location.unshift(parent.)
-                //  }
-                //  while (parent._id) {
-                //    parent = getParent(parent._id)
-                //    console.log(parent);
-                //    if (!parent._id) break
-                //    location.unshift(parent)
-                //  }
-                //
-                //  console.log(workspacePagesData);
-                //
-                //  //delete workspacePagesData[]
-                //
-                //  console.log(location);
-                //  return workspacePagesData
-                //})
+                alert.show(`Page deleted.`, { type: types.SUCCESS });
+                setWorkspacePagesData({
+                  ...workspacePagesData,
+                  pages: workspacePagesData.pages.filter(page => page._id !== pageOptionsPage._id)
+                });
+                if (pageOptionsPage === currentPage) {
+                  openPage(workspacePagesData.pages[0]);
+                }
               })
               .catch(err => {
-                alert.show(`Unable to delete. Please try again later.`, {type: types.ERROR})
-              })
-            setPageOptionsPage(null)
+                alert.show(`Unable to delete. Please try again later.`, { type: types.ERROR });
+              });
+            setPageOptionsPage(null);
           }}
           onCopyLink={() => {
-            alert("TODO: Copy link to this page")
-            setPageOptionsPage(null)
+            alert.show("TODO: Copy link to this page");
+            setPageOptionsPage(null);
           }}
           onDuplicate={() => {
-            alert("TODO: Duplicate page and subpages and subblocks")
-            setPageOptionsPage(null)
+            alert.show("TODO: Duplicate page and subpages and subblocks");
+            setPageOptionsPage(null);
           }}
         />
       )}

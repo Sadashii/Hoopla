@@ -1,5 +1,5 @@
 import { Divider } from "@mui/material";
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 
 const FloatingMenuSection = ({
   children,
@@ -10,7 +10,7 @@ const FloatingMenuSection = ({
     <>
       {children}
       {!noDivider && (
-        <Divider className={styles.menuDivider} />
+        <Divider className={styles.menuDivider}/>
       )}
     </>
   );

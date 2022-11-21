@@ -6,10 +6,9 @@ import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRig
 import LinkIcon from "@mui/icons-material/Link";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import clsx from "clsx";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import UserHelper from "../../../../helper/UserHelper";
-import { FlexBox } from "../../../atoms";
-import { RelativeTime, FloatingMenu, FloatingMenuOption, FloatingMenuSection } from "../../../molecules";
+import { FloatingMenu, FloatingMenuOption, FloatingMenuSection, RelativeTime } from "../../../molecules";
 import styles from "./blocks.module.scss";
 
 const colors = {
@@ -30,7 +29,7 @@ const blockTypes = {
   "Heading 1": "heading_1",
   "Heading 2": "heading_2",
   "Heading 3": "heading_3",
-  "ToDo List": "todo",
+  "To-do List": "todo",
   "Bulleted List": "bulleted_list",
   "Quote": "quote"
 };
@@ -56,26 +55,26 @@ const BlockOptionsMenu = ({
     <>
       <FloatingMenu open={open} onClose={onClose} anchor={anchor}>
         <FloatingMenuSection>
-          <FloatingMenuOption onClick={onDelete} icon={<DeleteOutlineIcon />} title={"Delete"} />
-          <FloatingMenuOption onClick={onDuplicate} icon={<ContentCopyIcon />} title={"Duplicate"} />
+          <FloatingMenuOption onClick={onDelete} icon={<DeleteOutlineIcon/>} title={"Delete"}/>
+          <FloatingMenuOption onClick={onDuplicate} icon={<ContentCopyIcon/>} title={"Duplicate"}/>
           <FloatingMenuOption
             id={"block-switcher-menu-item"}
-            icon={<AutorenewIcon />}
+            icon={<AutorenewIcon/>}
             title={"Change Into"}
-            expandIcon={<KeyboardArrowRightOutlinedIcon />}
+            expandIcon={<KeyboardArrowRightOutlinedIcon/>}
             onClick={() => {
-              setShowColorSwitcher(false)
-              setShowChangeInto(true)
+              setShowColorSwitcher(false);
+              setShowChangeInto(true);
             }}
           />
-          <FloatingMenuOption onClick={onCopyLink} icon={<LinkIcon />} title={"Copy link to block"} />
+          <FloatingMenuOption onClick={onCopyLink} icon={<LinkIcon/>} title={"Copy link to block"}/>
         </FloatingMenuSection>
         <FloatingMenuSection>
           <FloatingMenuOption
             id={"color-switcher-menu-item"}
-            icon={<PaletteOutlinedIcon />}
+            icon={<PaletteOutlinedIcon/>}
             title={"Color"}
-            expandIcon={<KeyboardArrowRightOutlinedIcon />}
+            expandIcon={<KeyboardArrowRightOutlinedIcon/>}
             onClick={() => {
               setShowColorSwitcher(true);
               setShowChangeInto(false);
@@ -83,13 +82,13 @@ const BlockOptionsMenu = ({
           />
         </FloatingMenuSection>
         <FloatingMenuSection noDivider>
-          <div style={{padding: '4px', fontSize: '.75rem'}}>
+          <div style={{ padding: "4px", fontSize: ".75rem" }}>
             <p>Last edited by {user.username}</p>
             <RelativeTime value={block.updatedAt}/>
           </div>
         </FloatingMenuSection>
       </FloatingMenu>
-  
+      
       {/* COLOR SWITCHER MENU */}
       <FloatingMenu open={showColorSwitcher} onClose={() => setShowColorSwitcher(false)} anchor={document.getElementById("color-switcher-menu-item")} secondary>
         <FloatingMenuSection>
@@ -123,7 +122,7 @@ const BlockOptionsMenu = ({
           ))}
         </FloatingMenuSection>
       </FloatingMenu>
-  
+      
       {/* BLOCK CHANGE MENU */}
       <FloatingMenu open={showChangeInto} onClose={() => setShowChangeInto(false)} anchor={document.getElementById("block-switcher-menu-item")} secondary>
         <FloatingMenuSection>

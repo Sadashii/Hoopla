@@ -15,18 +15,18 @@ const FloatingMenu = ({
       onClose={onClose}
       anchorEl={anchor}
       anchorOrigin={secondary ? {
-        vertical: 'center',
-        horizontal: 'right',
+        vertical: "center",
+        horizontal: "right"
       } : {
-        vertical: 'center',
-        horizontal: 'left',
+        vertical: "center",
+        horizontal: "left"
       }}
       transformOrigin={secondary ? {
-        vertical: 'center',
-        horizontal: 'left',
+        vertical: "center",
+        horizontal: "left"
       } : {
-        vertical: 'center',
-        horizontal: 'right',
+        vertical: "center",
+        horizontal: "right"
       }}
       className={styles.floatingMenu}
       autoFocus

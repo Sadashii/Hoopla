@@ -1,11 +1,11 @@
-import KeyboardDoubleArrowLeftIcon
-  from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import axios from "axios";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import UserHelper from "../../helper/UserHelper";
+import GeneralHelper from "../../utils/GeneralHelper";
 import { useStickyState } from "../../utils/useStickyState";
 import { FlexBox, Tooltip } from "../atoms";
 import PageNav from "./components/LeftNavPages";
@@ -98,6 +98,7 @@ const AppPage = () => {
   
   return (
     <>
+      {GeneralHelper.generateHead(currentPage ? currentPage.name || "Untitled" : (workspaceData ? workspaceData.name || "Untitled" : "App"))}
       <FlexBox className={clsx(styles.mainContainer)}>
         <FlexBox column className={clsx(styles.leftNavbar,
           navbarOpen && styles.leftNavbarOpen)}>
@@ -109,7 +110,7 @@ const AppPage = () => {
                        alt={"Brand Logo"}/>
                 <h3>{workspaceData.name}</h3>
               </FlexBox>
-              <Tooltip title={"Close sidebar"} shortcut={"Ctrl + /"} icon>
+              <Tooltip title={"Close sidebar"} icon>
                 <KeyboardDoubleArrowLeftIcon
                   className={styles.toggleNavbarIcon}
                   onClick={() => setNavbarOpen(!navbarOpen)}
@@ -127,6 +128,7 @@ const AppPage = () => {
                 setPageID={setCurrentPageID}
                 toggleSettingsModal={() => setShowSettingsModal(
                   !showSettingsModal)}
+                currentPage={currentPage}
               />
             </>
           )}

@@ -9,7 +9,7 @@ import User from "../../models/user";
 export default async function account (req, res) {
   await DB();
   if (!Utils.isUserLoggedIn(req, res)) {
-    return;
+    return res.status(401).send();
   }
   if (req.method !== "POST") {
     return res.status(405).send();
@@ -33,12 +33,10 @@ export default async function account (req, res) {
       await user.save();
       return res.status(200).send(user.toJSON());
     case "UPDATE_PASSWORD":
-      user.services.password.bcrypt = await Utils.createHash(
-        req.body.newPassword);
+      user.services.password.bcrypt = await Utils.createHash(req.body.newPassword);
       await user.save();
       
-      // TODO: Send mail saying password was changed,not you? log out of all
-      // devices rn
+      // TODO: Send mail saying password was changed,not you? log out of all devices rn
       
       return res.status(200).send(user.toJSON());
   }

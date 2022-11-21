@@ -1,5 +1,4 @@
-import KeyboardDoubleArrowRightIcon
-  from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Button } from "@mui/material";
 import axios from "axios";
@@ -65,7 +64,7 @@ const PageOptions = ({
     <FlexBox align fullWidth justifyBetween className={styles.pageOptions}>
       <FlexBox>
         {!navbarOpen && (
-          <Tooltip title={"Open sidebar"} shortcut={"Ctrl + /"} icon hoverLight>
+          <Tooltip title={"Open sidebar"} icon hoverLight>
             <KeyboardDoubleArrowRightIcon onClick={toggleNavbar}/>
           </Tooltip>
         )}
@@ -97,7 +96,9 @@ const PageOptions = ({
         </div>
         <div>
           <Tooltip title={"Page settings"} icon hoverLight>
-            <MoreHorizIcon id={"page-settings-button"} onClick={() => {setShowPageOptionsMenu(true)}}/>
+            <MoreHorizIcon id={"page-settings-button"} onClick={() => {
+              setShowPageOptionsMenu(true);
+            }}/>
           </Tooltip>
           <PageOptionsMenu
             open={showPageOptionsMenu}

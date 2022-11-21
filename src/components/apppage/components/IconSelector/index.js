@@ -3,8 +3,7 @@ import emojis from "node-emoji/lib/emoji.json";
 import { useState } from "react";
 import { FlexBox } from "../../../atoms";
 import FloatingMenu from "../../../molecules/FloatingMenu";
-import FloatingMenuSection
-  from "../../../molecules/FloatingMenu/FloatingMenuSection";
+import FloatingMenuSection from "../../../molecules/FloatingMenu/FloatingMenuSection";
 import styles from "./styles.module.scss";
 
 const IconSelector = ({

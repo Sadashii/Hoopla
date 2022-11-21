@@ -57,11 +57,11 @@ const Block = ({
   const selectionOffset = () => document.getSelection().anchorOffset;
   
   const onClickDelete = () => {
-    closeOptionsMenu()
+    closeOptionsMenu();
     deleteBlock(block);
   };
   const onCopyLink = () => {
-    closeOptionsMenu()
+    closeOptionsMenu();
   };
   const onDuplicate = () => {
     closeOptionsMenu();
@@ -97,7 +97,7 @@ const Block = ({
     });
   };
   const onClickAddAfter = () => {
-    closeOptionsMenu()
+    closeOptionsMenu();
     addBlock({
       type: "text",
       properties: {

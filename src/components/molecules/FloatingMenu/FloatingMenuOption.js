@@ -1,7 +1,6 @@
-import React, { forwardRef } from "react";
-
 import { MenuItem } from "@mui/material";
 import clsx from "clsx";
+import React, { forwardRef } from "react";
 import { FlexBox } from "../../atoms";
 import styles from "./styles.module.scss";
 

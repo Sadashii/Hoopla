@@ -1,12 +1,5 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  Button,
-  Divider,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  TextField
-} from "@mui/material";
+import { Button, Divider, FormControl, IconButton, InputAdornment, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
@@ -18,7 +11,8 @@ import { FlexBox, Layout } from "../../src/components/atoms";
 import { GoogleIcon } from "../../src/components/icons";
 import { RedirectToAppIfLoggedIn } from "../../src/components/molecules";
 import UserHelper from "../../src/helper/UserHelper";
-import styles from "../../styles/signup.module.scss";
+import GeneralHelper from "../../src/utils/GeneralHelper";
+import styles from "../../styles/auth.module.scss";
 
 const Login = ({}) => {
   const [error, setError] = useState(null);
@@ -111,6 +105,7 @@ const Login = ({}) => {
   
   return (
     <Layout logoOnly={true}>
+      {GeneralHelper.generateHead("Login")}
       <RedirectToAppIfLoggedIn/>
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>

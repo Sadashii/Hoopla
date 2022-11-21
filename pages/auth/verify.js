@@ -8,7 +8,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FlexBox, Layout, ProgressBar } from "../../src/components/atoms";
 import { RedirectToAppIfLoggedIn } from "../../src/components/molecules";
-import styles from "../../styles/signup.module.scss";
+import GeneralHelper from "../../src/utils/GeneralHelper";
+import styles from "../../styles/auth.module.scss";
 
 const Verify = ({}) => {
   const [loading, setLoading] = useState(true);
@@ -50,6 +51,7 @@ const Verify = ({}) => {
   
   return (
     <Layout logoOnly={true}>
+      {GeneralHelper.generateHead("Verify Your Email")}
       <RedirectToAppIfLoggedIn/>
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>

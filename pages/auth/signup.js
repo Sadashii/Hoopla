@@ -1,15 +1,5 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  Button,
-  Checkbox,
-  CircularProgress,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  IconButton,
-  InputAdornment,
-  TextField
-} from "@mui/material";
+import { Button, Checkbox, CircularProgress, Divider, FormControl, FormControlLabel, IconButton, InputAdornment, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
@@ -20,7 +10,8 @@ import { useState } from "react";
 import { FlexBox, Layout, ProgressBar } from "../../src/components/atoms";
 import { GoogleIcon } from "../../src/components/icons";
 import { RedirectToAppIfLoggedIn } from "../../src/components/molecules";
-import styles from "../../styles/signup.module.scss";
+import GeneralHelper from "../../src/utils/GeneralHelper";
+import styles from "../../styles/auth.module.scss";
 
 const Signup = ({}) => {
   const [response, setResponse] = useState(null);
@@ -142,6 +133,7 @@ const Signup = ({}) => {
   
   return (
     <Layout logoOnly={true}>
+      {GeneralHelper.generateHead("Register")}
       <RedirectToAppIfLoggedIn/>
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>

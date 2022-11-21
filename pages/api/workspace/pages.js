@@ -5,8 +5,8 @@
 import slugify from "slugify";
 import DB from "../../../middleware/database";
 import Utils from "../../../middleware/utils";
-import Page from "../../../models/page";
 import Block from "../../../models/block";
+import Page from "../../../models/page";
 
 export default async function pages (req, res) {
   await DB();
@@ -63,21 +63,21 @@ export default async function pages (req, res) {
       
       return res.status(200).send();
     case "DELETE":
-      const findAndDeleteChildren = async (id, first=true) => {
-        await Block.deleteMany({page: id})
-        let childrenPages = await Page.find({parent: id})
+      const findAndDeleteChildren = async (id, first = true) => {
+        await Block.deleteMany({ page: id });
+        let childrenPages = await Page.find({ parent: id });
         for (const childPage of childrenPages) {
-          await findAndDeleteChildren(childPage._id, false)
+          await findAndDeleteChildren(childPage._id, false);
         }
         if (first) {
-          await Page.findByIdAndDelete(id)
+          await Page.findByIdAndDelete(id);
         } else {
-          await Page.deleteMany({parent: id})
+          await Page.deleteMany({ parent: id });
         }
-      }
+      };
       
-      //await findAndDeleteChildren(req.body._id)
+      await findAndDeleteChildren(req.body._id);
       
-      return res.status(200).send()
+      return res.status(200).send();
   }
 }

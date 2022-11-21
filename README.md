@@ -1,5 +1,5 @@
 <h1 align="center">Hoopla</h1>
-<h3 align="center">A Next.js/MongoDB based notion-like to-software app</h3>
+<h3 align="center">A Next.js/MongoDB based notion-like to-do software app</h3>
 
 <p align="center">
 
@@ -12,16 +12,16 @@
 </a>
 </p>
 
-## What is GameBot?
+## What is Hoopla?
 
-A Next.js/MongoDB based notion-like to-software app
+A Next.js/MongoDB based notion-like to-do software app
 
 ## 💻 Local Development
 
 To develop Hoopla locally, you can use the following commands:
 
 - git clone https://github.com/Sadashii/Hoopla.git
-- cd GameBot
+- cd Hoopla
 - rename .env.example to .env and update it as required
 - npm install
 - npm run dev and visit http://localhost:4000

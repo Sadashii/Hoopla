@@ -11,7 +11,7 @@ const PageOptionsMenu = ({
   
   return (
     <FloatingMenu open={open} onClose={onClose} anchor={anchor} anchorOrigin={{
-      horizontal: 'right',
+      horizontal: "right"
     }}>
       <FloatingMenuSection noDivider>
         <FloatingMenuOption
@@ -33,7 +33,7 @@ const PageOptionsMenu = ({
               size={"small"}
             />
           </>}
-          />
+        />
       </FloatingMenuSection>
     </FloatingMenu>
   );

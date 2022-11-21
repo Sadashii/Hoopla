@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FlexBox, Layout } from "../../src/components/atoms";
 import { RedirectToAppIfLoggedIn } from "../../src/components/molecules";
-import styles from "../../styles/signup.module.scss";
+import styles from "../../styles/auth.module.scss";
 
 const ResetPassword = ({}) => {
   const [response, setResponse] = useState(null);
@@ -77,6 +77,7 @@ const ResetPassword = ({}) => {
   
   return (
     <Layout logoOnly={true}>
+      {GenerateHelmet.generateHead("Reset Password")}
       <RedirectToAppIfLoggedIn/>
       <Container maxWidth={"sm"} className={styles.signupContainer}>
         <FlexBox column align>

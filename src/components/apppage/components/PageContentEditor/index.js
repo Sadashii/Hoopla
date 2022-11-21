@@ -16,8 +16,7 @@ const PageContentEditor = ({
         operation: "GET",
         page: pageData._id
       }).then(res => {
-        setPageContent(res.data.blocks.sort(
-          (a, b) => a.properties.position - b.properties.position));
+        setPageContent(res.data.blocks.sort((a, b) => a.properties.position - b.properties.position));
         setPageContentVersion(res.data.__v);
       });
     }
@@ -144,6 +143,20 @@ const PageContentEditor = ({
           }}
         />
       ))}
+      {pageContent?.length === 0 && (
+        <span
+          style={{ opacity: .7 }}
+          onClick={() => {
+            addBlock({
+              type: "text",
+              properties: {
+                content: ""
+              },
+              page: pageData._id
+            });
+          }}
+        >Click me to add a block and start typing...</span>
+      )}
     </>
   );
 };

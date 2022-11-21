@@ -12,6 +12,12 @@ export default class MyDocument extends Document {
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main}/>
           <link rel="shortcut icon" href="/favicon.ico"/>
+          
+          <meta property="og:type" content="website"/>
+          <meta property="og:site_name" content="Hoopla | The next gen to-dp app"/>
+          <meta property="og:image" content="/logo.png"/>
+          <meta property="og:locale" content="en_US"/>
+          
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
