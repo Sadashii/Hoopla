@@ -7,8 +7,9 @@ import axios from "axios";
 import clsx from "clsx";
 import emojis from "node-emoji/lib/emoji.json";
 import { useEffect, useState } from "react";
+import { types, useAlert } from "react-alert";
 import { FlexBox, Tooltip } from "../../../atoms";
-import { findPageInPages } from "../../recursion";
+import { findPageInPages, findPageParent } from "../../recursion";
 import stylesP from "../../styles.module.scss";
 import { getPageIconType, pageIconTypes } from "../../utils";
 import NavPageOptions from "./NavPageOptions";
@@ -22,6 +23,7 @@ const PageNav = ({
   setPageID,
   toggleSettingsModal
 }) => {
+  const alert = useAlert()
   const [expandedPages, setExpandedPages] = useState([]);
   
   const [pageOptionsPage, setPageOptionsPage] = useState(null)
@@ -180,7 +182,40 @@ const PageNav = ({
           onClose={() => setPageOptionsPage(null)}
           anchor={document.querySelector(`[data-block-id="${pageOptionsPage._id}"]`).querySelector(`[data-block-type="page-options"]`)}
           onDelete={() => {
-            alert("TODO: Delete page and subpages and subblocks")
+            axios
+              .post(`/api/workspace/pages`, {
+                operation: "DELETE",
+                _id: pageOptionsPage._id,
+              })
+              .then(res => {
+                alert.show(`Page deleted.`, {type: types.SUCCESS})
+                //setWorkspacePagesData(workspacePagesData => {
+                //  let location = []
+                //  const getParent = (id) => findPageParent(id, { children: workspacePagesData });
+                //  let child = pageOptionsPage
+                //  let parent = getParent(pageOptionsPage._id)
+                //
+                //  if (parent._id) {
+                //    location.unshift(parent.)
+                //  }
+                //  while (parent._id) {
+                //    parent = getParent(parent._id)
+                //    console.log(parent);
+                //    if (!parent._id) break
+                //    location.unshift(parent)
+                //  }
+                //
+                //  console.log(workspacePagesData);
+                //
+                //  //delete workspacePagesData[]
+                //
+                //  console.log(location);
+                //  return workspacePagesData
+                //})
+              })
+              .catch(err => {
+                alert.show(`Unable to delete. Please try again later.`, {type: types.ERROR})
+              })
             setPageOptionsPage(null)
           }}
           onCopyLink={() => {

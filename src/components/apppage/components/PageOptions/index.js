@@ -6,6 +6,7 @@ import axios from "axios";
 import emojis from "node-emoji/lib/emoji.json";
 import { useEffect, useState } from "react";
 import { FlexBox, Tooltip } from "../../../atoms";
+import { RelativeTime } from "../../../molecules";
 import recursion from "../../recursion";
 import { getPageIconType, pageIconTypes } from "../../utils";
 import PageOptionsMenu from "./PageOptionsMenu";
@@ -91,8 +92,9 @@ const PageOptions = ({
         })}
       </FlexBox>
       <FlexBox align>
-        {/* <p>edited</p> */}
-        {/* <p>share</p> */}
+        <div className={styles.lastEdited}>
+          <RelativeTime value={currentPage.updatedAt}/>
+        </div>
         <div>
           <Tooltip title={"Page settings"} icon hoverLight>
             <MoreHorizIcon id={"page-settings-button"} onClick={() => {setShowPageOptionsMenu(true)}}/>

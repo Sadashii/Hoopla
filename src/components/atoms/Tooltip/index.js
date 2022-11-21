@@ -27,9 +27,9 @@ const Tooltip = ({
           {children}
         </FlexBox>
       ) : (
-        <>
+        <span>
           {children}
-        </>
+        </span>
       )}
     </MUITooltip>
   );
